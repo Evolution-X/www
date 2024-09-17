@@ -6,6 +6,7 @@ import Navbar from './coponents/Navbar';
 import NotFound from './pages/NotFound';
 import Downloads from './pages/Downloads';
 import Blog from './pages/Blog';
+import DownloadSection from './coponents/DownloadSection';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route index element={<HomePage />}/>
           <Route path='/downloads' element={<Downloads/>} />
+          <Route path='/downloads/:codename' element={<DownloadSection />}/>
           <Route path='/blog' element={<Blog/>}/>
           <Route path="*" element={<NotFound />}/>
         </Routes>

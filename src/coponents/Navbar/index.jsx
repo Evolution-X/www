@@ -22,7 +22,7 @@ const Navbar = () => {
                 Blog
             </li>
             </Link>
-            <Link to={'/wiki'}>
+            <Link to={'https://wiki.evolution-x.org/'} target='_blank'>
             <li>
                 Wiki
             </li>

@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
+import { Link } from 'react-router-dom';
+
 const Downloads = () => {
 
     const [devices, setDevices] = useState([]);
@@ -84,6 +86,9 @@ const Downloads = () => {
                 {device.data?.device} <br />
                 {device.codename}   <br />
                 {device.data?.maintainer} <br />
+                <Link to={`/downloads/${device.codename}`}>
+                <button className='w-full bg-blue-600 rounded-xl py-2 px-3 mt-5'>Download</button>
+                </Link>
                 </div>
                 </div>
             </div>
