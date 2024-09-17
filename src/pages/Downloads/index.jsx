@@ -10,7 +10,7 @@ const Downloads = () => {
   
     // Fetch the list of devices
     const fetchDevices = async () => {
-      const url = "https://raw.githubusercontent.com/Prathamk07/evox/main/devices/devices.json";
+      const url = "https://raw.githubusercontent.com/Evolution-X/official_devices/udc/devices.json";
       
       try {
         setLoading(true);  // Start loading
