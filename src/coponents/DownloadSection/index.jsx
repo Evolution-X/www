@@ -50,6 +50,8 @@ const DownloadSection = () => {
 
     return (
         <div className='w-4/5 mx-auto mt-10 bg-slate-800 p-5 rounded-xl'>
+            
+            
             {(data && !loading) && <>
             
             <div className='grid grid-cols-1 md:grid-cols-2'>
