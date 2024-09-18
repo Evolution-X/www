@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom'
 const Navbar = () => {
   return (
     <div className='flex justify-between  px-10 py-5'>
+        <Link to={'/'}>
         <h4>
             EvolutionX
         </h4>
-        <ul className='flex space-x-16'>
-            <Link to={'/'}>
-            <li>
+        </Link>
+        <ul className='flex space-x-5 md:space-x-16'>
+            <Link className='hidden md:block' to={'/'}>
+            <li className=''>
                 Home
             </li>
             </Link>

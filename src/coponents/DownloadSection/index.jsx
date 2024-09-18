@@ -54,7 +54,7 @@ const DownloadSection = () => {
             
             <div className='grid grid-cols-2'>
                 <div>
-                    <img className='rounded-xl w-full' src="https://github.com/Prathamk07/evox/blob/main/devices/resources/device_images/veux.png?raw=true" alt="Device" />
+                    <img className='rounded-xl p-3 mx-auto w-3/5 object-contain max-h-[30em]' src={`https://github.com/Evolution-X/official_devices/blob/udc/images/devices/${codename}.png?raw=true`} alt="Device" />
                 </div>
                 <div>
                     <div className='mt-12 w-4/5 mx-auto rounded-xl bg-slate-700 p-3'>

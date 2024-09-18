@@ -82,10 +82,11 @@ const Downloads = () => {
         {deviceList && !loading && deviceList.map((device,index) => (
             <div key={index}>
                 <div className='bg-slate-800 text-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300'>
-                <div className=''>
-                {device.data?.device} <br />
-                {device.codename}   <br />
-                {device.data?.maintainer} <br />
+                  <img className='max-h-44 mx-auto' src={`https://github.com/Evolution-X/official_devices/blob/udc/images/devices/${device.codename}.png?raw=true`} alt="" />
+                <div className='mt-5 text-center'>
+                <h6 className='text-lg '>{device.data?.device}</h6>
+                Codename : {device.codename}   <br />
+                Maintainer : {device.data?.maintainer} <br />
                 <Link to={`/downloads/${device.codename}`}>
                 <button className='w-full bg-blue-600 rounded-xl py-2 px-3 mt-5'>Download</button>
                 </Link>
