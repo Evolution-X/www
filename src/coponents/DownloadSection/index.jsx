@@ -52,9 +52,9 @@ const DownloadSection = () => {
         <div className='w-4/5 mx-auto mt-10 bg-slate-800 p-5 rounded-xl'>
             {(data && !loading) && <>
             
-            <div className='grid grid-cols-2'>
+            <div className='grid grid-cols-1 md:grid-cols-2'>
                 <div>
-                    <img className='rounded-xl p-3 mx-auto w-3/5 object-contain max-h-[30em]' src={`https://github.com/Evolution-X/official_devices/blob/udc/images/devices/${codename}.png?raw=true`} alt="Device" />
+                    <img className='rounded-xl p-3 mx-auto object-contain max-h-[40em] md:max-h-[30em]' src={`https://github.com/Evolution-X/official_devices/blob/udc/images/devices/${codename}.png?raw=true`} alt="Device" />
                 </div>
                 <div>
                     <div className='mt-12 w-4/5 mx-auto rounded-xl bg-slate-700 p-3'>
@@ -62,7 +62,7 @@ const DownloadSection = () => {
                      <span className='text-lg my-2'>Codename - {codename}</span><br />
                      <span className='text-lg my-2'>Maintained by - {data.maintainer}</span> <br />
 
-                     <div className='grid grid-cols-2 mx-auto mt-10'>
+                     <div className='grid grid-cols-1 md:grid-cols-2 mx-auto mt-10'>
                         <div>
                             <Link to={data.forum} target='_blank'>
                             <button className='w-5/6 mx-auto px-3 bg-rose-500 rounded-xl py-2 text-center my-2'>Forum</button>
