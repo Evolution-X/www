@@ -44,7 +44,7 @@ const HomePage = () => {
               <p className="font-[Prod-bold] text-2xl md:text-5xl">
                 <span className="evoxhighlight">About</span> EvolutionX
               </p>
-              <p className="text-sm md:text-2xl">
+              <p className="text-lg md:text-2xl">
                 Evolution X is a flashable Custom ROM to bring a true Pixel feel
                 to your Android Device at first glance, with many additional
                 configurations at your disposal. We aim to provide frequent
@@ -70,11 +70,11 @@ const HomePage = () => {
           </div>
           <div className="inline-flex flex-col gap-12 md:flex-row">
             <div className="middleshadow items-start justify-start rounded-3xl bg-black px-8 py-10 md:px-12 md:py-14 md:w-1/2">
-              <div className="flex h-48 flex-col items-start justify-start gap-5 md:gap-10">
-                <div className="font-[Prod-bold] text-2xl md:text-3xl">
+              <div className="flex flex-col items-start justify-start gap-5 md:gap-10">
+                <div className="font-[Prod-bold] text-3xl md:text-3xl">
                   Get frequent updates
                 </div>
-                <div className="md:text-2xl">
+                <div className="md:text-2xl text-xl">
                   We provide the most frequent updates amongst all custom ROMs.
                   The updates aim for the most stable state and ensure to be on
                   the latest security patches.
@@ -82,11 +82,11 @@ const HomePage = () => {
               </div>
             </div>
             <div className="middleshadow items-start justify-start gap-2.5 rounded-3xl bg-black px-8 py-10 md:px-12 md:py-14 md:w-1/2">
-              <div className="flex h-48 flex-col items-start justify-start gap-5 md:gap-10">
+              <div className="flex flex-col items-start justify-start gap-5 md:gap-10">
                 <div className="font-[Prod-bold] text-2xl md:text-3xl">
                   Gives you a Google Pixel feel
                 </div>
-                <div className="md:text-2xl">
+                <div className="md:text-2xl text-lg">
                   Evolution X gives you the perfect Pixel experience, using AOSP
                   sources. The ROM also comes with additional customizations and
                   features.

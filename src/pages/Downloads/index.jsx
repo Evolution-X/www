@@ -173,8 +173,8 @@ const Downloads = () => {
             )
             .map((device, index) => (
               <div key={index}>
-                <div className="relative flex h-[28rem] flex-col justify-between rounded-2xl border border-slate-800 bg-black pb-7 duration-100 ease-in hover:scale-105 hover:shadow-xl">
-                  <img className="size-40 object-contain py-2 mx-auto my-2" src={`https://github.com/Evolution-X/official_devices/blob/udc/images/devices/${device.codename}.png?raw=true`} alt="" />
+                <div className="flex min-h-full min-w-[22rem] flex-col justify-between rounded-2xl border border-slate-800 bg-black pb-7 duration-100 ease-in md:hover:scale-105 md:hover:shadow-xl">
+                  <img className="size-56 object-contain py-2 mx-auto my-2" src={`https://github.com/Evolution-X/official_devices/blob/udc/images/devices/${device.codename}.png?raw=true`} alt="" />
                   <div className="flex flex-col gap-6 px-7">
                     <div>
                       <p className="flex justify-between text-sm md:text-md text-[#999999]">
@@ -197,7 +197,8 @@ const Downloads = () => {
                     </div>
                     <Link
                       to={`/downloads/${device.codename}`}
-                      className="inline-flex h-12 w-4/5 mx-auto items-center justify-center rounded-full bg-[#5b60e3] text-lg md:text-xl text-white"
+                      className="inline-flex h-16 items-center justify-center rounded-full bg-[#5b60e3] text-xl text-white 
+"
                     >
                       Get EvolutionX
                     </Link>

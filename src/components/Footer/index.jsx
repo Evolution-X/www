@@ -3,6 +3,7 @@ import ghicon from "../../assets/ghicon.svg"
 import donateicon from "../../assets/donateicon.svg"
 import xdaicon from "../../assets/xdaicon.svg"
 import tgicon from "../../assets/tgicon.svg"
+import { Link } from "react-router-dom"
 
 function index() {
   return (
@@ -35,8 +36,8 @@ function index() {
         </p>
         <p>
           Website developed by{" "}
-          <span className="font-[Prod-bold] underline">
-            Zirgom Haidar & Rex07
+          <span className="font-[Prod-bold]">
+           <Link className='underline' to={'https://github.com/ZirgomHaidar'} target="_blank">Zirgom Haidar</Link> & <Link className='underline' to={'https://github.com/Prathamk07'} target="_blank">Prathamk07</Link>
           </span>
         </p>
       </div>
