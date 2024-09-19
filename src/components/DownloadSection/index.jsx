@@ -5,6 +5,9 @@ import avatar from "../../assets/avatar.png"
 import donateicon from "../../assets/donateicon.svg"
 import tgicon from "../../assets/tgicon.svg"
 import xdaicon from "../../assets/xdaicon.svg"
+import evoloading from "../../assets/evoloading.gif"
+import { img } from "framer-motion/client"
+
 
 const DownloadSection = () => {
   const { codename } = useParams()
@@ -12,12 +15,17 @@ const DownloadSection = () => {
   const [data, setData] = useState()
   const [vanilla, setVanilla] = useState()
 
+  function timeout(delay) {
+    return new Promise( res => setTimeout(res, delay) );
+  }
+
   const fetchDevice = async () => {
     const url = `https://raw.githubusercontent.com/Evolution-X/OTA/udc/builds/${codename}.json`
     try {
       const response = await fetch(url)
       const fetchedDeviceData = await response.json()
       console.log(fetchedDeviceData.response[0])
+      await timeout(1000);
       return fetchedDeviceData.response[0]
     } catch (error) {
       console.error(`Error fetching data for device ${codename}:`, error)
@@ -48,15 +56,20 @@ const DownloadSection = () => {
   }, [codename]) // Add codename as a dependency to refetch when it changes
 
   return (
+    <>
+    {loading &&
+      <img  className="mx-auto my-auto w-4/5 md:w-2/5" src={evoloading} alt="loading ..." />
+    }
+    {!loading &&
     <div className="mx-5 flex flex-col gap-6 md:-mb-20 md:-mt-24">
       {data && !loading && (
         <>
-          <div className="inline-flex flex-col rounded-2xl border-4 border-dashed border-[#f05d5d] px-8 py-3">
-            <div className="flex flex-col gap-2">
+          <div className="inline-flex flex-col rounded-2xl border-4 border-dashed border-[#f05d5d] px-8 py-3 md:py-10">
+            <div className="flex flex-col gap-2 md:gap-4">
               <p className="font-[Prod-bold] text-lg text-white md:text-xl">
                 Before you download and install!
               </p>
-              <p className="font-[Prod-light] text-md text-white md:text-lg">
+              <p className="font-[Prod-light] text-sm text-white md:text-lg">
                 Your warranty is void. Or valid, probably I am not responsible
                 for bricked devices, dead SD cards, Evolution X, thermonuclear
                 war, or the current economic crisis caused by you following
@@ -113,7 +126,7 @@ const DownloadSection = () => {
                 <div className="inline-flex flex-col items-center justify-between gap-6 rounded-2xl bg-[#212121] px-8 py-5 md:flex-row">
                   <div className="flex items-center gap-4 md:gap-9">
                     <div className="flex h-14 w-14 items-center justify-center">
-                      <img src={avatar} alt="avatar" />
+                      <img className="rounded-full" src={`https://avatars.githubusercontent.com/${data.github}`} alt="avatar" />
                     </div>
                     <div className="font-[Prod-Medium] text-2xl text-white md:text-3xl">
                       {data.maintainer}
@@ -173,6 +186,8 @@ const DownloadSection = () => {
         </>
       )}
     </div>
+    }
+    </>
   )
 }
 

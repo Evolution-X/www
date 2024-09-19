@@ -2,10 +2,13 @@ import React, { useEffect } from "react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import evoxbanner from "../../assets/evoxbanner.png"
+import { img } from "framer-motion/client"
+import evoloading from "../../assets/evoloading.gif"
+import { delay } from "framer-motion"
 
 const Downloads = () => {
   const [devices, setDevices] = useState([])
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [deviceList, setDeviceList] = useState([])
   const [oem, setOem] = useState("")
   const [searchQuery, setSearchQuery] = useState("") // State for search query
@@ -20,13 +23,17 @@ const Downloads = () => {
       console.log(oem)
     }
   }
+
+  function timeout(delay) {
+    return new Promise( res => setTimeout(res, delay) );
+}
+
   // Fetch the list of devices
   const fetchDevices = async () => {
     const url =
       "https://raw.githubusercontent.com/Evolution-X/official_devices/udc/devices.json"
 
     try {
-      setLoading(true) // Start loading
       const response = await fetch(url)
       const devicedata = await response.json()
       return devicedata
@@ -34,7 +41,6 @@ const Downloads = () => {
       console.error("Error fetching devices:", error)
       return [] // Return an empty array on error
     } finally {
-      setLoading(false) // End loading
     }
   }
 
@@ -48,7 +54,7 @@ const Downloads = () => {
           const fetchedDevice = await fetch(durl)
           const fetchedDeviceData = await fetchedDevice.json()
           console.log(fetchedDeviceData.response[0])
-
+          await timeout(1000);
           return { codename: device, data: fetchedDeviceData.response[0] }
         } catch (error) {
           console.error(`Error fetching data for device ${device}:`, error)
@@ -62,6 +68,7 @@ const Downloads = () => {
 
   // Load devices on component mount
   useEffect(() => {
+    
     const loadDevices = async () => {
       const data = await fetchDevices()
       setDevices(data) // Set state after fetching the device list
@@ -88,12 +95,19 @@ const Downloads = () => {
   useEffect(() => {
     console.log(deviceList)
     if (deviceList.length > 0) {
+     
       setLoading(false)
     }
   }, [deviceList])
 
   return (
+   <>
+   {loading &&
+    <img className="mx-auto my-auto w-4/5 md:w-2/5" src={evoloading} alt="loading ..." />
+   }
+   {!loading &&
     <div className="flex flex-col items-center justify-center gap-20 md:gap-40">
+      
       <div className="inline-flex w-[20rem] flex-col items-center justify-center gap-8 md:w-[64rem] md:gap-12">
         <p className="text-center font-[Prod-bold] text-4xl md:text-6xl">
           <span className="text-[#afbdf3]">Download</span> EvolutionX
@@ -152,7 +166,7 @@ const Downloads = () => {
           </div>
         </div>
       </div>
-      <div className="mx-6 grid gap-10 md:grid-cols-3 md:gap-20">
+      <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-3 md:gap-20">
         {deviceList &&
           !loading &&
           deviceList
@@ -173,11 +187,11 @@ const Downloads = () => {
             )
             .map((device, index) => (
               <div key={index}>
-                <div className="flex min-h-full min-w-[22rem] flex-col justify-between rounded-2xl border border-slate-800 bg-black pb-7 duration-100 ease-in md:hover:scale-105 md:hover:shadow-xl">
+                <div className="flex min-h-full min-w-[21rem] flex-col justify-between rounded-2xl border border-slate-800 bg-black pb-7 duration-100 ease-in md:hover:scale-105 md:hover:shadow-xl">
                   <img className="size-56 object-contain py-2 mx-auto my-2" src={`https://github.com/Evolution-X/official_devices/blob/udc/images/devices/${device.codename}.png?raw=true`} alt="" />
                   <div className="flex flex-col gap-6 px-7">
                     <div>
-                      <p className="flex justify-between text-sm md:text-md text-[#999999]">
+                      <p className="flex justify-between items-end text-sm md:text-md text-[#999999]">
                         Device{" "}
                         <span className="ml-8 inline-flex h-5 items-center justify-center rounded-3xl bg-[#232323] p-4">
                           <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-md md:text-xl text-transparent">
@@ -208,6 +222,8 @@ const Downloads = () => {
             ))}
       </div>
     </div>
+   }
+    </>
   )
 }
 

@@ -3,6 +3,7 @@ import ghicon from "../../assets/ghicon.svg"
 import donateicon from "../../assets/donateicon.svg"
 import xdaicon from "../../assets/xdaicon.svg"
 import tgicon from "../../assets/tgicon.svg"
+import discordicon from "../../assets/discord.svg"
 import { Link } from "react-router-dom"
 
 function index() {
@@ -22,20 +23,20 @@ function index() {
             </div>
           </div>
           <div className="inline-flex items-center gap-5">
-            <img src={tgicon} alt="tg" />
-            <img src={ghicon} alt="ghicon" />
+            <img className="bg-white p-2 rounded-full size-12" src={discordicon} alt="discord" />
+            <img src={ghicon} alt="github" />
             <img src={xdaicon} alt="xda" />
-            <img src={donateicon} alt="donateicon" />
+            <img src={donateicon} alt="donate" />
           </div>
         </div>
       </div>
       <div className="z-40 inline-flex flex-col justify-center gap-1 text-center font-[Prod-light] text-xs text-[#afbdf3] underline-offset-4 md:items-end md:text-lg">
         <p>
-          Website designed by{" "}
+          Designed by{" "}
           <span className="font-[Prod-bold] underline">Kshitij</span>
         </p>
         <p>
-          Website developed by{" "}
+          Developed by{" "}
           <span className="font-[Prod-bold]">
            <Link className='underline' to={'https://github.com/ZirgomHaidar'} target="_blank">Zirgom Haidar</Link> & <Link className='underline' to={'https://github.com/Prathamk07'} target="_blank">Prathamk07</Link>
           </span>

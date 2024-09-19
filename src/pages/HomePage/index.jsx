@@ -1,13 +1,38 @@
-import React from "react"
+import React, { useEffect , useState } from "react"
 import { Link } from "react-router-dom"
 import a14logo from "../../assets/android14.png"
 import { BackgroundGradientAnimation } from "../../components/ui/background-gradient-animation.tsx"
 import { Meteors } from "../../components/ui/meteors.tsx"
+import evoloading from "../../assets/evoloading.gif"
 
 const HomePage = () => {
+
+  const [loading, setLoading]=useState(true)
+
+  function timeout(delay) {
+    return new Promise( res => setTimeout(res, delay) );
+  }
+
+  const loadingAnimation=async ()=>{
+    await timeout(1000);
+    setLoading(false)
+  }
+  useEffect(()=>{
+    loadingAnimation()
+  },[])
+
   return (
     <>
-      <BackgroundGradientAnimation></BackgroundGradientAnimation>
+    {loading &&
+    <>
+     <BackgroundGradientAnimation></BackgroundGradientAnimation>
+
+          <img  className="mx-auto z-50 my-auto w-4/5 md:w-2/5" src={evoloading} alt="loading ..." />
+    </>
+    }
+    {!loading &&
+      <>
+ <BackgroundGradientAnimation></BackgroundGradientAnimation>
       <div className="TOP z-10 flex flex-col items-center justify-center space-y-6 font-[Prod-bold] md:space-y-11">
         <div className="inline-flex flex-col items-center text-4xl leading-tight md:text-6xl">
           <p>
@@ -99,6 +124,9 @@ const HomePage = () => {
       <div className="flex items-center justify-center rounded-3xl">
         ss
       </div>
+      </>
+    }
+     
     </>
   )
 }
