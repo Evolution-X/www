@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*::-webkit-scrollbar {
+display: none;
+}
+
+body{
+    @apply font-[Prod-normal] bg-[#040214];
+}
+
+.homebutton {
+    @apply rounded-full bg-white px-7 py-3 font-normal text-black w-48 md:text-[1.1rem];
+}
+
+.evoxhighlight{
+    @apply text-[#AFBEF3]
+}
+
+.middleshadow{
+    box-shadow: 0px 4px 20px 20px rgb(255 255 255 / 0.05);
+}
+
+.active{
+    @apply text-white underline underline-offset-8;
+}
+
+.brandSelect {
+    @apply inline-flex h-14 w-auto items-center justify-center rounded-3xl border-4 border-[#1e3150] uppercase px-8 duration-100 ease-linear;
+}
