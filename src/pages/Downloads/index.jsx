@@ -54,7 +54,7 @@ const Downloads = () => {
           const fetchedDevice = await fetch(durl)
           const fetchedDeviceData = await fetchedDevice.json()
           console.log(fetchedDeviceData.response[0])
-          await timeout(1000);
+          await timeout(0);
           return { codename: device, data: fetchedDeviceData.response[0] }
         } catch (error) {
           console.error(`Error fetching data for device ${device}:`, error)

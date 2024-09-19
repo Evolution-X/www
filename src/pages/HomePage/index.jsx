@@ -14,7 +14,7 @@ const HomePage = () => {
   }
 
   const loadingAnimation=async ()=>{
-    await timeout(1000);
+    await timeout(0);
     setLoading(false)
   }
   useEffect(()=>{

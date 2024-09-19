@@ -25,7 +25,7 @@ const DownloadSection = () => {
       const response = await fetch(url)
       const fetchedDeviceData = await response.json()
       console.log(fetchedDeviceData.response[0])
-      await timeout(1000);
+      await timeout(0);
       return fetchedDeviceData.response[0]
     } catch (error) {
       console.error(`Error fetching data for device ${codename}:`, error)
