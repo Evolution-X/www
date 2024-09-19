@@ -174,30 +174,30 @@ const Downloads = () => {
             .map((device, index) => (
               <div key={index}>
                 <div className="relative flex h-[28rem] flex-col justify-between rounded-2xl border border-slate-800 bg-black pb-7 duration-100 ease-in hover:scale-105 hover:shadow-xl">
-                  <img className="rounded-t-2xl" src={evoxbanner} alt="" />
+                  <img className="size-40 object-contain py-2 mx-auto my-2" src={`https://github.com/Evolution-X/official_devices/blob/udc/images/devices/${device.codename}.png?raw=true`} alt="" />
                   <div className="flex flex-col gap-6 px-7">
                     <div>
-                      <p className="flex justify-between text-[#999999]">
+                      <p className="flex justify-between text-sm md:text-md text-[#999999]">
                         Device{" "}
                         <span className="ml-8 inline-flex h-5 items-center justify-center rounded-3xl bg-[#232323] p-4">
-                          <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-xl text-transparent">
+                          <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-md md:text-xl text-transparent">
                             {device.codename}
                           </span>
                         </span>
                       </p>
-                      <p className="font-[Prod-Medium] text-2xl text-white">
+                      <p className="font-[Prod-Medium] text-xl md:text-2xl mt-0 text-white">
                         {device.data?.device}
                       </p>
                     </div>
                     <div className="inline-flex flex-col items-start justify-start">
-                      <p className="text-[#999999]">Maintainer</p>
-                      <p className="font-[Prod-Medium] text-2xl text-white">
+                      <p className="text-[#999999] text-sm md:text-md">Maintainer</p>
+                      <p className="font-[Prod-Medium] text-lg md:textxl text-white">
                         {device.data?.maintainer}
                       </p>
                     </div>
                     <Link
                       to={`/downloads/${device.codename}`}
-                      className="inline-flex h-16 items-center justify-center rounded-full bg-[#5b60e3] text-2xl text-white"
+                      className="inline-flex h-12 w-4/5 mx-auto items-center justify-center rounded-full bg-[#5b60e3] text-lg md:text-xl text-white"
                     >
                       Get EvolutionX
                     </Link>

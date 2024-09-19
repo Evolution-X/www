@@ -18,15 +18,15 @@ export default function Navbar() {
   }
 
   return (
-    <div className="z-50 mx-8 my-7 flex items-center justify-between uppercase md:mx-0">
+    <div className="z-50 mx-8 my-3 md:my-7 mb-0 flex items-center justify-between uppercase md:mx-0">
       <NavLink to={"/"}>
-        <img src={evoXLogo} alt="evoXLogo" />
+        <img className="size-10 md:size-14" src={evoXLogo} alt="evoXLogo" />
       </NavLink>
       <div>
         <img
           src={menu}
           alt="menu"
-          className="block size-8 md:hidden"
+          className="block size-6 md:size-8 md:hidden"
           onClick={openMenu}
         />
       </div>

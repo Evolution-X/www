@@ -6,7 +6,7 @@ import tgicon from "../../assets/tgicon.svg"
 
 function index() {
   return (
-    <div className="flex flex-col items-center gap-5 bg-[#121B40] p-6 md:h-36 md:flex-row md:gap-11 md:p-10">
+    <div className="flex flex-col items-center gap-5 bg-[#121B40] rounded-t-xl p-6 md:h-36 md:flex-row md:gap-11 md:p-10">
       <div className="z-40 rounded-xl bg-black/50 px-8 py-4 md:flex-grow">
         <div className="flex flex-col justify-between gap-3 md:flex-row">
           <div className="inline-flex items-center gap-10">

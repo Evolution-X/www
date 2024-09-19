@@ -14,7 +14,7 @@ function App() {
     <div className="flex min-h-screen flex-col tracking-wide text-white antialiased md:mx-64">
       <BrowserRouter>
         <Navbar />
-        <div className="mb-14 mt-14 flex-1 md:mb-28 md:mt-28">
+        <div className="mb-14 mt-7 flex-1 md:mb-28 md:mt-28">
           <main className="flex flex-col gap-12 md:gap-28">
             <Routes>
               <Route index element={<HomePage />} />

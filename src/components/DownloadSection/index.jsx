@@ -48,15 +48,15 @@ const DownloadSection = () => {
   }, [codename]) // Add codename as a dependency to refetch when it changes
 
   return (
-    <div className="mx-5 flex flex-col gap-9 md:-mb-20 md:-mt-24">
+    <div className="mx-5 flex flex-col gap-6 md:-mb-20 md:-mt-24">
       {data && !loading && (
         <>
-          <div className="inline-flex flex-col rounded-2xl border-4 border-dashed border-[#f05d5d] px-8 py-9">
-            <div className="flex flex-col gap-5">
-              <p className="font-[Prod-bold] text-2xl text-white md:text-3xl">
+          <div className="inline-flex flex-col rounded-2xl border-4 border-dashed border-[#f05d5d] px-8 py-3">
+            <div className="flex flex-col gap-2">
+              <p className="font-[Prod-bold] text-lg text-white md:text-xl">
                 Before you download and install!
               </p>
-              <p className="font-[Prod-light] text-xl text-white md:text-2xl">
+              <p className="font-[Prod-light] text-md text-white md:text-lg">
                 Your warranty is void. Or valid, probably I am not responsible
                 for bricked devices, dead SD cards, Evolution X, thermonuclear
                 war, or the current economic crisis caused by you following
@@ -133,19 +133,19 @@ const DownloadSection = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col pl-2 text-xl md:text-2xl">
+                <div className="flex flex-col pl-2 text-lg md:text-xl">
                   <p className="text-white">Note:</p>
                   <p className="text-[#d9d9d9]">
-                    Me noob.
-                    <br />
-                    If you searched evolutionX then you probably don&apos;t need
-                    notes.
-                    <br />
-                    Someone said fuck around and find out.
-                    <br />
-                    point N
-                    <br />
-                    point N
+                      Me noob.
+                      <br />
+                      If you searched evolutionX then you probably don&apos;t need
+                      notes.
+                      <br />
+                      Someone said fuck around and find out.
+                      <br />
+                      point N
+                      <br />
+                      point N
                   </p>
                 </div>
                 <div className="flex w-full flex-col gap-4 text-xl md:flex-row md:gap-9 md:text-2xl">
@@ -169,6 +169,7 @@ const DownloadSection = () => {
               </div>
             </div>
           </div>
+          
         </>
       )}
     </div>

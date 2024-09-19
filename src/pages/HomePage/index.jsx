@@ -41,10 +41,10 @@ const HomePage = () => {
         <div className="inline-flex flex-col gap-16">
           <div className="middleshadow flex flex-col gap-10 rounded-3xl bg-black px-10 py-10 md:flex-row md:gap-20 md:px-16 md:py-16">
             <div className="space-y-5 md:space-y-10">
-              <p className="font-[Prod-bold] text-3xl md:text-5xl">
+              <p className="font-[Prod-bold] text-2xl md:text-5xl">
                 <span className="evoxhighlight">About</span> EvolutionX
               </p>
-              <p className="md:text-2xl">
+              <p className="text-sm md:text-2xl">
                 Evolution X is a flashable Custom ROM to bring a true Pixel feel
                 to your Android Device at first glance, with many additional
                 configurations at your disposal. We aim to provide frequent
@@ -69,7 +69,7 @@ const HomePage = () => {
             </div>
           </div>
           <div className="inline-flex flex-col gap-12 md:flex-row">
-            <div className="middleshadow items-start justify-start rounded-3xl bg-black px-12 py-14 md:w-1/2">
+            <div className="middleshadow items-start justify-start rounded-3xl bg-black px-8 py-10 md:px-12 md:py-14 md:w-1/2">
               <div className="flex h-48 flex-col items-start justify-start gap-5 md:gap-10">
                 <div className="font-[Prod-bold] text-2xl md:text-3xl">
                   Get frequent updates
@@ -81,7 +81,7 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
-            <div className="middleshadow items-start justify-start gap-2.5 rounded-3xl bg-black px-12 py-14 md:w-1/2">
+            <div className="middleshadow items-start justify-start gap-2.5 rounded-3xl bg-black px-8 py-10 md:px-12 md:py-14 md:w-1/2">
               <div className="flex h-48 flex-col items-start justify-start gap-5 md:gap-10">
                 <div className="font-[Prod-bold] text-2xl md:text-3xl">
                   Gives you a Google Pixel feel
@@ -97,7 +97,7 @@ const HomePage = () => {
         </div>
       </div>
       <div className="flex items-center justify-center rounded-3xl">
-        <p>ss here</p>
+        ss
       </div>
     </>
   )
