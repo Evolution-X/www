@@ -5,6 +5,7 @@ import evoxbanner from "../../assets/evoxbanner.png"
 import { img } from "framer-motion/client"
 import evoloading from "../../assets/evoloading.gif"
 import { delay } from "framer-motion"
+import iphone from "../../assets/iphone.gif"
 
 const Downloads = () => {
   const [devices, setDevices] = useState([])
@@ -12,6 +13,7 @@ const Downloads = () => {
   const [deviceList, setDeviceList] = useState([])
   const [oem, setOem] = useState("")
   const [searchQuery, setSearchQuery] = useState("") // State for search query
+  const [apple,setApple]=useState(false)
 
   const oemToggle = async (deviceOem) => {
     // const doem = await deviceOem
@@ -104,6 +106,17 @@ const Downloads = () => {
    <>
    {loading &&
     <img className="mx-auto my-auto w-4/5 md:w-2/5" src={evoloading} alt="loading ..." />
+   }{(!loading && apple) && 
+      
+        <>
+        <div className="" style={{"width":"100%","height":"100%","padding-bottom":"100%","position":"absolute","top":"50%"}}>
+          <div className="fixed" style={{"top":"15%","left":"50%","marginLeft":"-20%"}}>
+          <h2 className="text-2xl">LMAO! You bought iPhone just to switch to Android!!</h2> <br />
+          <h1 className="text-5xl text-center font-bold">NOOB!!</h1>
+          </div>
+          <iframe title="iphone" src={iphone} width="100%" height="100%" style={{"position":"fixed","left":"80%","marginLeft":"-50%","top":"120%","marginTop":"-50%"}} frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p></p>
+        </>
+      
    }
    {!loading &&
     <div className="flex flex-col items-center justify-center gap-20 md:gap-40">
@@ -116,7 +129,7 @@ const Downloads = () => {
           <input
             type="text"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {e.target.value==='iphone'?setApple(true):setSearchQuery(e.target.value)}}
             className="w-full rounded-full border-2 border-current bg-slate-800 bg-gradient-to-r from-indigo-100 to-[#667dd0] px-10 py-4 text-black text-black/75 placeholder:text-black/75 focus:border-blue-600 focus:outline-none"
             placeholder="Search"
           />
