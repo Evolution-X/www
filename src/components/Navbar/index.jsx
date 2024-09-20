@@ -18,7 +18,7 @@ export default function Navbar() {
   }
 
   return (
-    <div className="z-50 mx-8 my-3 md:my-7 py-4 mb-0 flex items-center justify-between uppercase md:mx-0">
+    <div className="z-50 mx-8 overflow-y-hidden my-3 md:my-7 py-4 mb-0 flex items-center justify-between uppercase md:mx-0">
       <NavLink to={"/"}>
         <img className="size-11 md:size-14" src={evoXLogo} alt="evoXLogo" />
       </NavLink>

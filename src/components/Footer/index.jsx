@@ -45,8 +45,8 @@ function index() {
     //     </p>
     //   </div>
     // </div>
-    <div className="py-5 text-white px-5 border-t-slate-600 border border-l-0 border-r-0 border-b-0 w-4/5 mx-auto">
-      <div className="grid grid-cols-2">
+    <div className="py-5 text-white px-5 overflow-y-hidden border-t-slate-600 border border-l-0 border-r-0 border-b-0 w-4/5 mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2">
 
       <div className="my-5 w-screen">
        <img className="w-2/5 md:w-1/6 " src={evolution} alt="" />

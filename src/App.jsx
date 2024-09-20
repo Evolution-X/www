@@ -12,7 +12,7 @@ import "./fonts/style.css"
 function App() {
   return (
     <>
-    <div className="flex min-h-screen flex-col tracking-wide text-white antialiased md:mx-64">
+    <div className="flex min-h-screen flex-col tracking-wide overflow-y-hidden text-white antialiased md:mx-64">
       <BrowserRouter>
       <Navbar />
         <div className="mb-14 mt-7 flex-1 md:mb-28 md:mt-28">
