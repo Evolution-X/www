@@ -45,30 +45,30 @@ function index() {
     //     </p>
     //   </div>
     // </div>
-    <div className="py-5 text-white px-5 overflow-y-hidden border-t-slate-600 border border-l-0 border-r-0 border-b-0 w-4/5 mx-auto">
+    <div className="py-5 text-white md:px-5 overflow-y-hidden border-t-slate-600 border border-l-0 border-r-0 border-b-0 md:w-4/5 mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-2">
 
-      <div className="my-5 w-screen">
-       <img className="w-2/5 md:w-1/6 " src={evolution} alt="" />
-       <div className="w-1/6 text-center">
+      <div className="my-5 w-full ">
+       <img className="md:w-2/6 w-3/5 mx-auto md:mx-0" src={evolution} alt="" />
+       <div className="w-full text-center md:text-left mx-auto md:mx-10">
        <p className="mt-2 text-blue-200 text-lg">#KeepEvolving</p>
         </div> 
       </div>
-      <div className="flex space-x-2 justify-end">
-        <div className="flex space-x-2 h-12 my-auto">
-        <img className="bg-white p-3 rounded-full" src={discordicon} alt="" />
-        <img src={xdaicon} alt="" />
-        <img src={ghicon} alt="" />
-        <img src={donateicon} alt="" /> 
+      <div className="flex space-x-2 justify-evenly md:justify-end">
+        <div className="flex h-12 my-5 gap-4 md:my-auto justify-evenly">
+        <a className="mx-auto my-auto" href={'https://discord.com/invite/evolution-x'}><img className="bg-white p-3 rounded-full scale-110 my-auto mx-auto" src={discordicon} alt="" /></a>
+        <a href="/"><img src={xdaicon} alt="" /></a>
+        <a href="https://github.com/Evolution-X" target="_blank"><img src={ghicon} alt="" /></a>
+        <a href="/"><img src={donateicon} alt="" /></a> 
         </div>
       </div>
       </div>
-      <div className="flex justify-between font-[Prod-light]">
+      <div className="grid grid-cols-2 gap-10 px-2 my-5 font-[Prod-light]">
         <div>
-          Designed by <span className="underline font-[Prod-bold]"> Kshitij </span>
+          Designed by <span className="underline font-[Prod-bold] text-sm md:text-md"> Kshitij </span>
         </div>
-        <div>
-          Developed by <span className="underline font-[Prod-bold]">Zirgom Haidar & Prathamk07</span>
+        <div className="text-end">
+          Developed by <a href={'https://github.com/ZirgomHaidar'} target='_blank'><span className="underline font-[Prod-bold] text-sm md:text-md">Zirgom Haidar</span></a><span > & </span><a href={'https://github.com/Prathamk07/'} target='_blank'><span className="underline font-[Prod-bold] text-sm md:text-md">Prathamk07</span></a>
         </div>
       </div>
     </div>
