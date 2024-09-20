@@ -110,7 +110,7 @@ const Downloads = () => {
       
       <div className="inline-flex w-[20rem] flex-col items-center justify-center gap-8 md:w-[64rem] md:gap-12">
         <p className="text-center font-[Prod-bold] text-4xl md:text-6xl">
-          <span className="text-[#afbdf3]">Download</span> EvolutionX
+          <span className="text-[#afbdf3]">Download</span> Evolution X
         </p>
         <div className="space-y-4">
           <input
@@ -214,7 +214,7 @@ const Downloads = () => {
                       className="inline-flex h-16 items-center justify-center rounded-full bg-[#5b60e3] text-xl text-white 
 "
                     >
-                      Get EvolutionX
+                      Get Evolution X
                     </Link>
                   </div>
                 </div>

@@ -15,7 +15,7 @@ function index() {
             <img src={evoXLogo} alt="evoXLogo" />
             <div className="flex-col">
               <p className="font-[Prod-bold] text-3xl md:text-5xl">
-                <span className="text-[#afbdf3]">Evolution</span>X
+                <span className="text-[#afbdf3]">Evolution</span> X
               </p>
               <p className="text-xl font-normal">
                 <span className="text-[#afbdf3]">Android</span> custom rom

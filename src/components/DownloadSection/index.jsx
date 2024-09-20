@@ -70,13 +70,14 @@ const DownloadSection = () => {
                 Before you download and install!
               </p>
               <p className="font-[Prod-light] text-sm text-white md:text-lg">
-                Your warranty is void. Or valid, probably I am not responsible
-                for bricked devices, dead SD cards, Evolution X, thermonuclear
-                war, or the current economic crisis caused by you following
-                these directions. YOU are choosing to make these modifications,
-                and if you point your finger at me for messing up your device, I
-                will{" "}
-                <span className="evoxhighlight font-[Prod-bold]">LMAO</span> at
+                We are not responsible for bricked devices, dead SD cards, 
+                thermonuclear war, or the current economic crisis.
+                Please do some research if you have any concerns about
+                features included in this ROM before flashing it!
+                YOU are choosing to make these modificiations,
+                and if you point your finger at us for messing up your device,
+                we will{" "}
+                <span className="evoxhighlight font-[Prod-bold]">laugh</span> at
                 you.
               </p>
             </div>

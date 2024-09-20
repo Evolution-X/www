@@ -7,7 +7,7 @@ export default function index() {
     <div className="mx-4 flex flex-col items-center justify-center gap-20 md:mx-16">
       <div className="inline-flex flex-col items-center justify-center">
         <p className="text-4xl font-bold md:text-6xl">
-          EvolutionX <span className="text-[#afbdf3]">Blog</span>
+          Evolution X <span className="text-[#afbdf3]">Blog</span>
         </p>
       </div>
       <div className="flex w-full flex-col gap-10 rounded-3xl bg-black px-2 py-8 md:px-14 md:pb-16">

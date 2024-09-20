@@ -38,12 +38,12 @@ const HomePage = () => {
           <p>
             <span className="evoxhighlight">Evolve</span> your
           </p>
-          <p>Android</p>
+          <p>Android device</p>
         </div>
         <div className="inline-flex flex-col items-center text-center font-[Prod-light] text-[1rem] leading-tight md:text-2xl">
-          <p>Pixel UI, Android 14, Customization and more.</p>
+          <p>Pixel UI, Customization & more.</p>
           <p>
-            Get evolved with Evolution. We are{" "}
+            We are{" "}
             <span className="evoxhighlight font-[Prod-bold] text-xl md:text-3xl">
               Evolution X!
             </span>
@@ -67,14 +67,11 @@ const HomePage = () => {
           <div className="middleshadow flex flex-col gap-10 rounded-3xl bg-black px-10 py-10 md:flex-row md:gap-20 md:px-16 md:py-16">
             <div className="space-y-5 md:space-y-10">
               <p className="font-[Prod-bold] text-2xl md:text-5xl">
-                <span className="evoxhighlight">About</span> EvolutionX
+                <span className="evoxhighlight">About</span> Evolution X
               </p>
               <p className="text-lg md:text-2xl">
-                Evolution X is a flashable Custom ROM to bring a true Pixel feel
-                to your Android Device at first glance, with many additional
-                configurations at your disposal. We aim to provide frequent
-                builds with monthly security patches from the latest aosp
-                sources.
+                Evolution X aims to provide users with a Pixel-like feel at first 
+                glance, with additional features at their disposal.
               </p>
               <div className="space-y-3">
                 <p className="text-center font-[Prod-light] text-gray-400 md:text-start md:text-2xl">
@@ -97,11 +94,11 @@ const HomePage = () => {
             <div className="middleshadow items-start justify-start rounded-3xl bg-black px-8 py-10 md:px-12 md:py-14 md:w-1/2">
               <div className="flex flex-col items-start justify-start gap-5 md:gap-10">
                 <div className="font-[Prod-bold] text-3xl md:text-3xl">
-                  Get frequent updates
+                  Frequent updates & latest security patches
                 </div>
                 <div className="md:text-2xl text-xl">
-                  We provide the most frequent updates amongst all custom ROMs.
-                  The updates aim for the most stable state and ensure to be on
+                  We provide frequent updates amongst most custom ROMs.
+                  These updates aim to be in a stable state and are guaranteed to be on
                   the latest security patches.
                 </div>
               </div>
@@ -109,12 +106,11 @@ const HomePage = () => {
             <div className="middleshadow items-start justify-start gap-2.5 rounded-3xl bg-black px-8 py-10 md:px-12 md:py-14 md:w-1/2">
               <div className="flex flex-col items-start justify-start gap-5 md:gap-10">
                 <div className="font-[Prod-bold] text-2xl md:text-3xl">
-                  Gives you a Google Pixel feel
+                  Pixel look & feel
                 </div>
                 <div className="md:text-2xl text-lg">
-                  Evolution X gives you the perfect Pixel experience, using AOSP
-                  sources. The ROM also comes with additional customizations and
-                  features.
+                  Evolution X provides you with the perfect Pixel experience,
+                  imitating Google Pixel devices, with additional customizations.
                 </div>
               </div>
             </div>
