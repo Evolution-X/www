@@ -11,7 +11,7 @@ body{
 }
 
 .homebutton {
-    @apply rounded-full bg-white px-7 py-3 font-normal text-black w-48 md:text-[1.1rem];
+    @apply rounded-full bg-white px-7 font-normal text-black lg:text-lg;
 }
 
 .evoxhighlight{

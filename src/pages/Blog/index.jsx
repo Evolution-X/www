@@ -1,16 +1,18 @@
 import postbg from "../../assets/postbg.png"
 import avatar from "../../assets/avatar.png"
 import { Link } from "react-router-dom"
+import evolution from "../../assets/evolution.svg"
 
 export default function index() {
   return (
-    <div className="mx-4 flex flex-col items-center justify-center gap-20 md:mx-16">
+    <div className="mx-4 flex flex-col items-center justify-center gap-10 md:gap-20 lg:mx-16">
       <div className="inline-flex flex-col items-center justify-center">
-        <p className="text-4xl font-bold md:text-6xl">
-          Evolution X <span className="text-[#afbdf3]">Blog</span>
+        <p className="inline-flex flex-row items-baseline gap-4 text-4xl font-bold lg:text-6xl">
+          <img className="h-7 sm:h-8 lg:h-11" src={evolution} alt="" />
+          <span className="text-[#afbdf3]">Blog</span>
         </p>
       </div>
-      <div className="flex w-full flex-col gap-10 rounded-3xl bg-black px-2 py-8 md:px-14 md:pb-16">
+      <div className="flex w-full flex-col gap-10 rounded-3xl bg-black px-2 py-8 lg:px-14 lg:pb-16">
         <div className="inline-flex h-9 items-center">
           <hr className="w-9 rotate-90 border-2 border-[#6487fb]" />
           <p className="text-2xl font-semibold">
@@ -18,7 +20,7 @@ export default function index() {
           </p>
         </div>
         {/* Blog component */}
-        <div className="posts mx-3 grid gap-6 md:mx-20 md:grid-cols-2 md:gap-16">
+        <div className="posts mx-3 grid gap-6 sm:grid-cols-2 lg:gap-16 xl:mx-16">
           {Array(10)
             .fill({ blogId: "blog1" })
             .map((blognum, index) => (

@@ -18,20 +18,24 @@ export default function Navbar() {
   }
 
   return (
-    <div className="z-50 mx-8 overflow-y-hidden my-3 md:my-7 py-4 mb-0 flex items-center justify-between uppercase md:mx-0">
+    <div className="z-50 mx-8 my-3 mb-0 flex items-center justify-between py-4 uppercase lg:mx-8 lg:my-7">
       <NavLink to={"/"}>
-        <img className="size-11 md:size-14" src={evoXLogo} alt="evoXLogo" />
+        <img
+          className="size-11 md:size-12 lg:size-14"
+          src={evoXLogo}
+          alt="evoXLogo"
+        />
       </NavLink>
       <div>
         <img
           src={menu}
           alt="menu"
-          className="block size-7 md:size-8 md:hidden"
+          className="block size-7 sm:block md:hidden lg:size-8"
           onClick={openMenu}
         />
       </div>
       <ul
-        className="fixed left-0 right-0 top-[-1000px] z-50 flex h-full flex-col items-center justify-center gap-8 rounded-2xl bg-transparent text-2xl text-[#A9A9A9] backdrop-blur-xl duration-300 ease-in-out md:static md:flex-row md:gap-14 md:bg-transparent md:pl-0 md:pt-0 md:text-[1rem] md:backdrop-blur-0"
+        className="fixed left-0 right-0 top-[-1000px] z-50 flex h-full flex-col items-center justify-center gap-8 rounded-2xl bg-transparent text-2xl text-[#A9A9A9] backdrop-blur-xl duration-300 ease-in-out md:static md:flex-row md:bg-transparent md:pl-0 md:pt-0 md:text-[1rem] md:backdrop-blur-0 lg:gap-14"
         ref={navRef}
       >
         <img

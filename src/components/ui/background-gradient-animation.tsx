@@ -54,7 +54,7 @@ export const BackgroundGradientAnimation = ({
   return (
     <div
       className={cn(
-        "absolute left-0 top-0 z-0 h-[800px] w-screen overflow-hidden bg-[linear-gradient(40deg,var(--gradient-background-start),var(--gradient-background-end))] antialiased md:h-[1200px] md:w-screen",
+        "absolute left-0 top-0 z-0 h-screen w-screen overflow-hidden bg-[linear-gradient(40deg,var(--gradient-background-start),var(--gradient-background-end))] antialiased lg:h-[1000px] lg:w-screen",
         containerClassName,
       )}
     >
