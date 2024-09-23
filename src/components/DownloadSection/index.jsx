@@ -10,7 +10,7 @@ import evoloading from "../../assets/evoloading.gif"
 const DownloadSection = () => {
   const { codename } = useParams()
   const [loading, setLoading] = useState(true)
-  const [data, setData] = useState()
+    const [data, setData] = useState()
   const [vanilla, setVanilla] = useState()
 
   function timeout(delay) {

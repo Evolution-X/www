@@ -1,27 +1,72 @@
 import React from "react"
 import share from "../../assets/share.svg"
+import { useParams } from "react-router-dom"
+import { useState,useEffect } from "react"
+import evoloading from "../../assets/evoloading.gif"
 
-export default function index() {
+export default function BlogSection() {
+  
+  const {blogId} = useParams()
+  const [loading, setLoading] = useState(true)
+  const [data, setData] = useState()
+
+  const fetchBlog = async () => {
+    const url = `https://raw.githubusercontent.com/Prathamk07/evox/refs/heads/main/devices/resources/blogs/${blogId}.json`
+    try {
+      const response = await fetch(url)
+      const fetchedBlog = await response.json()
+      console.log(fetchedBlog)
+      return fetchedBlog
+    } catch (error) {
+      console.error(`Error fetching data for ${blogId}:`, error)
+      return null // Return null in case of an error
+    }
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const device = await fetchBlog()
+      // const vanilla = await fetchVanillaDevice()
+      setData(device)
+      // setVanilla(vanilla)
+      setLoading(false)
+    }
+    fetchData()
+  }, [blogId]) // Add codename as a dependency to refetch when it changes
+
+
   return (
-    <div className="mx-4 sm:-mt-10 lg:-mb-20 xl:mx-20 2xl:-mt-24">
+    <>
+    {loading &&
+      <img
+          className="mx-auto my-auto w-4/5 lg:w-2/5"
+          src={evoloading}
+          alt="loading ..."
+        />
+    }
+    {!loading &&
+      
+      <div className="mx-4 sm:-mt-10 lg:-mb-20 xl:mx-20 2xl:-mt-24">
       <div className="flex flex-col gap-10 rounded-3xl border border-[#2a2828] bg-[#070505] p-8 xl:p-16">
         <div className="flex items-center justify-between">
           <div className="flex flex-col text-[1.1rem] text-white lg:flex-row">
-            <span>9 August 2024 • </span>
-            <span className="font-[Prod-Light]">Author: Joey Huab</span>
+            <span>{data.date}&nbsp; • </span>
+            <span className="font-[Prod-Light]">&nbsp;&nbsp;Author: {data.author}</span>
           </div>
           <img src={share} className="size-7 cursor-pointer" alt="share" />
         </div>
         <div className="mt-6 text-3xl text-white lg:text-5xl">
-          Our plans with Android 15 QPR1 update.
+          {data.title}
         </div>
         <div className="flex flex-col gap-6">
-          <div className="flex h-44 items-center justify-center rounded-2xl bg-white py-16">
+          {/* <div className="flex h-44 items-center justify-center rounded-2xl bg-white py-16">
             <div className="text-3xl text-[#363232]/50">Image if any...</div>
-          </div>
-          <div className="px-2 text-xl text-white">content </div>
+          </div> */}
+          <div className="px-2 text-xl text-white">{data.content}</div>
         </div>
       </div>
     </div>
+    }
+    </>
   )
 }
