@@ -183,7 +183,7 @@ const HomePage = () => {
             </div>
           </div>
           <div className="flex items-center justify-center rounded-3xl">
-            <div className="grid grid-cols-4 gap-10 w-5/6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-10 w-5/6">
             {screenshots.map((ss,index)=>(
                 <div key={index}>
                   <img src={`https://github.com/Evolution-X/official_devices/blob/udc/images/screenshots/${ss}?raw=true`} alt="" />
