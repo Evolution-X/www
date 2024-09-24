@@ -7,20 +7,78 @@ import evoloading from "../../assets/evoloading.gif"
 
 const HomePage = () => {
   const [loading, setLoading] = useState(true)
+  const [screenshots,setScreenshots]=useState([])
+  const [screenshotsList , setScreenshotsList]=useState([])
 
-  function timeout(delay) {
-    return new Promise((res) => setTimeout(res, delay))
+  const fetchSS= async ()=>{
+    const url="https://raw.githubusercontent.com/Prathamk07/evox/refs/heads/main/devices/screenshots.json"
+    try {
+      const response = await fetch(url)
+      const fetchedSS = await response.json()
+      console.log(fetchedSS)
+      return fetchedSS
+    } catch (error) {
+      console.error(`Error fetching data for ${fetchSS}:`, error)
+      return null // Return null in case of an error
+    }
   }
 
-  const loadingAnimation = async () => {
-    await timeout(0)
-    setLoading(false)
-  }
+  // const fetchScreenshots= async ()=>{
+  //   const data = await Promise.all(
+  //     screenshots.map(async (ss) => {
+  //       const durl = `https://github.com/Evolution-X/official_devices/blob/udc/images/screenshots/${ss}?raw=true`
+  //       try {
+  //         const fetchedSS = await fetch(durl)
+  //         const fetchedSSData = await fetchedSS.json()
+  //         console.log(fetchedSSData)
+  //         // await timeout(0)
+  //         return fetchedSSData
+  //       } catch (error) {
+  //         console.error(`Error fetching data for Screenshots:`, error)
+  //         return null// Handle errors for individual devices
+  //       }
+  //     }),
+  //   )
+
+  //   return data // Return the resolved data
+  // }
+
+  // const loadingAnimation = async () => {
+  //   setLoading(false)
+  // }
   useEffect(() => {
-    loadingAnimation()
+    const loadSS = async () => {
+      const data = await fetchSS()
+      setScreenshots(data) // Set state after fetching the device list
+      console.log("Fetched devices:", data) // Log the fetched data
+      }      
+      loadSS() // Call the async function inside useEffect
+    // fetchSS()
+    // loadingAnimation()
   }, [])
 
-  return (
+  // useEffect(() => {
+  //   const loadSSdata = async () => {
+  //     if (screenshots.length > 0) {
+  //       const data = await fetchScreenshots()
+  //       console.log("Fetched device data:", data) // Log fetched device data
+  //       setScreenshotsList(data) // Set state with fetched device data
+  //     }
+  //   }
+
+  //   loadSSdata() // Call the async function when devices state changes
+  //   // console.log(deviceList)
+  // }, [screenshots]) // Trigger when `devices` state changes
+
+  useEffect(() => {
+    // console.log(screenshotsList)
+    if (screenshots.length > 0) {
+      setLoading(false)
+    }
+  }, [screenshots])
+
+
+  return (  
     <>
       {loading && (
         <>
@@ -124,7 +182,19 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-center rounded-3xl">ss</div>
+          <div className="flex items-center justify-center rounded-3xl">
+            <div className="grid grid-cols-4 gap-10 w-5/6">
+            {screenshots.map((ss,index)=>(
+                <div key={index}>
+                  <img src={`https://github.com/Evolution-X/official_devices/blob/udc/images/screenshots/${ss}?raw=true`} alt="" />
+                </div>
+                )
+              )
+            }
+              
+              
+            </div>
+          </div>
         </>
       )}
     </>
