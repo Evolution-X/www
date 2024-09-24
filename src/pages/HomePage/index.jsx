@@ -96,7 +96,7 @@ const HomePage = () => {
                   </div>
                 </div>
               </div>
-              <div className="inline-flex flex-col gap-9 sm:flex-row lg:flex-row">
+              <div className="inline-flex flex-col gap-9 md:gap-12 sm:flex-row lg:flex-row">
                 <div className="middleshadow items-start justify-start rounded-3xl bg-black px-8 py-10 sm:w-1/2 lg:px-12 lg:py-14">
                   <div className="flex flex-col items-start justify-start gap-5 lg:gap-10">
                     <div className="font-[Prod-bold] text-3xl capitalize lg:text-3xl">
