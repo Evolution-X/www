@@ -105,7 +105,7 @@ const HomePage = () => {
                 </span>
               </p>
             </div>
-            <div className="inline-flex flex-col items-center gap-2 text-center sm:flex-row sm:gap-3 lg:flex-row lg:gap-6">
+            <div className="inline-flex flex-col items-center gap-4 text-center sm:flex-row sm:gap-3 lg:flex-row lg:gap-6">
               <Link to="/downloads" className="homebutton min-w-44 px-7 py-3">
                 <div className="">Download ROM</div>
               </Link>
