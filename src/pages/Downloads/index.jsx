@@ -200,9 +200,9 @@ const Downloads = () => {
                 )
                 .map((device, index) => (
                   <div key={index}>
-                    <div className="flex min-h-full min-w-[20rem] max-w-[24rem] flex-col justify-between rounded-2xl border border-slate-800 bg-black pb-7 duration-100 ease-in lg:hover:scale-105 lg:hover:shadow-xl">
+                    <div className="flex min-h-full w-[23rem] flex-col justify-between rounded-2xl border border-slate-800 bg-black pb-7 duration-100 ease-in lg:hover:scale-105">
                       <img
-                        className="mx-auto my-2 size-56 object-contain py-2"
+                        className="mx-auto my-4 flex size-56 object-contain"
                         src={`https://github.com/Evolution-X/official_devices/blob/udc/images/devices/${device.codename}.png?raw=true`}
                         alt=""
                       />
@@ -211,7 +211,7 @@ const Downloads = () => {
                           <p className="lg:text-md flex items-end justify-between text-sm text-[#999999]">
                             Device{" "}
                             <span className="ml-8 inline-flex h-5 items-center justify-center rounded-3xl bg-[#232323] p-4">
-                              <span className="text-md bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent lg:text-xl">
+                              <span className="text-md bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent lg:text-lg">
                                 {device.codename}
                               </span>
                             </span>
@@ -224,7 +224,7 @@ const Downloads = () => {
                           <p className="lg:text-md text-sm text-[#999999]">
                             Maintainer
                           </p>
-                          <p className="lg:textxl font-[Prod-Medium] text-lg text-white">
+                          <p className="font-[Prod-Medium] text-lg text-white lg:text-2xl">
                             {device.data?.maintainer}
                           </p>
                         </div>

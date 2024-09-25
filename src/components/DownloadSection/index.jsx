@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
-import avatar from "../../assets/avatar.png"
 import donateicon from "../../assets/donateicon.svg"
 import tgicon from "../../assets/tgicon.svg"
 import xdaicon from "../../assets/xdaicon.svg"
