@@ -13,7 +13,7 @@ const HomePage = () => {
 
   const fetchSS = async () => {
     const url =
-      "https://raw.githubusercontent.com/Prathamk07/evox/refs/heads/main/devices/screenshots.json"
+      "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/udc/screenshots/screenshots.json"
     try {
       const response = await fetch(url)
       const fetchedSS = await response.json()
@@ -28,7 +28,7 @@ const HomePage = () => {
   // const fetchScreenshots= async ()=>{
   //   const data = await Promise.all(
   //     screenshots.map(async (ss) => {
-  //       const durl = `https://github.com/Evolution-X/official_devices/blob/udc/images/screenshots/${ss}?raw=true`
+  //       const durl = `https://github.com/Evolution-X/www_gitres/blob/udc/screenshots/${ss}?raw=true`
   //       try {
   //         const fetchedSS = await fetch(durl)
   //         const fetchedSSData = await fetchedSS.json()
@@ -174,7 +174,7 @@ const HomePage = () => {
                 <div className="middleshadow items-start justify-start rounded-3xl bg-black px-8 py-10 sm:w-1/2 lg:px-12 lg:py-14">
                   <div className="flex flex-col items-start justify-start gap-5 lg:gap-10">
                     <div className="font-[Prod-bold] text-3xl capitalize lg:text-3xl">
-                      Pixel look & feel on your Device
+                      Pixel look & feel
                     </div>
                     <div className="text-xl lg:text-2xl">
                       Evolution X provides you with the perfect Pixel
@@ -191,7 +191,7 @@ const HomePage = () => {
               {screenshots.map((ss, index) => (
                 <div key={index}>
                   <img
-                    src={`https://github.com/Evolution-X/official_devices/blob/udc/images/screenshots/${ss}?raw=true`}
+                    src={`https://github.com/Evolution-X/www_gitres/blob/udc/screenshots/${ss}?raw=true`}
                     alt=""
                   />
                 </div>

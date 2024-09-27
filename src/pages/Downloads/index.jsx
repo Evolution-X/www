@@ -31,7 +31,7 @@ const Downloads = () => {
   // Fetch the list of devices
   const fetchDevices = async () => {
     const url =
-      "https://raw.githubusercontent.com/Evolution-X/official_devices/udc/devices.json"
+      "https://raw.githubusercontent.com/Evolution-X/www_gitres/udc/devices/devices.json"
 
     try {
       const response = await fetch(url)
@@ -203,7 +203,7 @@ const Downloads = () => {
                     <div className="flex min-h-full w-[23rem] flex-col justify-between rounded-2xl border border-slate-800 bg-black pb-7 duration-100 ease-in lg:hover:scale-105">
                       <img
                         className="mx-auto my-4 flex size-56 object-contain"
-                        src={`https://github.com/Evolution-X/official_devices/blob/udc/images/devices/${device.codename}.png?raw=true`}
+                        src={`https://github.com/Evolution-X/www_gitres/blob/udc/devices/images/${device.codename}.png?raw=true`}
                         alt=""
                       />
                       <div className="flex flex-col gap-6 px-7">
