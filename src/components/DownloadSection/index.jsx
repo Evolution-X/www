@@ -5,15 +5,28 @@ import donateicon from "../../assets/donateicon.svg"
 import tgicon from "../../assets/tgicon.svg"
 import xdaicon from "../../assets/xdaicon.svg"
 import evoloading from "../../assets/evoloading.gif"
+import Changelogs from "../Changelogs"
+import { div } from "framer-motion/client"
 
 const DownloadSection = () => {
   const { codename } = useParams()
   const [loading, setLoading] = useState(true)
     const [data, setData] = useState()
   const [vanilla, setVanilla] = useState()
-
+  const [showInstructions, setShowInstructions] = useState(false)
+  const [showChangelogs, setShowChangelogs] = useState(false)
   function timeout(delay) {
     return new Promise((res) => setTimeout(res, delay))
+  }
+
+  const toggleChangelog=()=>{
+    if(showChangelogs){
+      setShowChangelogs(false)
+      console.log(showChangelogs)
+    }
+    else{
+      setShowChangelogs(true)
+    }
   }
 
   const fetchDevice = async () => {
@@ -161,21 +174,35 @@ const DownloadSection = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="flex flex-col pl-2 text-lg lg:text-xl">
-                      <p className="text-white">Note:</p>
-                      <p className="text-[#d9d9d9]">
-                        Me noob.
-                        <br />
-                        If you searched evolutionX then you probably don&apos;t
-                        need notes.
-                        <br />
-                        Someone said fuck around and find out.
-                        <br />
-                        point N
-                        <br />
-                        point N
-                      </p>
-                    </div>
+                    <div className="flex flex-col text-lg lg:text-xl">
+                      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-9">
+
+                    <div>
+                      <button onClick={(e)=>{setShowInstructions(true?false:true)}} className="bg-green-500 mb-4 md:mb-7 mx-auto text-xl md:text-2xl h-16 rounded-full w-full">Flashing Instructions</button>
+                    </div>  
+                    <div>
+                      {/* <a className="" href={`https://raw.githubusercontent.com/Evolution-X/OTA/refs/heads/udc/changelogs/${codename}.txt`}> */}
+                      <button onClick={()=>toggleChangelog()} className="bg-yellow-500 mb-4 md:mb-7 mx-auto text-xl md:text-2xl h-16 rounded-full w-full">Notes And Changelogs</button>
+                      {/* </a> */}
+                      {showChangelogs &&
+                      <>
+                        <span onClick={()=>setShowChangelogs(false)} className="fixed cursor-pointer top-[5em] bg-red-500 rounded-full px-2 z-50 right-[20em] text-white">x</span>
+
+                      <div className="bg-slate-800 backdrop-blur-lg text-white p-10 fixed top-0 bottom-0 left-0 right-0 w-1/2 mx-auto overflow-y-scroll h-3/4 my-auto">
+
+                        <div className="relative">
+                          
+                        </div>
+                        <div className="relative">
+
+                        <Changelogs codename={codename} />
+                        </div>
+                      </div>
+                      </>
+                      }
+
+                    </div>                               
+                      </div>
                     <div className="flex w-full flex-col gap-4 text-xl lg:flex-row lg:gap-9 lg:text-2xl">
                       <Link
                         to={data.download}
@@ -194,6 +221,8 @@ const DownloadSection = () => {
                         </Link>
                       )}
                     </div>
+                    </div>
+
                   </div>
                 </div>
               </div>
