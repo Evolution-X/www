@@ -5,6 +5,7 @@ import discordicon from "../../assets/discordicon.svg"
 import evolution from "../../assets/evolution.svg"
 import xlogo from "../../assets/xlogo.svg"
 
+
 function index() {
   return (
     <div className="m-6 flex flex-col gap-1 border-t border-white/50 px-4 pt-6 tracking-wide text-white">

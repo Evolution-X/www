@@ -1,5 +1,5 @@
 import React, { useEffect , useState } from 'react'
-
+import Markdown from 'react-markdown'
 const FlashingInstructions = (props) => {
     const [instructions,setInstructions]=useState()
 
@@ -26,7 +26,7 @@ const FlashingInstructions = (props) => {
     },[])
 
   return (
-    <div>{instructions && <pre>{instructions}</pre>}</div>
+    <div>{instructions && <pre><Markdown>{instructions}</Markdown></pre>}</div>
   )
 }
 
