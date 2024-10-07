@@ -3,6 +3,7 @@ import donateicon from "../../assets/donateicon.svg"
 import xdaicon from "../../assets/xdaicon.svg"
 import discordicon from "../../assets/discordicon.svg"
 import evolution from "../../assets/evolution.svg"
+import xlogo from "../../assets/xlogo.svg"
 
 function index() {
   return (
@@ -23,12 +24,20 @@ function index() {
             >
               <img src={discordicon} alt="" />
             </a>
+           
             <a
               href="https://github.com/Evolution-X"
               target="_blank"
               rel="noreferrer"
             >
               <img src={ghicon} alt="" />
+            </a>
+            <a
+              href={"https://x.com/EvolutionXROM"}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img className="bg-white rounded-full p-2" src={xlogo} alt="" />
             </a>
             <a
               href="https://www.gofundme.com/f/evolutionx-developers"
@@ -50,20 +59,21 @@ function index() {
         <div className="">
           Developed by{" "}
           <a
-            href={"https://github.com/ZirgomHaidar"}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <span className="font-[Prod-bold] underline">Zirgom Haidar</span>
-          </a>
-          <span> & </span>
-          <a
             href={"https://github.com/Prathamk07/"}
             target="_blank"
             rel="noreferrer"
           >
             <span className="font-[Prod-bold] underline">Prathamk07</span>
           </a>
+          <span> & </span>
+          <a
+            href={"https://github.com/ZirgomHaidar"}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span className="font-[Prod-bold] underline">Zirgom Haidar</span>
+          </a>
+         
         </div>
       </div>
     </div>

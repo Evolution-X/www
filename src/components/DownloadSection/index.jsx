@@ -7,6 +7,7 @@ import xdaicon from "../../assets/xdaicon.svg"
 import evoloading from "../../assets/evoloading.gif"
 import Changelogs from "../Changelogs"
 import { div } from "framer-motion/client"
+import FlashingInstructions from "../FlashingInstructions"
 
 const DownloadSection = () => {
   const { codename } = useParams()
@@ -28,7 +29,15 @@ const DownloadSection = () => {
       setShowChangelogs(true)
     }
   }
-
+  const toggleInstructions=()=>{
+    if(showInstructions){
+      setShowInstructions(false)
+      console.log(showInstructions)
+    }
+    else{
+      setShowInstructions(true)
+    }
+  }
   const fetchDevice = async () => {
     const url = `https://raw.githubusercontent.com/Evolution-X/OTA/udc/builds/${codename}.json`
     try {
@@ -162,9 +171,7 @@ const DownloadSection = () => {
                       </div>
                       <div className="flex gap-10">
                         <div className="flex items-center justify-center gap-4">
-                          <Link to={data.telegram} target="_blank">
-                            <img src={tgicon} alt="tg" />
-                          </Link>
+                          
                           <Link to={data.paypal} target="_blank">
                             <img src={donateicon} alt="donateicon" />
                           </Link>
@@ -178,7 +185,23 @@ const DownloadSection = () => {
                       <div className="grid grid-cols-1 md:grid-cols-2 md:gap-9">
 
                     <div>
-                      <button onClick={(e)=>{setShowInstructions(true?false:true)}} className="bg-green-500 mb-4 md:mb-7 mx-auto text-xl md:text-2xl h-16 rounded-full w-full">Flashing Instructions</button>
+                      <button onClick={(e)=>{toggleInstructions()}} className="bg-green-500 mb-4 md:mb-7 mx-auto text-xl md:text-2xl h-16 rounded-full w-full">Flashing Instructions</button>
+                      {showInstructions &&
+                      <>
+                        <span onClick={()=>setShowInstructions(false)} className="fixed cursor-pointer top-[5em] bg-red-500 rounded-full px-2 z-50 right-[20em] text-white">x</span>
+
+                      <div className="bg-slate-800 backdrop-blur-lg text-white p-10 fixed top-0 bottom-0 left-0 right-0 w-1/2 mx-auto overflow-y-scroll h-3/4 my-auto">
+
+                        <div className="relative">
+                          
+                        </div>
+                        <div className="relative">
+
+                        <FlashingInstructions codename={codename} />
+                        </div>
+                      </div>
+                      </>
+                      }
                     </div>  
                     <div>
                       {/* <a className="" href={`https://raw.githubusercontent.com/Evolution-X/OTA/refs/heads/udc/changelogs/${codename}.txt`}> */}
