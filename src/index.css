@@ -27,5 +27,5 @@ body{
 }
 
 .brandSelect {
-    @apply inline-flex h-14 w-32 items-center justify-around rounded-full border-4 border-[#1e3150] uppercase px-6 duration-100 ease-linear hover:bg-[#7e76dd];
+    @apply w-fit text-center rounded-full border-4 border-[#1e3150] uppercase px-6 py-3 duration-100 ease-linear hover:bg-[#7e76dd];
 }

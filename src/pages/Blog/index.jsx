@@ -34,8 +34,6 @@ export default function Blog() {
         try {
           const fetchedBlog = await fetch(durl)
           const fetchedBlogData = await fetchedBlog.json()
-          console.log(fetchedBlogData)
-          // await timeout(0)
           return fetchedBlogData
         } catch (error) {
           console.error(`Error fetching data for Blog ${blog}:`, error)
@@ -51,7 +49,6 @@ export default function Blog() {
     const loadBlogs = async () => {
       const data = await fetchBlogIds()
       setBlogIds(data) // Set state after fetching the device list
-      console.log("Fetched devices:", data) // Log the fetched data
     }
     loadBlogs() // Call the async function inside useEffect
   }, [])
@@ -61,17 +58,14 @@ export default function Blog() {
     const loadDeviceData = async () => {
       if (blogIds.length > 0) {
         const data = await fetchBlog()
-        console.log("Fetched device data:", data) // Log fetched device data
         setBlogsList(data) // Set state with fetched device data
       }
     }
 
     loadDeviceData() // Call the async function when devices state changes
-    // console.log(deviceList)
   }, [blogIds]) // Trigger when `devices` state changes
 
   useEffect(() => {
-    console.log(blogsList)
     if (blogsList.length > 0) {
       setLoading(false)
     }
@@ -102,24 +96,25 @@ export default function Blog() {
               {blogsList.map((blog, index) => (
                 <Link to={`/blog/${blog.blogId}`} key={index}>
                   <div
-                    className="relative flex h-[240px] flex-col items-center justify-center rounded-3xl p-8 ring ring-slate-500/10 duration-100 ease-linear hover:scale-105"
+                    className="relative flex h-[240px] flex-col rounded-3xl ring ring-slate-500/10 duration-100 ease-linear hover:scale-105"
                     key={index}
                   >
                     <img
                       src={postbg}
                       alt="postbg"
-                      fill
-                      className="absolute z-0 h-full w-full rounded-3xl object-cover"
+                      className="absolute h-full w-full rounded-3xl"
                     />
-                    <div className="z-40 inline-flex flex-grow flex-col justify-between">
+                    <div className="z-40 inline-flex flex-grow flex-col justify-between p-8">
                       <div className="inline-flex gap-3">
                         <img src={avatar} alt="postbg" />
-                        <div className="inline-flex flex-col">
-                          <p className="text-xl">{blog?.author}</p>
-                          <p className="text-xl">{blog?.date}</p>
+                        <div className="inline-flex flex-col text-xl">
+                          <p>{blog?.author}</p>
+                          <p>{blog?.date}</p>
                         </div>
                       </div>
-                      <p className="text-2xl font-bold">{blog.title}</p>
+                      <p className="pl-2 text-2xl font-bold tracking-wider">
+                        {blog.title}
+                      </p>
                     </div>
                   </div>
                 </Link>

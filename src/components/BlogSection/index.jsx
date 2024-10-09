@@ -15,7 +15,6 @@ export default function BlogSection() {
     try {
       const response = await fetch(url)
       const fetchedBlog = await response.json()
-      console.log(fetchedBlog)
       return fetchedBlog
     } catch (error) {
       console.error(`Error fetching data for ${blogId}:`, error)

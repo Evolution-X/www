@@ -9,12 +9,10 @@ export default function Navbar() {
 
   const openMenu = () => {
     navRef.current.style.top = "0px"
-    console.log("menu open")
   }
 
   const closeMenu = () => {
     navRef.current.style.top = "-2500px"
-    console.log("menu close")
   }
 
   return (

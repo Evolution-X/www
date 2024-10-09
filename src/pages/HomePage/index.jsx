@@ -9,7 +9,6 @@ import evolution from "../../assets/evolution.svg"
 const HomePage = () => {
   const [loading, setLoading] = useState(true)
   const [screenshots, setScreenshots] = useState([])
-  const [screenshotsList, setScreenshotsList] = useState([])
 
   const fetchSS = async () => {
     const url =
@@ -17,7 +16,6 @@ const HomePage = () => {
     try {
       const response = await fetch(url)
       const fetchedSS = await response.json()
-      console.log(fetchedSS)
       return fetchedSS
     } catch (error) {
       console.error(`Error fetching data for ${fetchSS}:`, error)
@@ -25,55 +23,15 @@ const HomePage = () => {
     }
   }
 
-  // const fetchScreenshots= async ()=>{
-  //   const data = await Promise.all(
-  //     screenshots.map(async (ss) => {
-  //       const durl = `https://github.com/Evolution-X/www_gitres/blob/udc/screenshots/${ss}?raw=true`
-  //       try {
-  //         const fetchedSS = await fetch(durl)
-  //         const fetchedSSData = await fetchedSS.json()
-  //         console.log(fetchedSSData)
-  //         // await timeout(0)
-  //         return fetchedSSData
-  //       } catch (error) {
-  //         console.error(`Error fetching data for Screenshots:`, error)
-  //         return null// Handle errors for individual devices
-  //       }
-  //     }),
-  //   )
-
-  //   return data // Return the resolved data
-  // }
-
-  // const loadingAnimation = async () => {
-  //   setLoading(false)
-  // }
   useEffect(() => {
     const loadSS = async () => {
       const data = await fetchSS()
       setScreenshots(data) // Set state after fetching the device list
-      console.log("Fetched devices:", data) // Log the fetched data
     }
     loadSS() // Call the async function inside useEffect
-    // fetchSS()
-    // loadingAnimation()
   }, [])
 
-  // useEffect(() => {
-  //   const loadSSdata = async () => {
-  //     if (screenshots.length > 0) {
-  //       const data = await fetchScreenshots()
-  //       console.log("Fetched device data:", data) // Log fetched device data
-  //       setScreenshotsList(data) // Set state with fetched device data
-  //     }
-  //   }
-
-  //   loadSSdata() // Call the async function when devices state changes
-  //   // console.log(deviceList)
-  // }, [screenshots]) // Trigger when `devices` state changes
-
   useEffect(() => {
-    // console.log(screenshotsList)
     if (screenshots.length > 0) {
       setLoading(false)
     }

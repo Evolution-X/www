@@ -1,10 +1,8 @@
 import ghicon from "../../assets/ghicon.svg"
 import donateicon from "../../assets/donateicon.svg"
-import xdaicon from "../../assets/xdaicon.svg"
 import discordicon from "../../assets/discordicon.svg"
 import evolution from "../../assets/evolution.svg"
 import xlogo from "../../assets/xlogo.svg"
-
 
 function index() {
   return (
@@ -25,7 +23,7 @@ function index() {
             >
               <img src={discordicon} alt="" />
             </a>
-           
+
             <a
               href="https://github.com/Evolution-X"
               target="_blank"
@@ -38,7 +36,7 @@ function index() {
               target="_blank"
               rel="noreferrer"
             >
-              <img className="bg-white rounded-full p-2" src={xlogo} alt="" />
+              <img className="rounded-full bg-white p-2" src={xlogo} alt="" />
             </a>
             <a
               href="https://www.gofundme.com/f/evolutionx-developers"
@@ -74,7 +72,6 @@ function index() {
           >
             <span className="font-[Prod-bold] underline">Zirgom Haidar</span>
           </a>
-         
         </div>
       </div>
     </div>

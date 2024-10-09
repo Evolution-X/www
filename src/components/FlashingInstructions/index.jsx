@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import Markdown from "react-markdown"
+
 const FlashingInstructions = (props) => {
   const [instructions, setInstructions] = useState()
 
@@ -9,7 +10,6 @@ const FlashingInstructions = (props) => {
     try {
       const logs = await fetch(url)
       const data = await logs.text()
-      console.log(data)
       return data
     } catch (error) {
       console.error(
@@ -22,7 +22,6 @@ const FlashingInstructions = (props) => {
     const fetchResponse = async () => {
       const response = await fetchInstructions()
       setInstructions(response)
-      console.log(response)
     }
     fetchResponse()
   }, [])

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
 import donateicon from "../../assets/donateicon.svg"
-import tgicon from "../../assets/tgicon.svg"
 import xdaicon from "../../assets/xdaicon.svg"
 import evoloading from "../../assets/evoloading.gif"
 import Changelogs from "../Changelogs"
@@ -22,7 +21,6 @@ const DownloadSection = () => {
   const toggleChangelog = () => {
     if (showChangelogs) {
       setShowChangelogs(false)
-      console.log(showChangelogs)
     } else {
       setShowChangelogs(true)
     }
@@ -30,7 +28,6 @@ const DownloadSection = () => {
   const toggleInstructions = () => {
     if (showInstructions) {
       setShowInstructions(false)
-      console.log(showInstructions)
     } else {
       setShowInstructions(true)
     }
@@ -40,7 +37,6 @@ const DownloadSection = () => {
     try {
       const response = await fetch(url)
       const fetchedDeviceData = await response.json()
-      console.log(fetchedDeviceData.response[0])
       await timeout(0)
       return fetchedDeviceData.response[0]
     } catch (error) {
@@ -53,7 +49,6 @@ const DownloadSection = () => {
     try {
       const response = await fetch(url)
       const fetchedDeviceData = await response.json()
-      console.log(fetchedDeviceData.response[0])
       return fetchedDeviceData.response[0]
     } catch (error) {
       return null
@@ -213,14 +208,12 @@ const DownloadSection = () => {
                           )}
                         </div>
                         <div>
-                          {/* <a className="" href={`https://raw.githubusercontent.com/Evolution-X/OTA/refs/heads/udc/changelogs/${codename}.txt`}> */}
                           <button
                             onClick={() => toggleChangelog()}
                             className="h-16 w-full rounded-full bg-pink-800 px-4"
                           >
                             Changelogs
                           </button>
-                          {/* </a> */}
                           {showChangelogs && (
                             <>
                               <div className="fixed inset-0 z-50 flex flex-col py-[6rem] backdrop-blur-sm backdrop-sepia md:py-[6rem] lg:py-[6rem] xl:px-[4rem] 2xl:px-[15rem]">

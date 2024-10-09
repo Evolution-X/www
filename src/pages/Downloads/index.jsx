@@ -14,13 +14,10 @@ const Downloads = () => {
   const [apple, setApple] = useState(false)
 
   const oemToggle = async (deviceOem) => {
-    // const doem = await deviceOem
     if (oem === deviceOem) {
       setOem(null)
-      console.log(oem)
     } else {
       setOem(deviceOem)
-      console.log(oem)
     }
   }
 
@@ -53,7 +50,6 @@ const Downloads = () => {
         try {
           const fetchedDevice = await fetch(durl)
           const fetchedDeviceData = await fetchedDevice.json()
-          console.log(fetchedDeviceData.response[0])
           await timeout(0)
           return { codename: device, data: fetchedDeviceData.response[0] }
         } catch (error) {
@@ -71,7 +67,6 @@ const Downloads = () => {
     const loadDevices = async () => {
       const data = await fetchDevices()
       setDevices(data) // Set state after fetching the device list
-      console.log("Fetched devices:", data) // Log the fetched data
     }
 
     loadDevices() // Call the async function inside useEffect
@@ -82,17 +77,14 @@ const Downloads = () => {
     const loadDeviceData = async () => {
       if (devices.length > 0) {
         const data = await fetchDeviceData()
-        console.log("Fetched device data:", data) // Log fetched device data
         setDeviceList(data) // Set state with fetched device data
       }
     }
 
     loadDeviceData() // Call the async function when devices state changes
-    // console.log(deviceList)
   }, [devices]) // Trigger when `devices` state changes
 
   useEffect(() => {
-    console.log(deviceList)
     if (deviceList.length > 0) {
       setLoading(false)
     }
@@ -123,7 +115,7 @@ const Downloads = () => {
                 className="flex w-full rounded-full border-2 border-current bg-slate-800 bg-gradient-to-r from-indigo-100 to-[#667dd0] px-10 py-4 text-black text-black/75 placeholder:text-black/75 focus:border-blue-600 focus:outline-none"
                 placeholder="Search"
               />
-              <div className="inline-flex flex-wrap items-center justify-center gap-4">
+              <div className="inline-flex flex-wrap items-center justify-center gap-3">
                 <button
                   onClick={() => oemToggle("Google")}
                   className={`brandSelect ${oem === "Google" ? "bg-[#7e76dd]" : ""}`}
