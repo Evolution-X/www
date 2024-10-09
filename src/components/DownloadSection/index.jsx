@@ -6,13 +6,12 @@ import tgicon from "../../assets/tgicon.svg"
 import xdaicon from "../../assets/xdaicon.svg"
 import evoloading from "../../assets/evoloading.gif"
 import Changelogs from "../Changelogs"
-import { div } from "framer-motion/client"
 import FlashingInstructions from "../FlashingInstructions"
 
 const DownloadSection = () => {
   const { codename } = useParams()
   const [loading, setLoading] = useState(true)
-    const [data, setData] = useState()
+  const [data, setData] = useState()
   const [vanilla, setVanilla] = useState()
   const [showInstructions, setShowInstructions] = useState(false)
   const [showChangelogs, setShowChangelogs] = useState(false)
@@ -20,21 +19,19 @@ const DownloadSection = () => {
     return new Promise((res) => setTimeout(res, delay))
   }
 
-  const toggleChangelog=()=>{
-    if(showChangelogs){
+  const toggleChangelog = () => {
+    if (showChangelogs) {
       setShowChangelogs(false)
       console.log(showChangelogs)
-    }
-    else{
+    } else {
       setShowChangelogs(true)
     }
   }
-  const toggleInstructions=()=>{
-    if(showInstructions){
+  const toggleInstructions = () => {
+    if (showInstructions) {
       setShowInstructions(false)
       console.log(showInstructions)
-    }
-    else{
+    } else {
       setShowInstructions(true)
     }
   }
@@ -130,7 +127,7 @@ const DownloadSection = () => {
                     </span>
                   </div>
                 </div>
-                <div className="flex grow flex-col rounded-2xl bg-[#151414] px-6 py-7 lg:px-10">
+                <div className="flex grow flex-col rounded-2xl bg-[#151414] px-6 py-7">
                   <div className="flex grow flex-col gap-4 lg:justify-between lg:gap-0">
                     <div className="flex flex-wrap gap-4 pl-2 lg:flex-row lg:gap-0">
                       <div className="grow">
@@ -156,96 +153,110 @@ const DownloadSection = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="inline-flex flex-col items-center justify-between gap-6 rounded-2xl bg-[#212121] px-8 py-5 lg:flex-row">
-                      <div className="flex items-center gap-4 lg:gap-9">
-                        <div className="flex size-20 items-center justify-center">
+                    <div className="inline-flex flex-col items-center justify-between gap-4 rounded-2xl bg-[#212121] px-8 py-5 lg:flex-row">
+                      <div className="flex items-center justify-center gap-4 lg:gap-9">
+                        <div className="flex size-20 shrink-0 items-center justify-center lg:size-40">
                           <img
                             className="rounded-full"
                             src={`https://avatars.githubusercontent.com/${data.github}`}
                             alt="avatar"
                           />
                         </div>
-                        <div className="font-[Prod-Medium] text-2xl text-white lg:text-3xl">
+                        <div className="lg:max-w-90 text-wrap font-[Prod-Medium] text-2xl text-white sm:max-w-56 lg:text-3xl xl:max-w-fit">
                           {data.maintainer}
                         </div>
                       </div>
                       <div className="flex gap-10">
-                        <div className="flex items-center justify-center gap-4">
-                          
+                        <div className="flex grow items-center justify-center gap-4 lg:flex-col xl:flex-row">
                           <Link to={data.paypal} target="_blank">
-                            <img src={donateicon} alt="donateicon" />
+                            <img
+                              src={donateicon}
+                              alt="donateicon"
+                              className="size-12 lg:size-14"
+                            />
                           </Link>
                           <Link to={data.forum} target="_blank">
-                            <img src={xdaicon} alt="xda" />
+                            <img
+                              src={xdaicon}
+                              alt="xda"
+                              className="size-12 lg:size-14"
+                            />
                           </Link>
                         </div>
                       </div>
                     </div>
-                    <div className="flex flex-col text-lg lg:text-xl">
-                      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-9">
-
-                    <div>
-                      <button onClick={(e)=>{toggleInstructions()}} className="bg-green-500 mb-4 md:mb-7 mx-auto text-xl md:text-2xl h-16 rounded-full w-full">Flashing Instructions</button>
-                      {showInstructions &&
-                      <>
-                        <span onClick={()=>setShowInstructions(false)} className="fixed cursor-pointer top-[5em] bg-red-500 rounded-full px-2 z-50 right-[20em] text-white">x</span>
-
-                      <div className="bg-slate-800 backdrop-blur-lg text-white p-10 fixed top-0 bottom-0 left-0 right-0 w-1/2 mx-auto overflow-y-scroll h-3/4 my-auto">
-
-                        <div className="relative">
-                          
+                    <div className="flex flex-col gap-4 text-xl lg:text-2xl">
+                      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                        <div>
+                          <button
+                            onClick={(e) => {
+                              toggleInstructions()
+                            }}
+                            className="h-16 w-full rounded-full bg-green-500 px-4"
+                          >
+                            Flashing Instructions
+                          </button>
+                          {showInstructions && (
+                            <>
+                              <div className="fixed inset-0 z-50 flex flex-col py-[6rem] backdrop-blur-sm backdrop-sepia md:py-[6rem] lg:py-[6rem] xl:px-[4rem] 2xl:px-[15rem]">
+                                <span
+                                  onClick={() => setShowInstructions(false)}
+                                  className="absolute right-6 top-6 z-50 cursor-pointer"
+                                >
+                                  ❌
+                                </span>
+                                <div className="relative mx-[2rem] grow overflow-y-scroll rounded-3xl bg-stone-800 px-10 outline-dashed outline-2 outline-green-600 lg:pt-[1rem]">
+                                  <FlashingInstructions codename={codename} />
+                                </div>
+                              </div>
+                            </>
+                          )}
                         </div>
-                        <div className="relative">
-
-                        <FlashingInstructions codename={codename} />
+                        <div>
+                          {/* <a className="" href={`https://raw.githubusercontent.com/Evolution-X/OTA/refs/heads/udc/changelogs/${codename}.txt`}> */}
+                          <button
+                            onClick={() => toggleChangelog()}
+                            className="h-16 w-full rounded-full bg-pink-800 px-4"
+                          >
+                            Changelogs
+                          </button>
+                          {/* </a> */}
+                          {showChangelogs && (
+                            <>
+                              <div className="fixed inset-0 z-50 flex flex-col py-[6rem] backdrop-blur-sm backdrop-sepia md:py-[6rem] lg:py-[6rem] xl:px-[4rem] 2xl:px-[15rem]">
+                                <span
+                                  onClick={() => setShowChangelogs(false)}
+                                  className="absolute right-6 top-6 z-50 cursor-pointer"
+                                >
+                                  ❌
+                                </span>
+                                <div className="relative mx-[2rem] grow overflow-y-scroll rounded-3xl bg-stone-800 px-10 outline-dashed outline-2 outline-pink-800 lg:pt-[1rem]">
+                                  <Changelogs codename={codename} />
+                                </div>
+                              </div>
+                            </>
+                          )}
                         </div>
                       </div>
-                      </>
-                      }
-                    </div>  
-                    <div>
-                      {/* <a className="" href={`https://raw.githubusercontent.com/Evolution-X/OTA/refs/heads/udc/changelogs/${codename}.txt`}> */}
-                      <button onClick={()=>toggleChangelog()} className="bg-yellow-500 mb-4 md:mb-7 mx-auto text-xl md:text-2xl h-16 rounded-full w-full">Notes And Changelogs</button>
-                      {/* </a> */}
-                      {showChangelogs &&
-                      <>
-                        <span onClick={()=>setShowChangelogs(false)} className="fixed cursor-pointer top-[5em] bg-red-500 rounded-full px-2 z-50 right-[20em] text-white">x</span>
-
-                      <div className="bg-slate-800 backdrop-blur-lg text-white p-10 fixed top-0 bottom-0 left-0 right-0 w-1/2 mx-auto overflow-y-scroll h-3/4 my-auto">
-
-                        <div className="relative">
-                          
-                        </div>
-                        <div className="relative">
-
-                        <Changelogs codename={codename} />
-                        </div>
-                      </div>
-                      </>
-                      }
-
-                    </div>                               
-                      </div>
-                    <div className="flex w-full flex-col gap-4 text-xl lg:flex-row lg:gap-9 lg:text-2xl">
-                      <Link
-                        to={data.download}
-                        target="_blank"
-                        className="inline-flex h-16 grow items-center justify-center rounded-full bg-[#5b60e3] text-white lg:w-1/2"
-                      >
-                        <p>Download GAPPS</p>
-                      </Link>
-                      {vanilla && !loading && (
+                      <div className="flex w-full flex-col gap-4 lg:flex-row lg:gap-4">
                         <Link
-                          to={vanilla.download}
+                          to={data.download}
                           target="_blank"
-                          className="inline-flex h-16 items-center justify-center rounded-full bg-[#5b60e3] text-white lg:w-1/2"
+                          className="inline-flex h-16 grow items-center justify-center rounded-full bg-[#5b60e3] text-white lg:w-1/2"
                         >
-                          <p>Download VANILLA</p>
+                          <p>Download GAPPS</p>
                         </Link>
-                      )}
+                        {vanilla && !loading && (
+                          <Link
+                            to={vanilla.download}
+                            target="_blank"
+                            className="inline-flex h-16 items-center justify-center rounded-full bg-[#5b60e3] text-white lg:w-1/2"
+                          >
+                            <p>Download VANILLA</p>
+                          </Link>
+                        )}
+                      </div>
                     </div>
-                    </div>
-
                   </div>
                 </div>
               </div>
