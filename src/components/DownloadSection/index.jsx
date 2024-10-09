@@ -244,7 +244,7 @@ const DownloadSection = () => {
                           target="_blank"
                           className="inline-flex h-16 grow items-center justify-center rounded-full bg-[#5b60e3] text-white lg:w-1/2"
                         >
-                          <p>Download GAPPS</p>
+                          <p>Download GAPPS build</p>
                         </Link>
                         {vanilla && !loading && (
                           <Link
@@ -252,7 +252,7 @@ const DownloadSection = () => {
                             target="_blank"
                             className="inline-flex h-16 items-center justify-center rounded-full bg-[#5b60e3] text-white lg:w-1/2"
                           >
-                            <p>Download VANILLA</p>
+                            <p>Download VANILLA build</p>
                           </Link>
                         )}
                       </div>
