@@ -135,10 +135,10 @@ const Downloads = () => {
                   Samsung
                 </button>
                 <button
-                  onClick={() => oemToggle("Oneplus")}
-                  className={`brandSelect ${oem === "Oneplus" ? "bg-[#7e76dd]" : ""}`}
+                  onClick={() => oemToggle("OnePlus")}
+                  className={`brandSelect ${oem === "OnePlus" ? "bg-[#7e76dd]" : ""}`}
                 >
-                  Oneplus
+                  OnePlus
                 </button>
                 <button
                   onClick={() => oemToggle("Motorola")}
