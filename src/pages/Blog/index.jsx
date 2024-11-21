@@ -4,6 +4,12 @@ import { Link } from "react-router-dom"
 import evolution from "../../assets/evolution.svg"
 import { useState, useEffect } from "react"
 import evoloading from "../../assets/evoloading.gif"
+import { motion } from "framer-motion"
+
+const variants = {
+  hidden: { opacity: 0, y: 75, transition: { delay: 0.2 } },
+  visible: { opacity: 1, y: 0, transition: { delay: 0.2 } },
+}
 
 export default function Blog() {
   const [loading, setLoading] = useState(true)
@@ -77,7 +83,12 @@ export default function Blog() {
         <img className="mx-auto" src={evoloading} alt="loading ..." />
       )}
       {!loading && blogsList && (
-        <div className="mx-4 flex flex-col items-center justify-center gap-10 md:gap-20 lg:mx-16">
+        <motion.div
+          variants={variants}
+          initial="hidden"
+          animate="visible"
+          className="mx-4 flex flex-col items-center justify-center gap-10 md:gap-20 lg:mx-16"
+        >
           <div className="inline-flex flex-col items-center justify-center">
             <p className="inline-flex flex-row items-baseline gap-4 text-4xl font-bold lg:text-6xl">
               <img className="h-7 sm:h-8 lg:h-11" src={evolution} alt="" />
@@ -121,7 +132,7 @@ export default function Blog() {
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
     </>
   )

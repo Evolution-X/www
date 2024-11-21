@@ -6,6 +6,12 @@ import xdaicon from "../../assets/xdaicon.svg"
 import evoloading from "../../assets/evoloading.gif"
 import Changelogs from "../Changelogs"
 import FlashingInstructions from "../FlashingInstructions"
+import { motion } from "framer-motion"
+
+const variants = {
+  hidden: { opacity: 0, y: 75 },
+  visible: { opacity: 1, y: 0 },
+}
 
 const DownloadSection = () => {
   const { codename } = useParams()
@@ -79,7 +85,13 @@ const DownloadSection = () => {
         <div className="mx-4 flex flex-col gap-6 sm:-mt-8 lg:-mb-20 lg:-mt-16">
           {data && !loading && (
             <>
-              <div className="inline-flex flex-col rounded-2xl border-4 border-dashed border-[#f05d5d] px-8 py-6 lg:py-10">
+              <motion.div
+                variants={variants}
+                initial="hidden"
+                animate="visible"
+                transition={{ delay: 0.2 }}
+                className="inline-flex flex-col rounded-2xl border-4 border-dashed border-[#f05d5d] px-8 py-6 lg:py-10"
+              >
                 <div className="flex flex-col gap-2 lg:gap-4">
                   <p className="font-[Prod-bold] text-2xl lg:text-3xl">
                     Before you download and install!
@@ -97,8 +109,14 @@ const DownloadSection = () => {
                     at you.
                   </p>
                 </div>
-              </div>
-              <div className="flex flex-col gap-10 rounded-2xl bg-[#060505] p-6 ring ring-gray-400/5 ring-offset-2 ring-offset-gray-400/5 md:flex-row lg:gap-16 lg:p-11">
+              </motion.div>
+              <motion.div
+                variants={variants}
+                initial="hidden"
+                animate="visible"
+                transition={{ delay: 0.4 }}
+                className="flex flex-col gap-10 rounded-2xl bg-[#060505] p-6 ring ring-gray-400/5 ring-offset-2 ring-offset-gray-400/5 md:flex-row lg:gap-16 lg:p-11"
+              >
                 <div className="mt-6 flex flex-col gap-4">
                   <img
                     className="max-h-72 min-h-64 object-contain"
@@ -252,7 +270,7 @@ const DownloadSection = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </>
           )}
         </div>

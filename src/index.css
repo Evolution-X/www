@@ -29,3 +29,7 @@ body{
 .brandSelect {
     @apply w-fit text-center rounded-full border-4 border-[#1e3150] uppercase px-6 py-3 duration-100 ease-linear hover:bg-[#7e76dd];
 }
+
+.fadeEffect {
+    @apply !bg-clip-text text-center font-[prod-bold] text-[156px] text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]
+}

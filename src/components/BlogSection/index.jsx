@@ -3,6 +3,7 @@ import share from "../../assets/share.svg"
 import { useParams } from "react-router-dom"
 import { useState, useEffect } from "react"
 import evoloading from "../../assets/evoloading.gif"
+import { motion } from "framer-motion"
 
 export default function BlogSection() {
   const { blogId } = useParams()
@@ -66,14 +67,21 @@ export default function BlogSection() {
         />
       )}
       {!loading && (
-        <div className="mx-4 sm:-mt-10 lg:-mb-20 xl:mx-20 2xl:-mt-24">
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mx-4 sm:-mt-10 lg:-mb-20 xl:mx-20 2xl:-mt-24"
+        >
           <div className="flex flex-col gap-10 rounded-3xl border border-[#2a2828] bg-[#070505] p-8 xl:p-16">
             <div className="flex items-center justify-between">
               <div className="flex flex-col text-[1.1rem] text-white md:flex-row">
                 <span>{data.date}&nbsp; •&nbsp;&nbsp; </span>
                 <span className="font-[Prod-Light]">Author: {data.author}</span>
               </div>
-              <div
+              <motion.div
+                initial={{ scale: 1 }}
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.75 }}
                 className="relative cursor-pointer"
                 onClick={handleCopyClick}
               >
@@ -83,7 +91,7 @@ export default function BlogSection() {
                 >
                   Copied!
                 </span>
-              </div>
+              </motion.div>
             </div>
             <div className="mt-6 text-3xl text-white lg:text-5xl">
               {data.title}
@@ -95,7 +103,7 @@ export default function BlogSection() {
               <div className="px-2 text-xl text-white">{data.content}</div>
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
     </>
   )

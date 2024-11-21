@@ -4,6 +4,12 @@ import { Link } from "react-router-dom"
 import evoloading from "../../assets/evoloading.gif"
 import iphone from "../../assets/iphone.gif"
 import evolution from "../../assets/evolution.svg"
+import { motion } from "framer-motion"
+
+const variants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0 },
+}
 
 const Downloads = () => {
   const [devices, setDevices] = useState([])
@@ -24,6 +30,10 @@ const Downloads = () => {
   function timeout(delay) {
     return new Promise((res) => setTimeout(res, delay))
   }
+
+  const brands = Array.from(
+    new Set(deviceList.map((device) => device.data?.oem)),
+  )
 
   // Fetch the list of devices
   const fetchDevices = async () => {
@@ -76,7 +86,9 @@ const Downloads = () => {
   useEffect(() => {
     const loadDeviceData = async () => {
       if (devices.length > 0) {
-        const data = await fetchDeviceData()
+        const data = await fetchDeviceData().then((data) =>
+          data.sort((ts1, ts2) => ts2.data?.timestamp - ts1.data?.timestamp),
+        )
         setDeviceList(data) // Set state with fetched device data
       }
     }
@@ -98,7 +110,13 @@ const Downloads = () => {
 
       {!loading && (
         <div className="flex flex-col items-center justify-center gap-20 xl:gap-24">
-          <div className="mx-4 inline-flex min-w-[20rem] flex-col items-center justify-center gap-8 sm:mx-6 sm:min-w-[32rem] lg:w-[60rem] lg:gap-12 xl:w-[64rem]">
+          <motion.div
+            variants={variants}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: 0.1 }}
+            className="mx-4 inline-flex min-w-[20rem] flex-col items-center justify-center gap-8 sm:mx-6 sm:min-w-[32rem] lg:w-[60rem] lg:gap-12 xl:w-[64rem]"
+          >
             <div className="inline-flex flex-col items-baseline gap-2 text-center font-[Prod-bold] text-4xl sm:flex-row sm:text-5xl lg:gap-4 lg:text-6xl">
               <span className="text-[#afbdf3]">Download</span>
               <img className="h-7 sm:h-10 lg:h-12" src={evolution} alt="" />
@@ -116,51 +134,18 @@ const Downloads = () => {
                 placeholder="Search"
               />
               <div className="inline-flex flex-wrap items-center justify-center gap-3">
-                <button
-                  onClick={() => oemToggle("Google")}
-                  className={`brandSelect ${oem === "Google" ? "bg-[#7e76dd]" : ""}`}
-                >
-                  Google
-                </button>
-                <button
-                  onClick={() => oemToggle("Xiaomi")}
-                  className={`brandSelect ${oem === "Xiaomi" ? "bg-[#7e76dd]" : ""}`}
-                >
-                  Xiaomi
-                </button>
-                <button
-                  onClick={() => oemToggle("Samsung")}
-                  className={`brandSelect ${oem === "Samsung" ? "bg-[#7e76dd]" : ""}`}
-                >
-                  Samsung
-                </button>
-                <button
-                  onClick={() => oemToggle("OnePlus")}
-                  className={`brandSelect ${oem === "OnePlus" ? "bg-[#7e76dd]" : ""}`}
-                >
-                  OnePlus
-                </button>
-                <button
-                  onClick={() => oemToggle("Motorola")}
-                  className={`brandSelect ${oem === "Motorola" ? "bg-[#7e76dd]" : ""}`}
-                >
-                  Motorola
-                </button>
-                <button
-                  onClick={() => oemToggle("Nothing")}
-                  className={`brandSelect ${oem === "Nothing" ? "bg-[#7e76dd]" : ""}`}
-                >
-                  Nothing
-                </button>
-                <button
-                  onClick={() => oemToggle("Lenovo")}
-                  className={`brandSelect ${oem === "Lenovo" ? "bg-[#7e76dd]" : ""}`}
-                >
-                  Lenovo
-                </button>
+                {brands.map((brand, index) => (
+                  <button
+                    onClick={() => oemToggle(brand)}
+                    className={`brandSelect ${oem === brand ? "bg-[#7e76dd]" : ""}`}
+                    key={index}
+                  >
+                    {brand}
+                  </button>
+                ))}
               </div>
             </div>
-          </div>
+          </motion.div>
           {!loading && apple && (
             <div className="text-center">
               <h2 className="text-2xl">
@@ -171,7 +156,13 @@ const Downloads = () => {
               <img src={iphone} alt="iphone"></img>
             </div>
           )}
-          <div className="mx-4 grid gap-5 md:grid-cols-2 md:gap-10 lg:gap-14 xl:grid-cols-3">
+          <motion.div
+            variants={variants}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: 0.2 }}
+            className="mx-4 grid gap-5 md:grid-cols-2 md:gap-10 lg:gap-14 xl:grid-cols-3"
+          >
             {deviceList &&
               !loading &&
               deviceList
@@ -191,7 +182,12 @@ const Downloads = () => {
                     ).includes(searchQuery.toLowerCase()),
                 )
                 .map((device, index) => (
-                  <div key={index}>
+                  <motion.div
+                    variants={variants}
+                    initial={{ opacity: 0, scale: 0.75 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    key={index}
+                  >
                     <div className="flex min-h-full w-[23rem] flex-col justify-between rounded-2xl border border-slate-800 bg-black pb-7 duration-100 ease-in lg:hover:scale-105">
                       <img
                         className="mx-auto my-4 flex size-56 object-contain"
@@ -228,9 +224,9 @@ const Downloads = () => {
                         </Link>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
-          </div>
+          </motion.div>
         </div>
       )}
     </>

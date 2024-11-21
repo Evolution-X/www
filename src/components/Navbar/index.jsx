@@ -48,6 +48,11 @@ export default function Navbar() {
           </NavLink>
         </li>
         <li>
+          <NavLink to={"/team"} onClick={closeMenu}>
+            team
+          </NavLink>
+        </li>
+        <li>
           <NavLink to={"downloads"} onClick={closeMenu}>
             Download
           </NavLink>

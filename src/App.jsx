@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import HomePage from "./pages/HomePage"
+import Team from "./pages/Team"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
 import NotFound from "./pages/NotFound"
@@ -19,6 +20,7 @@ function App() {
             <main className="flex flex-col gap-12 sm:gap-20 xl:gap-28">
               <Routes>
                 <Route index element={<HomePage />} />
+                <Route path="/team" element={<Team />} />
                 <Route path="/downloads" element={<Downloads />} />
                 <Route
                   path="/downloads/:codename"
