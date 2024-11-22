@@ -5,6 +5,8 @@ import Aidan from "../../assets/Aidan.png"
 import akito from "../../assets/akito.png"
 import hyde from "../../assets/Hyde.png"
 import onelots from "../../assets/Onelots.png"
+import founder from "../../assets/Founders.svg"
+import ourteam from "../../assets/OurTeam.svg"
 
 const Team = () => {
   return (
@@ -24,24 +26,17 @@ const Team = () => {
         animate={{ opacity: 1 }}
         className="mx-auto flex w-fit flex-col items-center justify-center border-4 border-[#afbdf3] p-10"
       >
-        <div className="z-10 mx-0 -mt-14 flex flex-col items-center justify-between text-xs lg:-mx-56 xl:-mx-64">
+        <div className="mx-0 -mt-14 flex flex-col items-center justify-between text-xs lg:-mx-56 xl:-mx-64">
           <div className="mb-12 w-fit bg-[#040214] px-3 text-2xl">
             Our Primes
           </div>
           <Card list={PrimeList} shadowOn={true} />
         </div>
+        <img className="absolute left-0 z-0 my-auto" alt="" src={founder} />
       </motion.div>
-      <span
-        className="fadeEffect absolute left-0 top-[550px] z-0 -ml-14 [background:linear-gradient(270deg,_#373c68,_rgba(153,_153,_153,_0))] md:top-[400px] lg:top-[150px] xl:top-[250px] 2xl:top-[300px]"
-        style={{
-          writingMode: "vertical-lr",
-        }}
-      >
-        Founders
-      </span>
       {/* Evolution X team */}
       <div className="mx-auto mb-12 flex w-fit flex-col items-center justify-center border-4 border-[#afbdf3] px-10 pb-20 pt-10 xl:p-10">
-        <div className="z-10 -my-14 flex flex-col items-center justify-between text-xs">
+        <div className="-my-14 flex flex-col items-center justify-between text-xs">
           <div className="mb-12 w-fit bg-[#040214] px-3 text-2xl">
             Project Members
           </div>
@@ -50,14 +45,7 @@ const Team = () => {
             These are the people who brought us here today
           </div>
         </div>
-        <span
-          className="fadeEffect absolute right-0 z-0 my-auto -mr-14 h-full rotate-180 [background:linear-gradient(270deg,_#373c68,_rgba(153,_153,_153,_0))]"
-          style={{
-            writingMode: "vertical-lr",
-          }}
-        >
-          Our Team
-        </span>
+        <img className="absolute right-0 z-0 my-auto" alt="" src={ourteam} />
       </div>
       {/* about evox */}
       <div className="z-10 mx-10 flex flex-col items-center justify-center gap-10 sm:mx-24 xl:flex-row">
@@ -67,9 +55,10 @@ const Team = () => {
           </div>
           <div className="text-xl lg:text-2xl">
             Evolution X is a custom Android ROM project dedicated to providing a
-            unique and customizable user experience. Founded in March 2019 by
-            Jose Antonio Huab (Joey Huab), Evolution X has grown into a thriving
-            community of developers and enthusiasts.
+            unique and customizable user experience. Founded in March 2019 by a
+            group of 3 developers led by Jose Antonio Huab (Joey Huab),
+            Evolution X has grown into a thriving community of developers and
+            enthusiasts.
           </div>
         </div>
         <img
@@ -86,7 +75,7 @@ export default Team
 
 function Card({ list, shadowOn }) {
   return (
-    <div className="grid gap-16 md:grid-cols-2 lg:grid-cols-3">
+    <div className="z-10 grid gap-16 md:grid-cols-2 lg:grid-cols-3">
       {list.map((item, index) => (
         <div
           className={`relative flex h-80 w-64 flex-col justify-end rounded-3xl text-left duration-300 ${shadowOn ? "shadow-[0px_0px_38.5px_14px_#ffffff25] hover:shadow-[0px_0px_38.5px_14px_#ffffff50]" : "shadow-[0px_0px_38.5px_14px_#FF8AF320] hover:shadow-[0px_0px_38.5px_14px_#FF8AF350]"}`}
