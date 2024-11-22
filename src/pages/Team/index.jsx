@@ -17,7 +17,7 @@ const Team = () => {
         className="relative z-10 flex flex-col items-center gap-2 px-4 text-center lg:-mt-14 lg:gap-7"
       >
         <p className="max-w-[50rem] font-[Prod-bold] text-4xl xl:text-5xl">
-          We are the people who initialized this project
+          We are the founders of this project
         </p>
       </motion.div>
       {/* our primes */}
@@ -42,7 +42,7 @@ const Team = () => {
           </div>
           <Card list={TeamMembers} shadowOn={false} />
           <div className="mt-12 hidden w-fit bg-[#040214] px-3 text-2xl xl:block">
-            These are the people who brought us here today
+            These are some the people who have helped bring us here today
           </div>
         </div>
         <img className="absolute right-0 z-0 my-auto" alt="" src={ourteam} />
@@ -51,14 +51,13 @@ const Team = () => {
       <div className="z-10 mx-10 flex flex-col items-center justify-center gap-10 sm:mx-24 xl:flex-row">
         <div className="space-y-10 md:text-center xl:text-left">
           <div className="text-nowrap !bg-clip-text text-4xl text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [background:linear-gradient(92deg,_#2fc1ee,_#dbe6ea)] lg:text-5xl">
-            About the Evolution X
+            About Evolution X
           </div>
           <div className="text-xl lg:text-2xl">
-            Evolution X is a custom Android ROM project dedicated to providing a
-            unique and customizable user experience. Founded in March 2019 by a
-            group of 3 developers led by Jose Antonio Huab (Joey Huab),
-            Evolution X has grown into a thriving community of developers and
-            enthusiasts.
+            Evolution X is a custom Android ROM project that mimics the user experience
+            of Google Pixel devices while enhancing it with extensive customization options.
+            Launched in March 2019 by a team of three developers, led by Jose Antonio Huab "Joey", Evolution X
+            has since evolved into one of the most sought-after custom ROMs.
           </div>
         </div>
         <img
