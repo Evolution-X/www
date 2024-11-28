@@ -14,7 +14,7 @@ const Team = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="relative z-10 flex flex-col items-center gap-2 px-4 text-center lg:-mt-14 lg:gap-7"
+        className="z-10 flex flex-col items-center gap-2 px-4 text-center lg:-mt-14 lg:gap-7"
       >
         <p className="max-w-[50rem] font-[Prod-bold] text-4xl xl:text-5xl">
           We are the founders of this project
@@ -32,8 +32,12 @@ const Team = () => {
           </div>
           <Card list={PrimeList} shadowOn={true} />
         </div>
-        <img className="absolute left-0 z-0 my-auto" alt="" src={founder} />
       </motion.div>
+      <img
+        className="absolute left-0 top-[550px] z-0 my-auto sm:top-[570px] md:top-[370px] lg:top-[160px] xl:top-[200px] 2xl:top-[260px]"
+        alt=""
+        src={founder}
+      />
       {/* Evolution X team */}
       <div className="mx-auto mb-12 flex w-fit flex-col items-center justify-center border-4 border-[#afbdf3] px-10 pb-20 pt-10 xl:p-10">
         <div className="-my-14 flex flex-col items-center justify-between text-xs">
@@ -54,10 +58,11 @@ const Team = () => {
             About Evolution X
           </div>
           <div className="text-xl lg:text-2xl">
-            Evolution X is a custom Android ROM project that mimics the user experience
-            of Google Pixel devices while enhancing it with extensive customization options.
-            Launched in March 2019 by a team of three developers, led by Jose Antonio Huab "Joey", Evolution X
-            has since evolved into one of the most sought-after custom ROMs.
+            Evolution X is a custom Android ROM project that mimics the user
+            experience of Google Pixel devices while enhancing it with extensive
+            customization options. Launched in March 2019 by a team of three
+            developers, led by Jose Antonio Huab "Joey", Evolution X has since
+            evolved into one of the most sought-after custom ROMs.
           </div>
         </div>
         <img

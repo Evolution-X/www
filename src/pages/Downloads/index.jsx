@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import evoloading from "../../assets/evoloading.gif"
 import iphone from "../../assets/iphone.gif"
 import evolution from "../../assets/evolution.svg"
+import star from "../../assets/star.svg"
 import { motion } from "framer-motion"
 
 const variants = {
@@ -13,94 +14,108 @@ const variants = {
 
 const Downloads = () => {
   const [devices, setDevices] = useState([])
-  const [loading, setLoading] = useState(true)
   const [deviceList, setDeviceList] = useState([])
-  const [oem, setOem] = useState("")
-  const [searchQuery, setSearchQuery] = useState("") // State for search query
+  const [loading, setLoading] = useState(true)
+  const [oem, setOem] = useState(null)
+  const [searchQuery, setSearchQuery] = useState("") // Search query state
   const [apple, setApple] = useState(false)
 
-  const oemToggle = async (deviceOem) => {
-    if (oem === deviceOem) {
-      setOem(null)
-    } else {
-      setOem(deviceOem)
-    }
-  }
-
-  function timeout(delay) {
-    return new Promise((res) => setTimeout(res, delay))
+  // Toggle OEM filter
+  const oemToggle = (deviceOem) => {
+    setOem((prevOem) => (prevOem === deviceOem ? null : deviceOem))
   }
 
   const brands = Array.from(
     new Set(deviceList.map((device) => device.data?.oem)),
   )
 
-  // Fetch the list of devices
+  // Fetch devices list
   const fetchDevices = async () => {
     const url =
       "https://raw.githubusercontent.com/Evolution-X/www_gitres/udc/devices/devices.json"
 
     try {
       const response = await fetch(url)
-      const devicedata = await response.json()
-      return devicedata
+      return await response.json()
     } catch (error) {
       console.error("Error fetching devices:", error)
       return [] // Return an empty array on error
-    } finally {
     }
   }
 
-  // Fetch individual device data
-  const fetchDeviceData = async () => {
-    // Wait for all device data to be fetched
-    const data = await Promise.all(
-      devices.map(async (device) => {
-        const durl = `https://raw.githubusercontent.com/Evolution-X/OTA/udc/builds/${device}.json`
-        try {
-          const fetchedDevice = await fetch(durl)
-          const fetchedDeviceData = await fetchedDevice.json()
-          await timeout(0)
-          return { codename: device, data: fetchedDeviceData.response[0] }
-        } catch (error) {
-          console.error(`Error fetching data for device ${device}:`, error)
-          return { codename: device, data: null } // Handle errors for individual devices
-        }
-      }),
-    )
-
-    return data // Return the resolved data
+  // Fetch device data from a given base path
+  const fetchDeviceData = async (basePath) => {
+    try {
+      const data = await Promise.all(
+        devices.map(async (device) => {
+          const deviceUrl = `${basePath}/${device}.json`
+          try {
+            const response = await fetch(deviceUrl)
+            const deviceData = await response.json()
+            return { codename: device, data: deviceData.response[0] }
+          } catch (error) {
+            console.error(`Error fetching data for device ${device}:`, error)
+            return { codename: device, data: null } // Handle individual device errors
+          }
+        }),
+      )
+      return data
+    } catch (error) {
+      console.error("Error fetching device data:", error)
+      return []
+    }
   }
 
-  // Load devices on component mount
+  // Load devices list on component mount
   useEffect(() => {
     const loadDevices = async () => {
-      const data = await fetchDevices()
-      setDevices(data) // Set state after fetching the device list
+      const devicesData = await fetchDevices()
+      setDevices(devicesData)
     }
-
-    loadDevices() // Call the async function inside useEffect
+    loadDevices()
   }, [])
 
-  // Fetch and set device data when the `devices` state updates
+  // Fetch device data when devices list is loaded
   useEffect(() => {
     const loadDeviceData = async () => {
       if (devices.length > 0) {
-        const data = await fetchDeviceData().then((data) =>
-          data.sort((ts1, ts2) => ts2.data?.timestamp - ts1.data?.timestamp),
-        )
-        setDeviceList(data) // Set state with fetched device data
+        const basePath1 =
+          "https://raw.githubusercontent.com/Evolution-X/OTA/udc/builds"
+        const basePath2 =
+          "https://raw.githubusercontent.com/Evolution-X/OTA/vic/builds"
+
+        const [data1, data2] = await Promise.all([
+          fetchDeviceData(basePath1),
+          fetchDeviceData(basePath2),
+        ])
+
+        const combinedList = [...data1, ...data2]
+          .filter((item) => item.data) // Ensure only items with 'data' are processed
+          .reduce((acc, curr) => {
+            const existingItemIndex = acc.findIndex(
+              (x) => x.codename === curr.codename,
+            )
+
+            if (existingItemIndex !== -1) {
+              // If codename exists, compare timestamps
+              if (curr.data.timestamp > acc[existingItemIndex].data.timestamp) {
+                acc[existingItemIndex] = curr // Replace with the one having greater timestamp
+              }
+            } else {
+              acc.push(curr) // Add new unique item
+            }
+
+            return acc
+          }, [])
+          .sort((a, b) => b.data.timestamp - a.data.timestamp)
+
+        console.log(combinedList)
+        setDeviceList(combinedList)
+        setLoading(false)
       }
     }
-
-    loadDeviceData() // Call the async function when devices state changes
-  }, [devices]) // Trigger when `devices` state changes
-
-  useEffect(() => {
-    if (deviceList.length > 0) {
-      setLoading(false)
-    }
-  }, [deviceList])
+    loadDeviceData()
+  }, [devices])
 
   return (
     <>
@@ -161,7 +176,7 @@ const Downloads = () => {
             initial="hidden"
             animate="visible"
             transition={{ delay: 0.2 }}
-            className="mx-4 grid gap-5 md:grid-cols-2 md:gap-10 lg:gap-14 xl:grid-cols-3"
+            className="mx-4 grid gap-5 md:gap-10 min-[880px]:grid-cols-2 lg:gap-14 min-[1320px]:grid-cols-3"
           >
             {deviceList &&
               !loading &&
@@ -188,18 +203,36 @@ const Downloads = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     key={index}
                   >
-                    <div className="flex min-h-full w-[23rem] flex-col justify-between rounded-2xl border border-slate-800 bg-black pb-7 duration-100 ease-in lg:hover:scale-105">
+                    <div className="relative flex min-h-full w-[23rem] flex-col justify-between rounded-2xl border border-slate-800 bg-black pb-7 duration-100 ease-in lg:hover:scale-105">
                       <img
                         className="mx-auto my-4 flex size-56 object-contain"
                         src={`https://github.com/Evolution-X/www_gitres/blob/udc/devices/images/${device.codename}.png?raw=true`}
                         alt=""
                       />
+                      {device.data?.version === "10.0" && (
+                        <motion.img
+                          initial={{ scale: 0.8, rotate: -5 }}
+                          animate={{ scale: 0.9, rotate: 5 }}
+                          transition={{
+                            repeat: Infinity,
+                            repeatType: "mirror",
+                            duration: 0.7,
+                            type: "spring",
+                            damping: 5,
+                            stiffness: 30,
+                          }}
+                          viewport={{ once: true }}
+                          src={star}
+                          alt=""
+                          className="absolute right-[-20px] top-[-30px] size-20 sm:right-[-30px]"
+                        />
+                      )}
                       <div className="flex flex-col gap-6 px-7">
                         <div>
                           <p className="lg:text-md flex items-end justify-between text-sm text-[#999999]">
                             Device{" "}
                             <span className="ml-8 inline-flex h-5 items-center justify-center rounded-3xl bg-[#232323] p-4">
-                              <span className="text-md bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent lg:text-lg">
+                              <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent lg:text-lg">
                                 {device.codename}
                               </span>
                             </span>

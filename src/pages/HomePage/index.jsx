@@ -5,6 +5,7 @@ import { BackgroundGradientAnimation } from "../../components/ui/background-grad
 import { Meteors } from "../../components/ui/meteors.tsx"
 import evoloading from "../../assets/evoloading.gif"
 import evolution from "../../assets/evolution.svg"
+import a15logo from "../../assets/a15.png"
 import { motion } from "framer-motion"
 
 const variants = {
@@ -59,6 +60,7 @@ const HomePage = () => {
             variants={variants}
             initial="hidden"
             animate="visible"
+            viewport={{ once: true }}
           >
             <div className="inline-flex flex-col items-center text-4xl leading-tight sm:text-5xl lg:text-6xl">
               <p>
@@ -96,6 +98,7 @@ const HomePage = () => {
             initial="hidden"
             animate="visible"
             transition={{ delay: 0.1 }}
+            viewport={{ once: true }}
             className="MIDDLE z-40 inline-flex flex-col rounded-3xl px-8 pb-16 lg:px-16 lg:py-16"
           >
             <div className="inline-flex flex-col gap-9">
@@ -110,10 +113,10 @@ const HomePage = () => {
                   </p>
                   <div>
                     <p className="font-[Prod-normal] text-gray-400 lg:text-start lg:text-2xl">
-                      Get Android 14 for your device now
+                      Get Android 15 for your device now
                     </p>
                     <Link to={"downloads"}>
-                      <div className="mt-2.5 w-full rounded-full bg-[#f86734] px-7 py-3 text-center text-xl text-white lg:w-fit">
+                      <div className="mt-2.5 w-full rounded-full bg-[#34A853] px-7 py-3 text-center text-xl text-white lg:w-fit">
                         Download
                       </div>
                     </Link>
@@ -125,7 +128,7 @@ const HomePage = () => {
                   </p>
                   <div className="relative flex justify-center lg:w-60">
                     <img
-                      src={a14logo}
+                      src={a15logo}
                       alt="A14"
                       className="z-40 size-[12rem] sm:size-[10rem] lg:size-[12rem]"
                     />
@@ -169,6 +172,7 @@ const HomePage = () => {
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   transition={{ delay: 0.1 }}
+                  viewport={{ once: true }}
                 >
                   <img
                     src={`https://github.com/Evolution-X/www_gitres/blob/udc/screenshots/${ss}?raw=true`}
