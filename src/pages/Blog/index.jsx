@@ -1,5 +1,3 @@
-import postbg from "../../assets/postbg.png"
-import avatar from "../../assets/avatar.png"
 import { Link } from "react-router-dom"
 import evolution from "../../assets/evolution.svg"
 import { useState, useEffect } from "react"
@@ -15,72 +13,98 @@ export default function Blog() {
   const [loading, setLoading] = useState(true)
   const [blogIds, setBlogIds] = useState([])
   const [blogsList, setBlogsList] = useState([])
-  // Fetch the list of devices
+
+  // Fetch the list of blogs
   const fetchBlogIds = async () => {
     const url =
-      "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/udc/blogs/blogs.json"
+      "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/blogs/blogs.json"
 
     try {
       const response = await fetch(url)
       const blogsNo = await response.json()
       return blogsNo
     } catch (error) {
-      console.error("Error fetching devices:", error)
-      return [] // Return an empty array on error
-    } finally {
+      console.error("Error fetching blog IDs:", error)
+      return []
     }
   }
 
-  // Fetch individual device data
+  // Fetch individual blog data
   const fetchBlog = async () => {
-    // Wait for all device data to be fetched
     const data = await Promise.all(
       blogIds.map(async (blog) => {
-        const durl = `https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/udc/blogs/${blog}.json`
+        const durl = `https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/blogs/posts/${blog}.json`
         try {
           const fetchedBlog = await fetch(durl)
           const fetchedBlogData = await fetchedBlog.json()
           return fetchedBlogData
         } catch (error) {
           console.error(`Error fetching data for Blog ${blog}:`, error)
-          return null // Handle errors for individual devices
+          return null
         }
-      }),
+      })
     )
+    return data
+  }
 
-    return data // Return the resolved data
+  // Check if all backgrounds are loaded
+  const checkAllBackgroundsLoaded = (blogsList) => {
+    return new Promise((resolve, reject) => {
+      let loadedBackgroundsCount = 0
+      const totalBackgrounds = blogsList.length
+
+      blogsList.forEach((blog) => {
+        const background = new Image()
+        background.src = `https://github.com/Evolution-X/www_gitres/blob/main/blogs/post_backgrounds/${blog?.background}.png?raw=true`
+        background.onload = () => {
+          loadedBackgroundsCount++
+          if (loadedBackgroundsCount === totalBackgrounds) {
+            resolve()
+          }
+        }
+        background.onerror = () => {
+          reject(new Error(`Failed to load background ${blog?.background} for blog ${blog}`))
+        }
+      })
+    })
   }
 
   useEffect(() => {
     const loadBlogs = async () => {
       const data = await fetchBlogIds()
-      setBlogIds(data) // Set state after fetching the device list
+      setBlogIds(data)
     }
-    loadBlogs() // Call the async function inside useEffect
+    loadBlogs()
   }, [])
 
-  // Fetch and set device data when the `devices` state updates
   useEffect(() => {
-    const loadDeviceData = async () => {
+    const loadBlogData = async () => {
       if (blogIds.length > 0) {
         const data = await fetchBlog()
-        setBlogsList(data) // Set state with fetched device data
+        setBlogsList(data)
       }
     }
-
-    loadDeviceData() // Call the async function when devices state changes
-  }, [blogIds]) // Trigger when `devices` state changes
+    loadBlogData()
+  }, [blogIds])
 
   useEffect(() => {
-    if (blogsList.length > 0) {
-      setLoading(false)
+    const loadBackgrounds = async () => {
+      if (blogsList.length > 0) {
+        try {
+          await checkAllBackgroundsLoaded(blogsList)
+          setLoading(false)
+        } catch (error) {
+          console.error("Error loading backgrounds:", error)
+        }
+      }
     }
+    loadBackgrounds()
   }, [blogsList])
 
   return (
     <>
       {loading && (
-        <img className="mx-auto" src={evoloading} alt="loading ..." />
+        <img className="mx-auto" src={evoloading} alt="Loading..." />
       )}
       {!loading && blogsList && (
         <motion.div
@@ -91,7 +115,7 @@ export default function Blog() {
         >
           <div className="inline-flex flex-col items-center justify-center">
             <p className="inline-flex flex-row items-baseline gap-4 text-4xl font-bold lg:text-6xl">
-              <img className="h-7 sm:h-8 lg:h-11" src={evolution} alt="" />
+              <img className="h-7 sm:h-8 lg:h-11" src={evolution} alt="Logo" />
               <span className="font-[Prod-bold] text-[#afbdf3]">Blog</span>
             </p>
           </div>
@@ -106,18 +130,19 @@ export default function Blog() {
             <div className="posts mx-3 grid gap-6 sm:grid-cols-2 lg:gap-16 xl:mx-16">
               {blogsList.map((blog, index) => (
                 <Link to={`/blog/${blog.blogId}`} key={index}>
-                  <div
-                    className="relative flex h-[240px] flex-col rounded-3xl ring ring-slate-500/10 duration-100 ease-linear hover:scale-105"
-                    key={index}
-                  >
+                  <div className="relative flex h-[240px] flex-col rounded-3xl ring ring-slate-500/10 duration-100 ease-linear hover:scale-105">
                     <img
-                      src={postbg}
-                      alt="postbg"
+                      src={`https://github.com/Evolution-X/www_gitres/blob/main/blogs/post_backgrounds/${blog?.background}.png?raw=true`}
+                      alt="Post Background"
                       className="absolute h-full w-full rounded-3xl"
                     />
                     <div className="z-40 inline-flex flex-grow flex-col justify-between p-8">
                       <div className="inline-flex gap-3">
-                        <img src={avatar} alt="postbg" />
+                        <img
+                          src={`https://avatars.githubusercontent.com/${blog?.github}`}
+                          alt={`${blog?.author}'s avatar`}
+                          className="rounded-full h-12 w-12"
+                        />
                         <div className="inline-flex flex-col text-xl">
                           <p>{blog?.author}</p>
                           <p>{blog?.date}</p>

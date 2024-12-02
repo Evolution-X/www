@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import a14logo from "../../assets/android14.png"
 import { BackgroundGradientAnimation } from "../../components/ui/background-gradient-animation.tsx"
 import { Meteors } from "../../components/ui/meteors.tsx"
 import evoloading from "../../assets/evoloading.gif"
 import evolution from "../../assets/evolution.svg"
-import a15logo from "../../assets/a15.png"
 import { motion } from "framer-motion"
 
 const variants = {
@@ -15,41 +13,62 @@ const variants = {
 
 const HomePage = () => {
   const [loading, setLoading] = useState(true)
+  const [androidVersion, setAndroidVersion] = useState(null)
   const [screenshots, setScreenshots] = useState([])
 
-  const fetchSS = async () => {
+  const fetchAndroidVersion = async () => {
     const url =
-      "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/udc/screenshots/screenshots.json"
+      "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/version/latestversion.json"
     try {
       const response = await fetch(url)
-      const fetchedSS = await response.json()
-      return fetchedSS
+      const data = await response.json()
+      const version = Object.keys(data)[0]
+      setAndroidVersion(version)
     } catch (error) {
-      console.error(`Error fetching data for ${fetchSS}:`, error)
-      return null // Return null in case of an error
+      console.error("Error fetching Android version:", error)
+    }
+  }
+
+  const fetchScreenshots = async () => {
+    const url =
+      "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/screenshots/screenshots.json"
+    try {
+      const response = await fetch(url)
+      const fetchedScreenshots = await response.json()
+      return fetchedScreenshots
+    } catch (error) {
+      console.error(`Error fetching data for ${fetchScreenshots}:`, error)
+      return null
     }
   }
 
   useEffect(() => {
-    const loadSS = async () => {
-      const data = await fetchSS()
-      setScreenshots(data) // Set state after fetching the device list
+    const loadAndroidVersion = async () => {
+      await fetchAndroidVersion()
     }
-    loadSS() // Call the async function inside useEffect
+    loadAndroidVersion()
   }, [])
 
   useEffect(() => {
-    if (screenshots.length > 0) {
+    const loadScreenshots = async () => {
+      const data = await fetchScreenshots()
+      setScreenshots(data)
+    }
+    loadScreenshots()
+  }, [])
+
+  useEffect(() => {
+    if (androidVersion && screenshots.length > 0) {
       setLoading(false)
     }
-  }, [screenshots])
+  }, [androidVersion, screenshots])
 
   return (
     <>
       {loading && (
         <>
           <BackgroundGradientAnimation />
-          <img className="z-50 m-auto" src={evoloading} alt="loading ..." />
+          <img className="z-50 m-auto" src={evoloading} alt="Loading ..." />
         </>
       )}
       {!loading && (
@@ -113,7 +132,7 @@ const HomePage = () => {
                   </p>
                   <div>
                     <p className="font-[Prod-normal] text-gray-400 lg:text-start lg:text-2xl">
-                      Get Android 15 for your device now
+                      Get Android {androidVersion} for your device now
                     </p>
                     <Link to={"downloads"}>
                       <div className="mt-2.5 w-full rounded-full bg-[#34A853] px-7 py-3 text-center text-xl text-white lg:w-fit">
@@ -128,8 +147,8 @@ const HomePage = () => {
                   </p>
                   <div className="relative flex justify-center lg:w-60">
                     <img
-                      src={a15logo}
-                      alt="A14"
+                      src={`https://github.com/Evolution-X/www_gitres/blob/main/version/androidversion.png?raw=true`}
+                      alt=""
                       className="z-40 size-[12rem] sm:size-[10rem] lg:size-[12rem]"
                     />
                     <Meteors number={25} className="hidden lg:block" />
@@ -166,7 +185,7 @@ const HomePage = () => {
           </motion.div>
           <div className="z-40 flex items-center justify-center rounded-3xl">
             <div className="z-40 grid w-5/6 grid-cols-2 gap-10 md:grid-cols-4">
-              {screenshots.map((ss, index) => (
+              {screenshots.map((screenshot, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0 }}
@@ -175,7 +194,7 @@ const HomePage = () => {
                   viewport={{ once: true }}
                 >
                   <img
-                    src={`https://github.com/Evolution-X/www_gitres/blob/udc/screenshots/${ss}?raw=true`}
+                    src={`https://github.com/Evolution-X/www_gitres/blob/main/screenshots/${screenshot}.png?raw=true`}
                     alt=""
                   />
                 </motion.div>

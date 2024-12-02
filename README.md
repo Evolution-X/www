@@ -16,4 +16,4 @@ npm start
 
 ## Credits
 - Designed by Kshitij
-- Developed by Zirgom Haidar & Pratham Kalra
+- Developed by Zirgom Haidar, Pratham Kalra & Anierin Bliss

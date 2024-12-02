@@ -1,10 +1,8 @@
-import React, { useEffect } from "react"
-import { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import evoloading from "../../assets/evoloading.gif"
 import iphone from "../../assets/iphone.gif"
 import evolution from "../../assets/evolution.svg"
-import star from "../../assets/star.svg"
 import { motion } from "framer-motion"
 
 const variants = {
@@ -13,12 +11,14 @@ const variants = {
 }
 
 const Downloads = () => {
-  const [devices, setDevices] = useState([])
+  const [devices, setDevices] = useState({})
   const [deviceList, setDeviceList] = useState([])
   const [loading, setLoading] = useState(true)
   const [oem, setOem] = useState(null)
-  const [searchQuery, setSearchQuery] = useState("") // Search query state
+  const [searchQuery, setSearchQuery] = useState("")
   const [apple, setApple] = useState(false)
+  const [latestVersionMapping, setLatestVersionMapping] = useState({})
+  const [latestVersionSVG, setLatestVersionSVG] = useState(null)
 
   // Toggle OEM filter
   const oemToggle = (deviceOem) => {
@@ -26,43 +26,91 @@ const Downloads = () => {
   }
 
   const brands = Array.from(
-    new Set(deviceList.map((device) => device.data?.oem)),
+    new Set(deviceList.map((device) => device.data?.oem))
   )
 
   // Fetch devices list
   const fetchDevices = async () => {
     const url =
-      "https://raw.githubusercontent.com/Evolution-X/www_gitres/udc/devices/devices.json"
-
+      "https://raw.githubusercontent.com/Evolution-X/www_gitres/main/devices/devices.json"
     try {
       const response = await fetch(url)
-      return await response.json()
+      const devicesData = await response.json()
+      return devicesData
     } catch (error) {
       console.error("Error fetching devices:", error)
-      return [] // Return an empty array on error
+      return {}
     }
   }
 
-  // Fetch device data from a given base path
-  const fetchDeviceData = async (basePath) => {
+  // Fetch device data
+  const fetchDeviceData = async (devices) => {
     try {
       const data = await Promise.all(
-        devices.map(async (device) => {
-          const deviceUrl = `${basePath}/${device}.json`
-          try {
-            const response = await fetch(deviceUrl)
-            const deviceData = await response.json()
-            return { codename: device, data: deviceData.response[0] }
-          } catch (error) {
-            console.error(`Error fetching data for device ${device}:`, error)
-            return { codename: device, data: null } // Handle individual device errors
-          }
-        }),
+        Object.entries(devices).map(async ([device, branches]) => {
+          // Filter out vanilla branches
+          const filteredBranches = branches.filter(
+            (branch) => !branch.includes("-vanilla")
+          )
+
+          const deviceDataList = await Promise.all(
+            filteredBranches.map(async (branch) => {
+              const deviceUrl = `https://raw.githubusercontent.com/Evolution-X/OTA/${branch}/builds/${device}.json`
+              try {
+                const response = await fetch(deviceUrl)
+                const deviceData = await response.json()
+                return { codename: device, branch, data: deviceData.response[0] }
+              } catch (error) {
+                console.error(
+                  `Error fetching data for device ${device} on branch ${branch}:`,
+                  error
+                )
+                return { codename: device, branch, data: null }
+              }
+            })
+          )
+
+          return deviceDataList.filter((item) => item.data)
+        })
       )
-      return data
+      return data.flat()
     } catch (error) {
       console.error("Error fetching device data:", error)
       return []
+    }
+  }
+
+  // Fetch latest version mapping
+  const fetchLatestVersion = async () => {
+    const url =
+      "https://raw.githubusercontent.com/Evolution-X/www_gitres/main/version/latestversion.json"
+    try {
+      const response = await fetch(url)
+      const versionData = await response.json()
+      setLatestVersionMapping(versionData)
+    } catch (error) {
+      console.error("Error fetching latest version mapping:", error)
+    }
+  }
+
+  // Check if a device supports the latest version
+  const supportsLatestVersion = (branches) => {
+    const latestVersions = Object.values(latestVersionMapping).flat()
+    return branches.some((branch) =>
+      latestVersions.some((version) => branch.includes(version))
+    )
+  }
+
+  // Fetch latest version SVG
+  const fetchLatestVersionSVG = async () => {
+    const latestVersionUrl =
+      "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/version/latestversion.svg"
+    try {
+      const response = await fetch(latestVersionUrl)
+      const latestVersionData = await response.text()
+      setLatestVersionSVG(latestVersionData)
+    } catch (error) {
+      console.error("Error fetching latest version SVG:", error)
     }
   }
 
@@ -71,29 +119,21 @@ const Downloads = () => {
     const loadDevices = async () => {
       const devicesData = await fetchDevices()
       setDevices(devicesData)
+      fetchLatestVersion()
+      fetchLatestVersionSVG()
     }
     loadDevices()
   }, [])
 
-  // Fetch device data when devices list is loaded
   useEffect(() => {
     const loadDeviceData = async () => {
-      if (devices.length > 0) {
-        const basePath1 =
-          "https://raw.githubusercontent.com/Evolution-X/OTA/udc/builds"
-        const basePath2 =
-          "https://raw.githubusercontent.com/Evolution-X/OTA/vic/builds"
-
-        const [data1, data2] = await Promise.all([
-          fetchDeviceData(basePath1),
-          fetchDeviceData(basePath2),
-        ])
-
-        const combinedList = [...data1, ...data2]
+      if (Object.keys(devices).length > 0 && Object.keys(latestVersionMapping).length > 0) {
+        const data = await fetchDeviceData(devices)
+        const combinedList = data
           .filter((item) => item.data) // Ensure only items with 'data' are processed
           .reduce((acc, curr) => {
             const existingItemIndex = acc.findIndex(
-              (x) => x.codename === curr.codename,
+              (x) => x.codename === curr.codename
             )
 
             if (existingItemIndex !== -1) {
@@ -109,18 +149,17 @@ const Downloads = () => {
           }, [])
           .sort((a, b) => b.data.timestamp - a.data.timestamp)
 
-        console.log(combinedList)
         setDeviceList(combinedList)
         setLoading(false)
       }
     }
     loadDeviceData()
-  }, [devices])
+  }, [devices, latestVersionMapping])
 
   return (
     <>
       {loading && (
-        <img className="mx-auto" src={evoloading} alt="loading ..." />
+        <img className="mx-auto" src={evoloading} alt="Loading..." />
       )}
 
       {!loading && (
@@ -152,7 +191,7 @@ const Downloads = () => {
                 {brands.map((brand, index) => (
                   <button
                     onClick={() => oemToggle(brand)}
-                    className={`brandSelect ${oem === brand ? "bg-[#7e76dd]" : ""}`}
+                    className={`buttonSelect ${oem === brand ? "bg-[#7e76dd]" : ""}`}
                     key={index}
                   >
                     {brand}
@@ -161,6 +200,7 @@ const Downloads = () => {
               </div>
             </div>
           </motion.div>
+
           {!loading && apple && (
             <div className="text-center">
               <h2 className="text-2xl">
@@ -194,71 +234,77 @@ const Downloads = () => {
                       device.data?.oem.toLowerCase() +
                       " " +
                       device.data?.device.toLowerCase()
-                    ).includes(searchQuery.toLowerCase()),
+                    ).includes(searchQuery.toLowerCase())
                 )
-                .map((device, index) => (
-                  <motion.div
-                    variants={variants}
-                    initial={{ opacity: 0, scale: 0.75 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    key={index}
-                  >
-                    <div className="relative flex min-h-full w-[23rem] flex-col justify-between rounded-2xl border border-slate-800 bg-black pb-7 duration-100 ease-in lg:hover:scale-105">
-                      <img
-                        className="mx-auto my-4 flex size-56 object-contain"
-                        src={`https://github.com/Evolution-X/www_gitres/blob/udc/devices/images/${device.codename}.png?raw=true`}
-                        alt=""
-                      />
-                      {device.data?.version === "10.0" && (
-                        <motion.img
-                          initial={{ scale: 0.8, rotate: -5 }}
-                          animate={{ scale: 0.9, rotate: 5 }}
-                          transition={{
-                            repeat: Infinity,
-                            repeatType: "mirror",
-                            duration: 0.7,
-                            type: "spring",
-                            damping: 5,
-                            stiffness: 30,
-                          }}
-                          viewport={{ once: true }}
-                          src={star}
+                .map((device, index) => {
+                  // Check if device supports the latest version
+                  const isSupported = supportsLatestVersion(devices[device.codename])
+
+                  return (
+                    <motion.div
+                      variants={variants}
+                      initial={{ opacity: 0, scale: 0.75 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      key={index}
+                    >
+                      <div className="relative flex min-h-full w-[23rem] flex-col justify-between rounded-2xl border border-slate-800 bg-black pb-7 duration-100 ease-in lg:hover:scale-105">
+                        <img
+                          className="mx-auto my-4 flex size-56 object-contain"
+                          src={`https://github.com/Evolution-X/www_gitres/blob/main/devices/images/${device.codename}.png?raw=true`}
                           alt=""
-                          className="absolute right-[-20px] top-[-30px] size-20 sm:right-[-30px]"
                         />
-                      )}
-                      <div className="flex flex-col gap-6 px-7">
-                        <div>
-                          <p className="lg:text-md flex items-end justify-between text-sm text-[#999999]">
-                            Device{" "}
-                            <span className="ml-8 inline-flex h-5 items-center justify-center rounded-3xl bg-[#232323] p-4">
-                              <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent lg:text-lg">
-                                {device.codename}
+                        {isSupported && latestVersionSVG && (
+                          <motion.div
+                            initial={{ scale: 0.8, rotate: -5 }}
+                            animate={{ scale: 0.9, rotate: 5 }}
+                            transition={{
+                              repeat: Infinity,
+                              repeatType: "mirror",
+                              duration: 0.7,
+                              type: "spring",
+                              damping: 5,
+                              stiffness: 30,
+                            }}
+                            viewport={{ once: true }}
+                            dangerouslySetInnerHTML={{
+                              __html: latestVersionSVG,
+                            }}
+                            className="absolute right-[-20px] top-[-30px] size-20 sm:right-[-30px]"
+                          />
+                        )}
+                        <div className="flex flex-col gap-6 px-7">
+                          <div>
+                            <p className="lg:text-md flex items-end justify-between text-sm text-[#999999]">
+                              Device{" "}
+                              <span className="ml-8 inline-flex h-5 items-center justify-center rounded-3xl bg-[#232323] p-4">
+                                <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent lg:text-lg">
+                                  {device.codename}
+                                </span>
                               </span>
-                            </span>
-                          </p>
-                          <p className="mt-0 font-[Prod-Medium] text-xl text-white lg:text-2xl">
-                            {device.data?.device}
-                          </p>
+                            </p>
+                            <p className="mt-0 font-[Prod-Medium] text-xl text-white lg:text-2xl">
+                              {device.data?.oem} {device.data?.device}
+                            </p>
+                          </div>
+                          <div className="inline-flex flex-col items-start justify-start">
+                            <p className="lg:text-md text-sm text-[#999999]">
+                              Maintainer
+                            </p>
+                            <p className="font-[Prod-Medium] text-lg text-white lg:text-2xl">
+                              {device.data?.maintainer}
+                            </p>
+                          </div>
+                          <Link
+                            to={`/downloads/${device.codename}`}
+                            className="inline-flex h-16 items-center justify-center rounded-full bg-[#5b60e3] text-xl text-white"
+                          >
+                            Get Evolution X
+                          </Link>
                         </div>
-                        <div className="inline-flex flex-col items-start justify-start">
-                          <p className="lg:text-md text-sm text-[#999999]">
-                            Maintainer
-                          </p>
-                          <p className="font-[Prod-Medium] text-lg text-white lg:text-2xl">
-                            {device.data?.maintainer}
-                          </p>
-                        </div>
-                        <Link
-                          to={`/downloads/${device.codename}`}
-                          className="inline-flex h-16 items-center justify-center rounded-full bg-[#5b60e3] text-xl text-white"
-                        >
-                          Get Evolution X
-                        </Link>
                       </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  )
+                })}
           </motion.div>
         </div>
       )}

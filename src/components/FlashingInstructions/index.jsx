@@ -2,29 +2,30 @@ import React, { useEffect, useState } from "react"
 import Markdown from "react-markdown"
 
 const FlashingInstructions = (props) => {
+  const { codename, branch } = props
   const [instructions, setInstructions] = useState()
 
   const fetchInstructions = async () => {
-    const codename = props.codename
-    const url = `https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/udc/devices/instructions/${codename}.md`
+    const url = `https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/devices/instructions/${branch}/${codename}.md`
     try {
       const logs = await fetch(url)
       const data = await logs.text()
       return data
     } catch (error) {
       console.error(
-        "Error fetching instructions for device " + props.codename,
-        error,
+        "Error fetching instructions for device " + codename,
+        error
       )
     }
   }
+
   useEffect(() => {
     const fetchResponse = async () => {
       const response = await fetchInstructions()
       setInstructions(response)
     }
     fetchResponse()
-  }, [])
+  }, [codename, branch])
 
   return (
     <div>

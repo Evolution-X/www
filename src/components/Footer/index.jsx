@@ -64,13 +64,21 @@ function index() {
           >
             <span className="font-[Prod-bold] underline">Prathamk07</span>
           </a>
-          <span> & </span>
+          <span> , </span>
           <a
             href={"https://github.com/ZirgomHaidar"}
             target="_blank"
             rel="noreferrer"
           >
             <span className="font-[Prod-bold] underline">Zirgom Haidar</span>
+          </a>
+          <span> & </span>
+          <a
+            href={"https://github.com/AnierinBliss"}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span className="font-[Prod-bold] underline">Anierin Bliss</span>
           </a>
         </div>
       </div>

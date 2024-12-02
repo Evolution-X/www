@@ -12,7 +12,7 @@ export default function BlogSection() {
   const [isCopied, setIsCopied] = useState(false)
 
   const fetchBlog = async () => {
-    const url = `https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/udc/blogs/${blogId}.json`
+    const url = `https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/blogs/posts/${blogId}.json`
     try {
       const response = await fetch(url)
       const fetchedBlog = await response.json()
@@ -63,7 +63,7 @@ export default function BlogSection() {
         <img
           className="mx-auto my-auto w-4/5 lg:w-2/5"
           src={evoloading}
-          alt="loading ..."
+          alt="Loading ..."
         />
       )}
       {!loading && (
