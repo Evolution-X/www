@@ -111,14 +111,13 @@ export default function Blog() {
           variants={variants}
           initial="hidden"
           animate="visible"
-          className="mx-4 flex flex-col items-center justify-center gap-10 md:gap-20 lg:mx-16"
+          className="mx-4 flex flex-col items-center justify-center gap-10 md:gap-20 lg:mx-16 xl:mx-auto xl:w-[64rem]"
         >
-          <div className="inline-flex flex-col items-center justify-center">
-            <p className="inline-flex flex-row items-baseline gap-4 text-4xl font-bold lg:text-6xl">
-              <img className="h-7 sm:h-8 lg:h-11" src={evolution} alt="Logo" />
-              <span className="font-[Prod-bold] text-[#afbdf3]">Blog</span>
-            </p>
+          <div className="inline-flex flex-col items-baseline gap-2 text-center font-[Prod-bold] text-4xl sm:flex-row sm:text-5xl lg:gap-4 lg:text-6xl">
+            <img className="h-7 sm:h-10 lg:h-12" src={evolution} alt="Logo" />
+            <span className="text-[#afbdf3]">Blog</span>
           </div>
+
           <div className="flex w-full flex-col gap-10 rounded-3xl bg-black px-2 py-8 lg:px-14 lg:pb-16">
             <div className="inline-flex h-9 items-center font-[Prod-bold]">
               <hr className="w-9 rotate-90 border-2 border-[#6487fb]" />

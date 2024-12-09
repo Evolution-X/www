@@ -2,8 +2,11 @@ import { motion } from "framer-motion"
 import React, { useEffect, useState } from "react"
 import evoloading from "../../assets/evoloading.gif"
 import evolution from "../../assets/evolution.svg"
-import founder from "../../assets/Founders.svg"
-import ourteam from "../../assets/OurTeam.svg"
+
+const variants = {
+  hidden: { opacity: 0, y: 75, transition: { delay: 0.2 } },
+  visible: { opacity: 1, y: 0, transition: { delay: 0.2 } },
+}
 
 const Team = () => {
   const [teamData, setTeamData] = useState(null)
@@ -50,18 +53,18 @@ const Team = () => {
   }
 
   return (
-    <>
-      {/* Founders */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="z-10 flex flex-col items-center gap-2 px-4 text-center lg:-mt-14 lg:gap-7"
-      >
-        <p className="inline-flex flex-row items-baseline gap-4 text-4xl font-bold lg:text-6xl">
-          <span className="font-[Prod-bold] text-[#afbdf3]">Team</span>
-          <img className="h-7 sm:h-8 lg:h-11" src={evolution} alt="Logo" />
-        </p>
-      </motion.div>
+    <motion.div
+      variants={variants}
+      initial="hidden"
+      animate="visible"
+      className="mx-4 flex flex-col items-center justify-center gap-10 md:gap-20 lg:mx-16 xl:mx-auto xl:w-[64rem]"
+    >
+      <div className="inline-flex flex-col items-baseline gap-2 text-center font-[Prod-bold] text-4xl sm:flex-row sm:text-5xl lg:gap-4 lg:text-6xl">
+        <span className="text-[#afbdf3]">Team</span>
+        <img className="h-7 sm:h-10 lg:h-12" src={evolution} alt="Logo" />
+      </div>
+      
+      {/* Founders Section */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -72,14 +75,14 @@ const Team = () => {
           <Card list={teamData.founders} shadowOn={true} />
         </div>
       </motion.div>
-      <img
-        className="absolute left-0 top-[550px] z-0 my-auto sm:top-[570px] md:top-[370px] lg:top-[160px] xl:top-[200px] 2xl:top-[260px]"
-        alt=""
-        src={founder}
-      />
 
       {/* Team Section */}
-      <div className="mx-auto mb-12 flex w-fit flex-col items-center justify-center border-4 border-[#afbdf3] px-10 pb-20 pt-10 xl:p-10">
+      <motion.div
+        variants={variants}
+        initial="hidden"
+        animate="visible"
+        className="mx-auto mb-12 flex w-fit flex-col items-center justify-center border-4 border-[#afbdf3] px-10 pb-20 pt-10 xl:p-10"
+      >
         <div className="-my-14 flex flex-col items-center justify-between text-xs">
           <div className="mb-12 w-fit bg-[#040214] px-3 text-2xl">Project Members</div>
           <Card list={teamData.teamMembers} shadowOn={false} />
@@ -87,11 +90,15 @@ const Team = () => {
             These are some of the people who have helped bring us here today
           </div>
         </div>
-        <img className="absolute right-0 z-0 my-auto" alt="" src={ourteam} />
-      </div>
+      </motion.div>
 
       {/* Maintainers Section */}
-      <div className="mx-auto mb-12 flex w-fit flex-col items-center justify-center border-4 border-[#afbdf3] px-10 pb-20 pt-10 xl:p-10">
+      <motion.div
+        variants={variants}
+        initial="hidden"
+        animate="visible"
+        className="mx-auto mb-12 flex w-fit flex-col items-center justify-center border-4 border-[#afbdf3] px-10 pb-20 pt-10 xl:p-10"
+      >
         <div className="-my-14 flex flex-col items-center justify-between text-xs">
           <div className="mb-12 w-fit bg-[#040214] px-3 text-2xl">Maintainers</div>
           <Card list={maintainersData.maintainers} shadowOn={false} isMaintainer={true} />
@@ -99,10 +106,15 @@ const Team = () => {
             These are the amazing individuals maintaining Evolution X
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* About Evolution X */}
-      <div className="z-10 mx-10 flex flex-col items-center justify-center gap-10 sm:mx-24 xl:flex-row">
+      <motion.div
+        variants={variants}
+        initial="hidden"
+        animate="visible"
+        className="z-10 mx-10 flex flex-col items-center justify-center gap-10 sm:mx-24 xl:flex-row"
+      >
         <div className="space-y-10 md:text-center xl:text-left">
           <div className="text-nowrap !bg-clip-text text-4xl text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [background:linear-gradient(92deg,_#2fc1ee,_#dbe6ea)] lg:text-5xl">
             About Evolution X
@@ -120,8 +132,8 @@ const Team = () => {
           alt="Evolution X Banner"
           src={`https://raw.githubusercontent.com/Evolution-X/www_gitres/main/team/banner.png`}
         />
-      </div>
-    </>
+      </motion.div>
+    </motion.div>
   )
 }
 
