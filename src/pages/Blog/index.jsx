@@ -80,7 +80,7 @@ export default function Blog() {
   useEffect(() => {
     const loadBlogData = async () => {
       if (blogIds.length > 0) {
-        const data = await fetchBlog()
+        const data = (await fetchBlog()).sort((a, b) => new Date(b.date) - new Date(a.date))
         setBlogsList(data)
       }
     }
