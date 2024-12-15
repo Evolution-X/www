@@ -115,7 +115,7 @@ export default function Blog() {
         >
           <div className="inline-flex flex-col items-baseline gap-2 text-center font-[Prod-bold] text-4xl sm:flex-row sm:text-5xl lg:gap-4 lg:text-6xl">
             <img className="h-7 sm:h-10 lg:h-12" src={evolution} alt="Logo" />
-            <span className="text-[#afbdf3]">Blog</span>
+            <span className="evoxhighlight">Blog</span>
           </div>
 
           <div className="flex w-full flex-col gap-10 rounded-3xl bg-black px-2 py-8 lg:px-14 lg:pb-16">

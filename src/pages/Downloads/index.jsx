@@ -172,7 +172,7 @@ const Downloads = () => {
             className="mx-4 inline-flex min-w-[20rem] flex-col items-center justify-center gap-8 sm:mx-6 sm:min-w-[32rem] lg:w-[60rem] lg:gap-12 xl:w-[64rem]"
           >
             <div className="inline-flex flex-col items-baseline gap-2 text-center font-[Prod-bold] text-4xl sm:flex-row sm:text-5xl lg:gap-4 lg:text-6xl">
-              <span className="text-[#afbdf3]">Download</span>
+              <span className="evoxhighlight">Download</span>
               <img className="h-7 sm:h-10 lg:h-12" src={evolution} alt="" />
             </div>
             <div className="space-y-4">

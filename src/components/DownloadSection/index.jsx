@@ -12,11 +12,6 @@ const variants = {
   visible: { opacity: 1, y: 0 }
 }
 
-const versionUrl =
-  "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/version/versions.json"
-const deviceUrl =
-  "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/devices/devices.json"
-
 const DownloadSection = () => {
   const { codename } = useParams()
   const [loading, setLoading] = useState(true)
@@ -35,11 +30,15 @@ const DownloadSection = () => {
       try {
         setLoading(true)
 
-        const versionsResponse = await fetch(versionUrl)
+        const versionsResponse = await fetch(
+          "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/version/versions.json"
+        )
         const versionsData = await versionsResponse.json()
         setAndroidVersions(versionsData)
 
-        const devicesResponse = await fetch(deviceUrl)
+        const devicesResponse = await fetch(
+          "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/devices/devices.json"
+        )
         const devicesData = await devicesResponse.json()
 
         const branches = devicesData[codename] || []

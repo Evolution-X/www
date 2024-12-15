@@ -60,7 +60,7 @@ const Team = () => {
       className="mx-4 flex flex-col items-center justify-center gap-10 md:gap-20 lg:mx-16 xl:mx-auto xl:w-[64rem]"
     >
       <div className="inline-flex flex-col items-baseline gap-2 text-center font-[Prod-bold] text-4xl sm:flex-row sm:text-5xl lg:gap-4 lg:text-6xl">
-        <span className="text-[#afbdf3]">Team</span>
+        <span className="evoxhighlight">Team</span>
         <img className="h-7 sm:h-10 lg:h-12" src={evolution} alt="Logo" />
       </div>
       
