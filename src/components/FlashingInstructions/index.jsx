@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import Markdown from "react-markdown"
+import 'github-markdown-css/github-markdown-dark.css';
 
 const FlashingInstructions = (props) => {
   const { codename, branch } = props
@@ -28,13 +29,14 @@ const FlashingInstructions = (props) => {
   }, [codename, branch])
 
   return (
-    <div>
+    <div
+      className="markdown-body"
+      style={{ backgroundColor: '#292524' }}
+    >
       {instructions && (
-        <pre>
-          <Markdown className="text-wrap text-[0.9rem] xl:text-lg">
-            {instructions}
-          </Markdown>
-        </pre>
+        <Markdown className="text-wrap text-[0.9rem] xl:text-lg">
+          {instructions}
+        </Markdown>
       )}
     </div>
   )
