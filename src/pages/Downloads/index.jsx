@@ -235,7 +235,9 @@ const Downloads = () => {
                       device.data?.oem.toLowerCase() +
                       " " +
                       device.data?.device.toLowerCase()
-                    ).includes(searchQuery.toLowerCase())
+                    ).includes(searchQuery.toLowerCase()) || // Match OEM and device name
+                    (device.data?.maintainer?.toLowerCase().includes(searchQuery.toLowerCase())) || // Match maintainer
+                    (device.data?.github?.toLowerCase().includes(searchQuery.toLowerCase())) // Match GitHub
                 )
                 .map((device, index) => {
                   // Check if device supports the latest version
