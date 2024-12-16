@@ -154,7 +154,7 @@ function Card({ list, shadowOn, isMaintainer = false }) {
           : `https://github.com/${item.github}`
 
         const devicesList = isMaintainer && item.devices ? (
-          <div className="text-xs mt-2 text-gray-300">
+          <div className="text-xs">
             {item.devices.map((device, deviceIndex) => (
               <div key={deviceIndex}>{device}</div>
             ))}
