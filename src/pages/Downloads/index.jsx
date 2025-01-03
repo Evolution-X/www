@@ -4,6 +4,7 @@ import evoloading from "../../assets/evoloading.gif"
 import iphone from "../../assets/iphone.gif"
 import evolution from "../../assets/evolution.svg"
 import { motion } from "framer-motion"
+import { Helmet } from "react-helmet"
 
 const variants = {
   hidden: { opacity: 0, y: 50 },
@@ -158,6 +159,21 @@ const Downloads = () => {
 
   return (
     <>
+      <Helmet>
+        <meta property="og:title" content="Evolution X - Downloads" />
+        <meta
+          property="og:description"
+          content="Download Evolution X for your device!"
+        />
+        <meta property="og:url" content="https://evolution-x.org/downloads" />
+        <meta
+          property="og:image"
+          content="https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/team/banner.png"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Evolution X" />
+      </Helmet>
+
       {loading && (
         <img className="mx-auto" src={evoloading} alt="Loading..." />
       )}

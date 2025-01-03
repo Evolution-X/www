@@ -3,6 +3,7 @@ import evolution from "../../assets/evolution.svg"
 import { useState, useEffect } from "react"
 import evoloading from "../../assets/evoloading.gif"
 import { motion } from "framer-motion"
+import { Helmet } from "react-helmet"
 
 const variants = {
   hidden: { opacity: 0, y: 75, transition: { delay: 0.2 } },
@@ -103,6 +104,21 @@ export default function Blog() {
 
   return (
     <>
+      <Helmet>
+        <meta property="og:title" content="Evolution X - Blogs" />
+        <meta
+          property="og:description"
+          content="Stay up to date with the latest news and updates from Evolution X!"
+        />
+        <meta property="og:url" content="https://evolution-x.org/blog" />
+        <meta
+          property="og:image"
+          content="https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/team/banner.png"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Evolution X Blog" />
+      </Helmet>
+
       {loading && (
         <img className="mx-auto" src={evoloading} alt="Loading..." />
       )}
