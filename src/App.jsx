@@ -3,9 +3,10 @@ import HomePage from "./pages/HomePage"
 import Team from "./pages/Team"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
-import NotFound from "./pages/NotFound"
 import Downloads from "./pages/Downloads"
 import Blog from "./pages/Blog"
+import Merch from "./pages/Merch"
+import NotFound from "./pages/NotFound"
 import BlogSection from "./components/BlogSection"
 import DownloadSection from "./components/DownloadSection"
 import "./fonts/style.css"
@@ -28,6 +29,7 @@ function App() {
                 />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:blogId" element={<BlogSection />} />
+                <Route path="/merch" element={<Merch />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>

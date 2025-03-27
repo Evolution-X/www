@@ -64,6 +64,11 @@ export default function Navbar() {
           </NavLink>
         </li>
         <li>
+          <NavLink to={"/merch"} onClick={closeMenu}>
+            merch
+          </NavLink>
+        </li>
+        <li>
           <Link
             to={"https://wiki.evolution-x.org/"}
             target="_blank"
