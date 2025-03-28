@@ -5,6 +5,7 @@ import { Meteors } from "../../components/ui/meteors.tsx"
 import evoloading from "../../assets/evoloading.gif"
 import evolution from "../../assets/evolution.svg"
 import { motion } from "framer-motion"
+import { ArrowOutwardIcon } from "../../components/ui/icons.tsx"
 
 const variants = {
   hidden: { opacity: 0, y: 75 },
@@ -97,18 +98,25 @@ const HomePage = () => {
               </p>
             </div>
             <div className="inline-flex flex-col items-center gap-2 pt-3 text-center sm:flex-row sm:gap-3 lg:flex-row lg:gap-6">
-              <Link
-                to="/downloads"
-                className="homebutton min-w-[11rem] border-[0.13rem] px-7 py-3 md:border-none"
-              >
-                <div className="">Download ROM</div>
+              <Link to="/downloads">
+                <motion.div
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ scale: 1 }}
+                  className="homebutton min-w-[11rem] border-[0.13rem] px-7 py-3 md:border-none"
+                >
+                  <div className="">Download ROM</div>
+                </motion.div>
               </Link>
-              <Link
-                className="min-w-[11rem] rounded-full border-[0.13rem] bg-transparent px-7 py-3 text-white"
-                to="https://wiki.evolution-x.org/"
-                target="_blank"
-              >
-                Learn More
+              <Link to="https://wiki.evolution-x.org/" target="_blank">
+                <motion.div
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ scale: 1 }}
+                  className="min-w-[11rem] rounded-full border-[0.13rem] bg-transparent px-7 py-3 text-white"
+                >
+                  <div className="inline-flex items-center gap-2">
+                    Learn More <ArrowOutwardIcon />
+                  </div>
+                </motion.div>
               </Link>
             </div>
           </motion.div>
@@ -135,9 +143,13 @@ const HomePage = () => {
                       Get Android {androidVersion} for your device now
                     </p>
                     <Link to={"downloads"}>
-                      <div className="mt-2.5 w-full rounded-full bg-[#34A853] px-7 py-3 text-center text-xl text-white lg:w-fit">
+                      <motion.div
+                        whileTap={{ scale: 0.95 }}
+                        initial={{ scale: 1 }}
+                        className="mt-2.5 w-full rounded-full bg-[#34A853] px-7 py-3 text-center text-xl text-white lg:w-fit"
+                      >
                         Download
-                      </div>
+                      </motion.div>
                     </Link>
                   </div>
                 </div>

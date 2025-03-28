@@ -4,16 +4,17 @@
 
 ## Install
 
-```
+```bash
 npm install
 ```
 
 ## Test
 
-```
+```bash
 npm start
 ```
 
 ## Credits
+
 - Designed by Kshitij
 - Developed by Zirgom Haidar, Pratham Kalra & Anierin Bliss

@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom"
 import evoXLogo from "../../assets/evoXLogo.svg"
 import menu from "../../assets/menu.svg"
 import menuClose from "../../assets/menuClose.svg"
+import { ArrowOutwardIcon } from "../ui/icons.tsx"
 
 export default function Navbar() {
   const navRef = useRef(null)
@@ -21,7 +22,7 @@ export default function Navbar() {
         <img
           className="size-11 md:size-12 lg:size-14"
           src={evoXLogo}
-          alt="evoXLogo"
+          alt="Evolution X Logo"
         />
       </NavLink>
       <div>
@@ -63,8 +64,12 @@ export default function Navbar() {
           </NavLink>
         </li>
         <li>
-          <Link to={"https://wiki.evolution-x.org/"} target="_blank">
-            wiki
+          <Link
+            to={"https://wiki.evolution-x.org/"}
+            target="_blank"
+            className="inline-flex items-center gap-2"
+          >
+            wiki <ArrowOutwardIcon width={20} height={20} />
           </Link>
         </li>
       </ul>

@@ -6,10 +6,11 @@ import xdaicon from "../../assets/xdaicon.svg"
 import Changelogs from "../Changelogs"
 import FlashingInstructions from "../FlashingInstructions"
 import { motion } from "framer-motion"
+import { ArrowOutwardIcon } from "../ui/icons.tsx"
 
 const variants = {
   hidden: { opacity: 0, y: 75 },
-  visible: { opacity: 1, y: 0 }
+  visible: { opacity: 1, y: 0 },
 }
 
 const DownloadSection = () => {
@@ -31,13 +32,13 @@ const DownloadSection = () => {
         setLoading(true)
 
         const versionsResponse = await fetch(
-          "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/version/versions.json"
+          "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/version/versions.json",
         )
         const versionsData = await versionsResponse.json()
         setAndroidVersions(versionsData)
 
         const devicesResponse = await fetch(
-          "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/devices/devices.json"
+          "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/devices/devices.json",
         )
         const devicesData = await devicesResponse.json()
 
@@ -46,9 +47,13 @@ const DownloadSection = () => {
 
         if (branches.length > 0) {
           const highestVersionBranch = Object.entries(versionsData)
-            .sort(([versionA], [versionB]) => parseInt(versionB.split('-')[0], 10) - parseInt(versionA.split('-')[0], 10))
+            .sort(
+              ([versionA], [versionB]) =>
+                parseInt(versionB.split("-")[0], 10) -
+                parseInt(versionA.split("-")[0], 10),
+            )
             .flatMap(([version, branchesForVersion]) =>
-              branchesForVersion.filter(branch => branches.includes(branch))
+              branchesForVersion.filter((branch) => branches.includes(branch)),
             )[0]
 
           if (highestVersionBranch) {
@@ -128,7 +133,9 @@ const DownloadSection = () => {
                     included in this ROM before flashing it! YOU are choosing to
                     make these modifications, and if you point your finger at us
                     for messing up your device, we will{" "}
-                    <span className="evoxhighlight font-[Prod-bold]">laugh</span>{" "}
+                    <span className="evoxhighlight font-[Prod-bold]">
+                      laugh
+                    </span>{" "}
                     at you.
                   </p>
                 </div>
@@ -144,9 +151,9 @@ const DownloadSection = () => {
               >
                 {Object.entries(androidVersions)
                   .sort(([versionA], [versionB]) => {
-                    const numA = parseInt(versionA.split('-')[0], 10);
-                    const numB = parseInt(versionB.split('-')[0], 10);
-                    return numA - numB;
+                    const numA = parseInt(versionA.split("-")[0], 10)
+                    const numB = parseInt(versionB.split("-")[0], 10)
+                    return numA - numB
                   })
                   .map(([version, branches]) =>
                     branches.map(
@@ -159,8 +166,8 @@ const DownloadSection = () => {
                           >
                             {version}
                           </button>
-                        )
-                    )
+                        ),
+                    ),
                   )}
               </motion.div>
 
@@ -181,7 +188,9 @@ const DownloadSection = () => {
                   <div className="flex flex-wrap justify-center gap-4 sm:flex-row md:flex-col lg:justify-normal lg:pl-2">
                     <span>
                       <p className="text-lg text-[#999999]">Device</p>
-                      <p className="w-auto text-2xl md:w-[15rem]">{data.oem} {data.device}</p>
+                      <p className="w-auto text-2xl md:w-[15rem]">
+                        {data.oem} {data.device}
+                      </p>
                     </span>
                     <span>
                       <p className="text-lg text-[#999999]">Codename</p>
@@ -198,14 +207,20 @@ const DownloadSection = () => {
                   <div className="flex grow flex-col gap-4 lg:justify-between lg:gap-0">
                     <div className="flex flex-wrap gap-4 pl-2 lg:flex-row lg:gap-0">
                       <div className="grow">
-                        <div className="text-lg text-[#999999]">Build Timestamp</div>
+                        <div className="text-lg text-[#999999]">
+                          Build Timestamp
+                        </div>
                         <div className="text-2xl text-white">
-                          {new Date(data.timestamp * 1000).toString().slice(0, 24)}
+                          {new Date(data.timestamp * 1000)
+                            .toString()
+                            .slice(0, 24)}
                         </div>
                       </div>
                       <div className="grow">
                         <div className="text-lg text-[#999999]">Build Type</div>
-                        <div className="text-2xl text-white">{data.buildtype}</div>
+                        <div className="text-2xl text-white">
+                          {data.buildtype}
+                        </div>
                       </div>
                       <div className="grow">
                         <div className="text-lg text-[#999999]">Build Size</div>
@@ -264,7 +279,10 @@ const DownloadSection = () => {
                                 ❌
                               </span>
                               <div className="relative mx-[2rem] grow overflow-y-scroll rounded-3xl bg-stone-800 px-10 outline-dashed outline-2 outline-green-600 lg:pt-[1rem]">
-                                <FlashingInstructions codename={codename} branch={currentBranch} />
+                                <FlashingInstructions
+                                  codename={codename}
+                                  branch={currentBranch}
+                                />
                               </div>
                             </div>
                           )}
@@ -285,7 +303,10 @@ const DownloadSection = () => {
                                 ❌
                               </span>
                               <div className="relative mx-[2rem] grow overflow-y-scroll rounded-3xl bg-stone-800 px-10 outline-dashed outline-2 outline-pink-800 lg:pt-[1rem]">
-                                <Changelogs codename={codename} branch={currentBranch} />
+                                <Changelogs
+                                  codename={codename}
+                                  branch={currentBranch}
+                                />
                               </div>
                             </div>
                           )}
@@ -295,9 +316,9 @@ const DownloadSection = () => {
                         <Link
                           to={data.download}
                           target="_blank"
-                          className="inline-flex h-16 grow items-center justify-center rounded-full bg-[#5b60e3] text-white lg:w-1/2"
+                          className="inline-flex h-16 grow items-center justify-center gap-4 rounded-full bg-[#5b60e3] text-white lg:w-1/2"
                         >
-                          <p>Download</p>
+                          <p>Download</p> <ArrowOutwardIcon />
                         </Link>
                       </div>
                     </div>
