@@ -17,7 +17,7 @@ function index() {
         <div className="flex justify-center space-x-2 lg:justify-end">
           <div className="my-5 flex h-12 justify-evenly gap-4">
             <a
-              href={"https://discord.com/invite/evolution-x"}
+              href={"https://discord.com/invite/evolution-x-670512508871639041"}
               target="_blank"
               rel="noreferrer"
             >
