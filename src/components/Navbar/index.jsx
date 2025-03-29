@@ -68,6 +68,15 @@ export default function Navbar() {
             merch
           </NavLink>
         </li>
+        <li>   
+          <Link
+            to={"https://crowdin.com/project/evolution_x"}
+            target="_blank"
+            className="inline-flex items-center gap-2"
+          >
+            translations <ArrowOutwardIcon width={20} height={20} />
+          </Link>
+        </li>
         <li>
           <Link
             to={"https://wiki.evolution-x.org/"}
