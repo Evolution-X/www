@@ -6,6 +6,8 @@ import evoloading from "../../assets/evoloading.gif"
 import evolution from "../../assets/evolution.svg"
 import { motion } from "framer-motion"
 import { ArrowOutwardIcon } from "../../components/ui/icons.tsx"
+import back from "../../assets/back.svg"
+import forward from "../../assets/forward.svg"
 
 const variants = {
   hidden: { opacity: 0, y: 75 },
@@ -16,6 +18,7 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true)
   const [androidVersion, setAndroidVersion] = useState(null)
   const [screenshots, setScreenshots] = useState([])
+  const [currentScreenshotIndex, setCurrentScreenshotIndex] = useState(0)
 
   const fetchData = async () => {
     const androidVersionUrl =
@@ -31,10 +34,11 @@ const HomePage = () => {
 
       const versionData = await versionResponse.json()
       const version = Object.keys(versionData)[0]
-      const fetchedScreenshots = await screenshotsResponse.json()
 
       setAndroidVersion(version)
-      setScreenshots(fetchedScreenshots)
+
+      const screenshotsData = await screenshotsResponse.json()
+      setScreenshots(screenshotsData)
 
       setLoading(false)
     } catch (error) {
@@ -45,6 +49,26 @@ const HomePage = () => {
   useEffect(() => {
     fetchData()
   }, [])
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (screenshots.length > 0) {
+        setCurrentScreenshotIndex((prevIndex) => (prevIndex + 1) % screenshots.length)
+      }
+    }, 3000)
+
+    return () => clearInterval(intervalId)
+  }, [screenshots])
+
+  const goToNextScreenshot = () => {
+    setCurrentScreenshotIndex((prevIndex) => (prevIndex + 1) % screenshots.length)
+  }
+
+  const goToPrevScreenshot = () => {
+    setCurrentScreenshotIndex(
+      (prevIndex) => (prevIndex - 1 + screenshots.length) % screenshots.length
+    )
+  }
 
   return (
     <>
@@ -177,23 +201,65 @@ const HomePage = () => {
               </div>
             </div>
           </motion.div>
-          <div className="z-40 flex items-center justify-center rounded-3xl">
-            <div className="z-40 grid w-5/6 grid-cols-2 gap-10 md:grid-cols-4">
-              {screenshots.map((screenshot, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ delay: 0.1 }}
-                  viewport={{ once: true }}
-                  className="middleshadow"
-                >
+          <div className="z-40 flex items-center justify-center rounded-3xl relative overflow-hidden">
+            <div className="carousel-container relative z-40 flex items-center justify-center">
+              <button
+                className="carousel-button left-0 absolute z-50 p-2 text-white transform translate-x-[-50px]"
+                onClick={goToPrevScreenshot}
+              >
+                <img
+                  src={back}
+                  alt="Previous"
+                  className="w-6 h-6"
+                />
+              </button>
+              <div className="carousel-images flex justify-center items-center space-x-6">
+                {screenshots.length > 0 && (
                   <img
-                    src={`https://github.com/Evolution-X/www_gitres/blob/main/screenshots/${screenshot}.png?raw=true`}
-                    alt=""
+                    src={`https://github.com/Evolution-X/www_gitres/blob/main/screenshots/${screenshots[(currentScreenshotIndex - 2 + screenshots.length) % screenshots.length]}.png?raw=true`}
+                    alt="Screenshot Left"
+                    className="max-w-[8rem] h-auto object-cover transition-transform duration-300 ease-in-out"
                   />
-                </motion.div>
-              ))}
+                )}
+                {screenshots.length > 0 && (
+                  <img
+                    src={`https://github.com/Evolution-X/www_gitres/blob/main/screenshots/${screenshots[(currentScreenshotIndex - 1 + screenshots.length) % screenshots.length]}.png?raw=true`}
+                    alt="Screenshot Left"
+                    className="max-w-[8rem] h-auto object-cover transition-transform duration-300 ease-in-out"
+                  />
+                )}
+                {screenshots.length > 0 && (
+                  <img
+                    src={`https://github.com/Evolution-X/www_gitres/blob/main/screenshots/${screenshots[currentScreenshotIndex]}.png?raw=true`}
+                    alt="Screenshot Center"
+                    className="max-w-[12rem] h-auto object-cover transition-transform duration-300 ease-in-out"
+                  />
+                )}
+                {screenshots.length > 0 && (
+                  <img
+                    src={`https://github.com/Evolution-X/www_gitres/blob/main/screenshots/${screenshots[(currentScreenshotIndex + 1) % screenshots.length]}.png?raw=true`}
+                    alt="Screenshot Right"
+                    className="max-w-[8rem] h-auto object-cover transition-transform duration-300 ease-in-out"
+                  />
+                )}
+                {screenshots.length > 0 && (
+                  <img
+                    src={`https://github.com/Evolution-X/www_gitres/blob/main/screenshots/${screenshots[(currentScreenshotIndex + 2) % screenshots.length]}.png?raw=true`}
+                    alt="Screenshot Right"
+                    className="max-w-[8rem] h-auto object-cover transition-transform duration-300 ease-in-out"
+                  />
+                )}
+              </div>
+              <button
+                className="carousel-button right-0 absolute z-50 p-2 text-white transform translate-x-[50px]"
+                onClick={goToNextScreenshot}
+              >
+                <img
+                  src={forward}
+                  alt="Next"
+                  className="w-6 h-6"
+                />
+              </button>
             </div>
           </div>
         </>
