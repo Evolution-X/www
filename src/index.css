@@ -19,7 +19,7 @@ body{
 }
 
 .middleshadow{
-    box-shadow: 0px 4px 20px 20px rgb(255 255 255 / 0.05);
+    box-shadow: 0px 4px 20px 20px rgb(0 96 255 / 0.05);
 }
 
 .active{

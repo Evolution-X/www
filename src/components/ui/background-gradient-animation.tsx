@@ -1,13 +1,12 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { cn } from "../../libs/utils.ts"
-import { useEffect, useState } from "react"
 
 export const BackgroundGradientAnimation = ({
   gradientBackgroundStart = "rgb(0, 0, 0, 0)",
   gradientBackgroundEnd = "rgb(0, 0, 0, 0)",
   firstColor = "18, 113, 255",
   secondColor = "221, 74, 255",
-  thirdColor = "100, 220, 255",
+  thirdColor = "0, 96, 255",
   fourthColor = "200, 50, 50",
   fifthColor = "180, 180, 50",
   size = "70%",
@@ -45,7 +44,7 @@ export const BackgroundGradientAnimation = ({
     document.body.style.setProperty("--fifth-color", fifthColor)
     document.body.style.setProperty("--size", size)
     document.body.style.setProperty("--blending-value", blendingValue)
-  }, [])
+  }, [gradientBackgroundStart, gradientBackgroundEnd, firstColor, secondColor, thirdColor, fourthColor, fifthColor, size, blendingValue])
 
   const [isSafari, setIsSafari] = useState(false)
   useEffect(() => {
@@ -55,7 +54,7 @@ export const BackgroundGradientAnimation = ({
   return (
     <div
       className={cn(
-        "absolute left-0 top-0 z-0 h-screen w-screen overflow-hidden bg-[linear-gradient(40deg,var(--gradient-background-start),var(--gradient-background-end))] antialiased lg:h-[1000px] lg:w-screen",
+        "absolute left-0 top-0 z-0 h-full w-full overflow-hidden bg-[linear-gradient(40deg,var(--gradient-background-start),var(--gradient-background-end))] antialiased",
         containerClassName,
       )}
     >
