@@ -186,6 +186,7 @@ const HomePage = () => {
                   whileInView={{ opacity: 1 }}
                   transition={{ delay: 0.1 }}
                   viewport={{ once: true }}
+                  className="middleshadow"
                 >
                   <img
                     src={`https://github.com/Evolution-X/www_gitres/blob/main/screenshots/${screenshot}.png?raw=true`}
