@@ -184,7 +184,7 @@ const Downloads = () => {
                     ? setApple(true)
                     : setSearchQuery(e.target.value)
                 }}
-                className="flex w-full rounded-full border-2 border-current bg-slate-800 bg-gradient-to-r from-indigo-100 to-[#667dd0] px-10 py-4 text-black text-black/75 placeholder:text-black/75 focus:border-blue-600 focus:outline-none"
+                className="flex w-full rounded-full border-2 border-current bg-slate-800 bg-gradient-to-r from-indigo-100 to-[#0060ff] px-10 py-4 text-black text-black/75 placeholder:text-black/75 focus:border-blue-600 focus:outline-none"
                 placeholder="Search"
               />
               <div className="inline-flex flex-wrap items-center justify-center gap-3">
