@@ -17,52 +17,34 @@ const HomePage = () => {
   const [androidVersion, setAndroidVersion] = useState(null)
   const [screenshots, setScreenshots] = useState([])
 
-  const fetchAndroidVersion = async () => {
-    const url =
+  const fetchData = async () => {
+    const androidVersionUrl =
       "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/version/latestversion.json"
-    try {
-      const response = await fetch(url)
-      const data = await response.json()
-      const version = Object.keys(data)[0]
-      setAndroidVersion(version)
-    } catch (error) {
-      console.error("Error fetching Android version:", error)
-    }
-  }
-
-  const fetchScreenshots = async () => {
-    const url =
+    const screenshotsUrl =
       "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/screenshots/screenshots.json"
+
     try {
-      const response = await fetch(url)
-      const fetchedScreenshots = await response.json()
-      return fetchedScreenshots
+      const [versionResponse, screenshotsResponse] = await Promise.all([
+        fetch(androidVersionUrl),
+        fetch(screenshotsUrl),
+      ])
+
+      const versionData = await versionResponse.json()
+      const version = Object.keys(versionData)[0]
+      const fetchedScreenshots = await screenshotsResponse.json()
+
+      setAndroidVersion(version)
+      setScreenshots(fetchedScreenshots)
+
+      setLoading(false)
     } catch (error) {
-      console.error(`Error fetching data for ${fetchScreenshots}:`, error)
-      return null
+      console.error("Error fetching data:", error)
     }
   }
 
   useEffect(() => {
-    const loadAndroidVersion = async () => {
-      await fetchAndroidVersion()
-    }
-    loadAndroidVersion()
+    fetchData()
   }, [])
-
-  useEffect(() => {
-    const loadScreenshots = async () => {
-      const data = await fetchScreenshots()
-      setScreenshots(data)
-    }
-    loadScreenshots()
-  }, [])
-
-  useEffect(() => {
-    if (androidVersion && screenshots.length > 0) {
-      setLoading(false)
-    }
-  }, [androidVersion, screenshots])
 
   return (
     <>
