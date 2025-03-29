@@ -88,22 +88,24 @@ const Merch = () => {
             href={item.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="relative flex h-80 w-64 flex-col justify-end rounded-3xl text-left duration-300 hover:scale-105"
+            className="relative flex h-80 w-64 flex-col justify-end rounded-3xl text-left duration-300 hover:scale-105 hover:shadow-xl hover:shadow-[#0060ff]/50"
           >
             <img
-              className="absolute h-80 w-64 rounded-3xl object-cover"
+              className="absolute h-80 w-64 rounded-3xl object-cover transform transition-all duration-500 ease-in-out hover:scale-110"
               alt={item.name}
               src={getImageUrl(item.image)}
             />
-            <div className="z-20 rounded-b-3xl bg-black/25 px-4 py-4">
-              <p className="font-[Prod-bold] text-base">{item.name}</p>
-              {item.price && <div className="text-xs">{`$${item.price}`}</div>}
-              <a
-                href={item.link}
-                className="mt-2 inline-block px-6 py-2 bg-green-500 text-white rounded-full hover:bg-green-600 transition-all duration-300"
-              >
-                Buy Now
-              </a>
+            <div className="z-20 rounded-b-3xl bg-black/50 px-4 py-4 transition-all duration-300 hover:bg-black/70">
+              <p className="font-[Prod-bold] text-xl text-white">{item.name}</p>
+              {item.price && <div className="text-sm text-gray-300">{`$${item.price}`}</div>}
+              <div className="mt-2">
+                <a
+                  href={item.link}
+                  className="inline-block px-6 py-2 bg-[#0060ff] text-white rounded-full hover:bg-[#004bb5] transition-all duration-300"
+                >
+                  Buy Now
+                </a>
+              </div>
             </div>
           </a>
         ))}
