@@ -162,28 +162,35 @@ function Card({ list, shadowOn, isMaintainer = false }) {
         ) : null
 
         return (
-          <a
-            href={githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+          <motion.div
+            variants={variants}
+            initial={{ opacity: 0, scale: 0.75 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             key={index}
-            className={`relative flex h-80 w-64 flex-col justify-end rounded-3xl text-left duration-300 ${
-              shadowOn
-                ? "shadow-[0px_0px_38.5px_14px_#ffffff25] hover:shadow-[0px_0px_38.5px_14px_#ffffff50]"
-                : "shadow-[0px_0px_38.5px_14px_#FF8AF320] hover:shadow-[0px_0px_38.5px_14px_#FF8AF350]"
-            }`}
+            className="relative flex h-80 w-64 flex-col justify-end rounded-3xl text-left duration-300"
           >
-            <img
-              className="absolute h-80 w-64 rounded-3xl object-cover"
-              alt={name}
-              src={avatarUrl}
-            />
-            <div className="z-20 rounded-b-3xl bg-black/25 px-4 py-4">
-              <p className="font-[Prod-bold] text-base">{name}</p>
-              {!isMaintainer && item.role && <div className="text-xs"><p>{item.role}</p></div>}
-              {devicesList}
-            </div>
-          </a>
+            <a
+              href={githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`flex h-full flex-col justify-between rounded-3xl ${
+                shadowOn
+                ? "shadow-[0px_0px_38.5px_14px_#0060ff25] hover:shadow-[0px_0px_38.5px_14px_#0060ff50]"
+                : "shadow-[0px_0px_38.5px_14px_#0060ff20] hover:shadow-[0px_0px_38.5px_14px_#0060ff50]"
+              }`}
+            >
+              <img
+                className="absolute h-80 w-64 rounded-3xl object-cover"
+                alt={name}
+                src={avatarUrl}
+              />
+              <div className="z-20 rounded-b-3xl bg-black/25 px-4 py-4">
+                <p className="font-[Prod-bold] text-base">{name}</p>
+                {!isMaintainer && item.role && <div className="text-xs"><p>{item.role}</p></div>}
+                {devicesList}
+              </div>
+            </a>
+          </motion.div>
         )
       })}
     </div>
