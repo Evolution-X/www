@@ -120,7 +120,7 @@ const DownloadSection = () => {
                 animate="visible"
                 transition={{ delay: 0.2 }}
                 viewport={{ once: true }}
-                className="inline-flex flex-col rounded-2xl border-4 border-dashed border-[#f05d5d] px-8 py-6 lg:py-10"
+                className="inline-flex flex-col rounded-2xl border-4 border-dashed border-[#ff5e00] px-8 py-6 lg:py-10"
               >
                 <div className="flex flex-col gap-2 lg:gap-4">
                   <p className="font-[Prod-bold] text-2xl lg:text-3xl">
@@ -266,7 +266,7 @@ const DownloadSection = () => {
                         <div>
                           <button
                             onClick={() => toggleInstructions()}
-                            className="h-16 w-full rounded-full bg-green-500 px-4"
+                            className="h-16 w-full rounded-full bg-[#00FF00] px-4"
                           >
                             Flashing Instructions
                           </button>
@@ -278,7 +278,7 @@ const DownloadSection = () => {
                               >
                                 ❌
                               </span>
-                              <div className="relative mx-[2rem] grow overflow-y-scroll rounded-3xl bg-stone-800 px-10 outline-dashed outline-2 outline-green-600 lg:pt-[1rem]">
+                              <div className="relative mx-[2rem] grow overflow-y-scroll rounded-3xl bg-stone-800 px-10 outline-dashed outline-2 outline-[#00FF00] lg:pt-[1rem]">
                                 <FlashingInstructions
                                   codename={codename}
                                   branch={currentBranch}
@@ -290,7 +290,7 @@ const DownloadSection = () => {
                         <div>
                           <button
                             onClick={() => toggleChangelog()}
-                            className="h-16 w-full rounded-full bg-pink-800 px-4"
+                            className="h-16 w-full rounded-full bg-[#FF00FF] px-4"
                           >
                             Changelog
                           </button>
@@ -302,7 +302,7 @@ const DownloadSection = () => {
                               >
                                 ❌
                               </span>
-                              <div className="relative mx-[2rem] grow overflow-y-scroll rounded-3xl bg-stone-800 px-10 outline-dashed outline-2 outline-pink-800 lg:pt-[1rem]">
+                              <div className="relative mx-[2rem] grow overflow-y-scroll rounded-3xl bg-stone-800 px-10 outline-dashed outline-2 outline-[#FF00FF] lg:pt-[1rem]">
                                 <Changelogs
                                   codename={codename}
                                   branch={currentBranch}
@@ -316,7 +316,7 @@ const DownloadSection = () => {
                         <Link
                           to={data.download}
                           target="_blank"
-                          className="inline-flex h-16 grow items-center justify-center gap-4 rounded-full bg-[#5b60e3] text-white lg:w-1/2"
+                          className="inline-flex h-16 grow items-center justify-center gap-4 rounded-full bg-[#0060ff] text-white lg:w-1/2"
                         >
                           <p>Download</p> <ArrowOutwardIcon />
                         </Link>

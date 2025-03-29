@@ -280,7 +280,7 @@ const Downloads = () => {
                             <p className="lg:text-md flex items-end justify-between text-sm text-[#999999]">
                               Device{" "}
                               <span className="ml-8 inline-flex h-5 items-center justify-center rounded-3xl bg-[#232323] p-4">
-                                <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent lg:text-lg">
+                                <span className="bg-gradient-to-r from-[#0060ff] via-[#9b4dca] to-[#ff007f] bg-clip-text text-transparent lg:text-lg">
                                   {device.codename}
                                 </span>
                               </span>
