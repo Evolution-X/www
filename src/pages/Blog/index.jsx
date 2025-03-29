@@ -9,83 +9,62 @@ const variants = {
   visible: { opacity: 1, y: 0, transition: { delay: 0.2 } },
 }
 
-export default function Blog() {
-  const [loading, setLoading] = useState(true)
-  const [blogIds, setBlogIds] = useState([])
-  const [blogsList, setBlogsList] = useState([])
+const getBackgroundUrl = (background) =>
+  `https://raw.githubusercontent.com/Evolution-X/www_gitres/main/blogs/post_backgrounds/${background}.png?raw=true`
 
-  // Fetch the list of blogs
+export default function Blog() {
+  const [blogsList, setBlogsList] = useState([])
+  const [loading, setLoading] = useState(true)
+
   const fetchBlogIds = async () => {
     const url =
       "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/blogs/blogs.json"
-
     try {
       const response = await fetch(url)
-      const blogsNo = await response.json()
-      return blogsNo
+      return await response.json()
     } catch (error) {
       console.error("Error fetching blog IDs:", error)
       return []
     }
   }
 
-  // Fetch individual blog data
-  const fetchBlog = async () => {
-    const data = await Promise.all(
-      blogIds.map(async (blog) => {
-        const durl = `https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/blogs/posts/${blog}.json`
-        try {
-          const fetchedBlog = await fetch(durl)
-          const fetchedBlogData = await fetchedBlog.json()
-          return fetchedBlogData
-        } catch (error) {
-          console.error(`Error fetching data for Blog ${blog}:`, error)
-          return null
-        }
-      })
-    )
-    return data
+  const fetchBlogs = async () => {
+    try {
+      const blogIds = await fetchBlogIds()
+      const blogData = await Promise.all(
+        blogIds.map(async (blogId) => {
+          const blogUrl = `https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/blogs/posts/${blogId}.json`
+          const response = await fetch(blogUrl)
+          const data = await response.json()
+          return data
+        })
+      )
+
+      setBlogsList(blogData.sort((a, b) => new Date(b.date) - new Date(a.date)))
+    } catch (error) {
+      console.error("Error fetching blog data:", error)
+    }
   }
 
-  // Check if all backgrounds are loaded
-  const checkAllBackgroundsLoaded = (blogsList) => {
-    return new Promise((resolve, reject) => {
-      let loadedBackgroundsCount = 0
-      const totalBackgrounds = blogsList.length
-
-      blogsList.forEach((blog) => {
+  const checkAllBackgroundsLoaded = (blogs) => {
+    const backgroundPromises = blogs.map((blog) => {
+      return new Promise((resolve, reject) => {
         const background = new Image()
-        background.src = `https://github.com/Evolution-X/www_gitres/blob/main/blogs/post_backgrounds/${blog?.background}.png?raw=true`
-        background.onload = () => {
-          loadedBackgroundsCount++
-          if (loadedBackgroundsCount === totalBackgrounds) {
-            resolve()
-          }
-        }
-        background.onerror = () => {
-          reject(new Error(`Failed to load background ${blog?.background} for blog ${blog}`))
-        }
+        background.src = getBackgroundUrl(blog.background)
+        background.onload = resolve
+        background.onerror = () => reject(new Error(`Failed to load background for ${blog.blogId}`))
       })
     })
+    
+    return Promise.all(backgroundPromises)
   }
 
   useEffect(() => {
     const loadBlogs = async () => {
-      const data = await fetchBlogIds()
-      setBlogIds(data)
+      await fetchBlogs()
     }
     loadBlogs()
   }, [])
-
-  useEffect(() => {
-    const loadBlogData = async () => {
-      if (blogIds.length > 0) {
-        const data = (await fetchBlog()).sort((a, b) => new Date(b.date) - new Date(a.date))
-        setBlogsList(data)
-      }
-    }
-    loadBlogData()
-  }, [blogIds])
 
   useEffect(() => {
     const loadBackgrounds = async () => {
@@ -103,10 +82,9 @@ export default function Blog() {
 
   return (
     <>
-      {loading && (
+      {loading ? (
         <img className="mx-auto" src={evoloading} alt="Loading..." />
-      )}
-      {!loading && blogsList && (
+      ) : (
         <motion.div
           variants={variants}
           initial="hidden"
@@ -125,13 +103,13 @@ export default function Blog() {
                 <span className="text-[#6487fb]">LATEST</span> POSTS
               </p>
             </div>
-            {/* Blog component */}
+
             <div className="posts mx-3 grid gap-6 sm:grid-cols-2 lg:gap-16 xl:mx-16">
               {blogsList.map((blog, index) => (
                 <Link to={`/blog/${blog.blogId}`} key={index}>
                   <div className="relative flex h-[240px] flex-col rounded-3xl ring ring-slate-500/10 duration-100 ease-linear hover:scale-105">
                     <img
-                      src={`https://github.com/Evolution-X/www_gitres/blob/main/blogs/post_backgrounds/${blog?.background}.png?raw=true`}
+                      src={getBackgroundUrl(blog?.background)}
                       alt="Post Background"
                       className="absolute h-full w-full rounded-3xl"
                     />
@@ -147,9 +125,7 @@ export default function Blog() {
                           <p>{blog?.date}</p>
                         </div>
                       </div>
-                      <p className="pl-2 text-2xl font-bold tracking-wider">
-                        {blog.title}
-                      </p>
+                      <p className="pl-2 text-2xl font-bold tracking-wider">{blog.title}</p>
                     </div>
                   </div>
                 </Link>
