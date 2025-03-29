@@ -68,7 +68,7 @@ const Team = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="mx-auto flex w-fit flex-col items-center justify-center border-4 border-[#afbdf3] p-10"
+        className="mx-auto flex w-fit flex-col items-center justify-center border-4 border-[#0060ff] p-10"
       >
         <div className="mx-0 -mt-14 flex flex-col items-center justify-between text-xs lg:-mx-56 xl:-mx-64">
           <div className="mb-12 w-fit bg-[#040214] px-3 text-2xl">Founders</div>
@@ -81,7 +81,7 @@ const Team = () => {
         variants={variants}
         initial="hidden"
         animate="visible"
-        className="mx-auto mb-12 flex w-fit flex-col items-center justify-center border-4 border-[#afbdf3] px-10 pb-20 pt-10 xl:p-10"
+        className="mx-auto mb-12 flex w-fit flex-col items-center justify-center border-4 border-[#0060ff] px-10 pb-20 pt-10 xl:p-10"
       >
         <div className="-my-14 flex flex-col items-center justify-between text-xs">
           <div className="mb-12 w-fit bg-[#040214] px-3 text-2xl">Project Members</div>
@@ -97,7 +97,7 @@ const Team = () => {
         variants={variants}
         initial="hidden"
         animate="visible"
-        className="mx-auto mb-12 flex w-fit flex-col items-center justify-center border-4 border-[#afbdf3] px-10 pb-20 pt-10 xl:p-10"
+        className="mx-auto mb-12 flex w-fit flex-col items-center justify-center border-4 border-[#0060ff] px-10 pb-20 pt-10 xl:p-10"
       >
         <div className="-my-14 flex flex-col items-center justify-between text-xs">
           <div className="mb-12 w-fit bg-[#040214] px-3 text-2xl">Maintainers</div>
@@ -116,7 +116,7 @@ const Team = () => {
         className="z-10 mx-10 flex flex-col items-center justify-center gap-10 sm:mx-24 xl:flex-row"
       >
         <div className="space-y-10 md:text-center xl:text-left">
-          <div className="text-nowrap !bg-clip-text text-4xl text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [background:linear-gradient(92deg,_#2fc1ee,_#dbe6ea)] lg:text-5xl">
+          <div className="text-nowrap !bg-clip-text text-4xl text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [background:linear-gradient(92deg,_#0060ff,_#004bb5)] lg:text-5xl">
             About Evolution X
           </div>
           <div className="text-xl lg:text-2xl">

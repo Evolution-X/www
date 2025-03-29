@@ -10,7 +10,7 @@ function index() {
       <div className="flex flex-col items-center sm:flex-row sm:justify-between lg:flex-row">
         <div className="inline-flex flex-col">
           <img className="h-10" src={evolution} alt="" />
-          <p className="mt-2 text-center text-lg text-blue-200 sm:text-start">
+          <p className="mt-2 text-center text-lg evoxhighlight sm:text-start">
             #KeepEvolving
           </p>
         </div>

@@ -88,7 +88,8 @@ const Merch = () => {
             href={item.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="relative flex h-80 w-64 flex-col justify-end rounded-3xl text-left duration-300 hover:scale-105 hover:shadow-xl hover:shadow-[#0060ff]/50"
+            className="relative flex h-80 w-64 flex-col justify-end rounded-3xl text-left duration-300 
+                       shadow-[0px_0px_38.5px_14px_#0060ff20] hover:scale-105 hover:shadow-[0px_0px_38.5px_14px_#0060ff50]"
           >
             <img
               className="absolute h-80 w-64 rounded-3xl object-cover transform transition-all duration-500 ease-in-out hover:scale-110"

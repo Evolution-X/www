@@ -191,7 +191,7 @@ const Downloads = () => {
                 {brands.map((brand, index) => (
                   <button
                     onClick={() => oemToggle(brand)}
-                    className={`buttonSelect ${oem === brand ? "bg-[#7e76dd]" : ""}`}
+                    className={`buttonSelect ${oem === brand ? "bg-[#0060ff]" : ""}`}
                     key={index}
                   >
                     {brand}
@@ -299,7 +299,7 @@ const Downloads = () => {
                           </div>
                           <Link
                             to={`/downloads/${device.codename}`}
-                            className="inline-flex h-16 items-center justify-center rounded-full bg-[#5b60e3] text-xl text-white"
+                            className="inline-flex h-16 items-center justify-center rounded-full bg-[#0060ff] text-xl text-white hover:bg-[#004bb5] transition-all duration-300"
                           >
                             Get Evolution X
                           </Link>

@@ -161,7 +161,7 @@ const DownloadSection = () => {
                         supportedBranches.includes(branch) && (
                           <button
                             key={branch}
-                            className={`buttonSelect ${currentBranch === branch ? "bg-[#7e76dd]" : ""}`}
+                            className={`buttonSelect ${currentBranch === branch ? "bg-[#0060ff]" : ""}`}
                             onClick={() => setCurrentBranch(branch)}
                           >
                             {version}

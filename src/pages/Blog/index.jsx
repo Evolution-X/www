@@ -98,9 +98,9 @@ export default function Blog() {
 
           <div className="flex w-full flex-col gap-10 rounded-3xl bg-black px-2 py-8 lg:px-14 lg:pb-16">
             <div className="inline-flex h-9 items-center font-[Prod-bold]">
-              <hr className="w-9 rotate-90 border-2 border-[#6487fb]" />
+              <hr className="w-9 rotate-90 border-2 border-[#0060ff]" />
               <p className="text-2xl">
-                <span className="text-[#6487fb]">LATEST</span> POSTS
+                <span className="evoxhighlight">LATEST</span> POSTS
               </p>
             </div>
 

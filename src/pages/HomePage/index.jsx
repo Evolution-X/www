@@ -128,7 +128,7 @@ const HomePage = () => {
                       <motion.div
                         whileTap={{ scale: 0.95 }}
                         initial={{ scale: 1 }}
-                        className="mt-2.5 w-full rounded-full bg-[#34A853] px-7 py-3 text-center text-xl text-white lg:w-fit"
+                        className="inline-block mt-2.5 w-full rounded-full bg-[#0060ff] px-7 py-3 text-center text-xl text-white hover:bg-[#004bb5] transition-all duration-300 lg:w-fit"
                       >
                         Download
                       </motion.div>
@@ -136,7 +136,7 @@ const HomePage = () => {
                   </div>
                 </div>
                 <div className="inline-flex flex-col items-center gap-6 lg:gap-12">
-                  <p className="z-40 text-lg italic lg:text-xl">
+                  <p className="z-40 text-lg italic lg:text-xl evoxhighlight">
                     #KeepEvolving
                   </p>
                   <div className="relative flex justify-center lg:w-60">
