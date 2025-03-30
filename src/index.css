@@ -27,7 +27,7 @@ body{
 }
 
 .buttonSelect {
-    @apply w-fit text-center rounded-full border-4 border-[#1e3150] uppercase px-6 py-3 duration-100 ease-linear hover:bg-[#0060ff];
+    @apply w-fit text-center rounded-full border-4 border-[#0060ff] uppercase px-6 py-3 duration-100 ease-linear hover:bg-[#0060ff];
 }
 
 .fadeEffect {
