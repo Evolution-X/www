@@ -266,7 +266,7 @@ const DownloadSection = () => {
                         <div>
                           <button
                             onClick={() => toggleInstructions()}
-                            className="h-16 w-full rounded-full bg-[#00FF00] px-4"
+                            className="h-16 w-full rounded-full border-4 border-[#0060ff] bg-transparent px-4"
                           >
                             Flashing Instructions
                           </button>
@@ -278,7 +278,7 @@ const DownloadSection = () => {
                               >
                                 ❌
                               </span>
-                              <div className="relative mx-[2rem] grow overflow-y-scroll rounded-3xl bg-stone-800 px-10 outline-dashed outline-2 outline-[#00FF00] lg:pt-[1rem]">
+                              <div className="relative mx-[2rem] grow overflow-y-scroll rounded-3xl bg-stone-800 px-10 outline-dashed outline-2 outline-[#0060ff] lg:pt-[1rem]">
                                 <FlashingInstructions
                                   codename={codename}
                                   branch={currentBranch}
@@ -290,7 +290,7 @@ const DownloadSection = () => {
                         <div>
                           <button
                             onClick={() => toggleChangelog()}
-                            className="h-16 w-full rounded-full bg-[#FF00FF] px-4"
+                            className="h-16 w-full rounded-full border-4 border-[#0060ff] bg-transparent px-4"
                           >
                             Changelog
                           </button>
@@ -302,7 +302,7 @@ const DownloadSection = () => {
                               >
                                 ❌
                               </span>
-                              <div className="relative mx-[2rem] grow overflow-y-scroll rounded-3xl bg-stone-800 px-10 outline-dashed outline-2 outline-[#FF00FF] lg:pt-[1rem]">
+                              <div className="relative mx-[2rem] grow overflow-y-scroll rounded-3xl bg-stone-800 px-10 outline-dashed outline-2 outline-[#0060ff] lg:pt-[1rem]">
                                 <Changelogs
                                   codename={codename}
                                   branch={currentBranch}
