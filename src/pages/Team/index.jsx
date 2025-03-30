@@ -130,7 +130,7 @@ const Team = () => {
         <img
           className="mx-10 h-56 rounded-[2.5rem] object-cover lg:h-72"
           alt="Evolution X Banner"
-          src={`https://raw.githubusercontent.com/Evolution-X/www_gitres/main/team/banner.png`}
+          src="https://raw.githubusercontent.com/Evolution-X/www_gitres/main/team/banner.png"
         />
       </motion.div>
     </motion.div>
@@ -140,6 +140,29 @@ const Team = () => {
 export default Team
 
 function Card({ list, shadowOn, isMaintainer = false }) {
+  const [expandedItems, setExpandedItems] = useState(new Set())
+
+  const toggleExpanded = (index) => {
+    setExpandedItems((prev) => {
+      const newExpandedItems = new Set(prev)
+      if (newExpandedItems.has(index)) {
+        newExpandedItems.delete(index)
+      } else {
+        newExpandedItems.add(index)
+      }
+      return newExpandedItems
+    })
+  }
+
+  const handleShowMoreClick = (e, index) => {
+    e.stopPropagation()
+    toggleExpanded(index)
+  }
+
+  const handleCardDoubleClick = (githubUrl) => {
+    window.open(githubUrl, '_blank')
+  }
+
   return (
     <div className="z-10 grid gap-16 md:grid-cols-2 lg:grid-cols-3">
       {list.map((item, index) => {
@@ -155,10 +178,19 @@ function Card({ list, shadowOn, isMaintainer = false }) {
 
         const devicesList = isMaintainer && item.devices ? (
           <div className="text-xs">
-            {item.devices.map((device, deviceIndex) => (
+            {(expandedItems.has(index) ? item.devices : item.devices.slice(0, 5)).map((device, deviceIndex) => (
               <div key={deviceIndex}>{device}</div>
             ))}
           </div>
+        ) : null
+
+        const moreDevicesCount = isMaintainer && item.devices && item.devices.length > 5 ? (
+          <button
+            onClick={(e) => handleShowMoreClick(e, index)}
+            className="text-[#0060ff] text-xs hover:underline"
+          >
+            {expandedItems.has(index) ? "Show Less" : `+${item.devices.length - 5} more`}
+          </button>
         ) : null
 
         return (
@@ -167,14 +199,11 @@ function Card({ list, shadowOn, isMaintainer = false }) {
             initial={{ opacity: 0, scale: 0.75 }}
             whileInView={{ opacity: 1, scale: 1 }}
             key={index}
-            className="relative flex h-80 w-64 flex-col justify-end rounded-3xl text-left duration-300"
+            className="relative flex h-80 w-64 flex-col justify-between rounded-3xl text-left duration-300"
+            onDoubleClick={() => handleCardDoubleClick(githubUrl)}
           >
-            <a
-              href={githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`flex h-full flex-col justify-between rounded-3xl ${
-                shadowOn
+            <div
+              className={`flex h-full flex-col justify-between rounded-3xl ${shadowOn
                 ? "shadow-[0px_0px_38.5px_14px_#0060ff25] hover:shadow-[0px_0px_38.5px_14px_#0060ff50]"
                 : "shadow-[0px_0px_38.5px_14px_#0060ff20] hover:shadow-[0px_0px_38.5px_14px_#0060ff50]"
               }`}
@@ -184,12 +213,13 @@ function Card({ list, shadowOn, isMaintainer = false }) {
                 alt={name}
                 src={avatarUrl}
               />
-              <div className="z-20 rounded-b-3xl bg-black/25 px-4 py-4">
+              <div className="z-20 flex flex-col justify-between rounded-b-3xl bg-black/25 px-4 py-4">
                 <p className="font-[Prod-bold] text-base">{name}</p>
                 {!isMaintainer && item.role && <div className="text-xs"><p>{item.role}</p></div>}
                 {devicesList}
+                <div className="mt-2">{moreDevicesCount}</div>
               </div>
-            </a>
+            </div>
           </motion.div>
         )
       })}
