@@ -177,7 +177,7 @@ const DownloadSection = () => {
                 animate="visible"
                 transition={{ delay: 0.4 }}
                 viewport={{ once: true }}
-                className="flex flex-col gap-10 rounded-2xl bg-[#060505] p-6 ring ring-gray-400/5 ring-offset-2 ring-offset-gray-400/5 md:flex-row lg:gap-16 lg:p-11"
+                className="flex flex-col gap-10 rounded-2xl bg-[#060505] p-6 ring ring-[#0060ff] ring-offset-2 ring-offset-[#0060ff] md:flex-row lg:gap-16 lg:p-11"
               >
                 <div className="mt-6 flex flex-col gap-4">
                   <img
