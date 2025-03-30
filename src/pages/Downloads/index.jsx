@@ -180,9 +180,13 @@ const Downloads = () => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => {
-                  e.target.value === "iphone"
-                    ? setApple(true)
-                    : setSearchQuery(e.target.value)
+                  const query = e.target.value
+                  setSearchQuery(query)
+                  if (query.toLowerCase() === "iphone") {
+                    setApple(true)
+                  } else {
+                    setApple(false)
+                  }
                 }}
                 className="flex w-full rounded-full border-2 border-current bg-slate-800 bg-gradient-to-r from-indigo-100 to-[#0060ff] px-10 py-4 text-black text-black/75 placeholder:text-black/75 focus:border-blue-600 focus:outline-none"
                 placeholder="Search"
@@ -211,6 +215,7 @@ const Downloads = () => {
               <img src={iphone} alt="iphone"></img>
             </div>
           )}
+
           <motion.div
             variants={variants}
             initial="hidden"
