@@ -9,6 +9,7 @@ import Merch from "./pages/Merch"
 import NotFound from "./pages/NotFound"
 import BlogSection from "./components/BlogSection"
 import DownloadSection from "./components/DownloadSection"
+import ScrollToTopButton from "./components/ScrollToTopButton"
 import "./fonts/style.css"
 
 function App() {
@@ -23,10 +24,7 @@ function App() {
                 <Route index element={<HomePage />} />
                 <Route path="/team" element={<Team />} />
                 <Route path="/downloads" element={<Downloads />} />
-                <Route
-                  path="/downloads/:codename"
-                  element={<DownloadSection />}
-                />
+                <Route path="/downloads/:codename" element={<DownloadSection />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:blogId" element={<BlogSection />} />
                 <Route path="/merch" element={<Merch />} />
@@ -35,6 +33,7 @@ function App() {
             </main>
           </div>
           <Footer />
+          <ScrollToTopButton />
         </BrowserRouter>
       </div>
     </>
