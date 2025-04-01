@@ -10,7 +10,7 @@ const variants = {
 }
 
 const getBackgroundUrl = (background) =>
-  `https://raw.githubusercontent.com/Evolution-X/www_gitres/main/blogs/post_backgrounds/${background}.png?raw=true`
+  `https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/blogs/post_backgrounds/${background}.webp`
 
 export default function Blog() {
   const [blogsList, setBlogsList] = useState([])

@@ -130,7 +130,7 @@ const Team = () => {
         <img
           className="mx-10 h-56 rounded-[2.5rem] object-cover lg:h-72"
           alt="Evolution X Banner"
-          src="https://raw.githubusercontent.com/Evolution-X/www_gitres/main/team/banner.png"
+          src="https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/team/banner.webp"
         />
       </motion.div>
     </motion.div>

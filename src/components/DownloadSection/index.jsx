@@ -182,7 +182,7 @@ const DownloadSection = () => {
                 <div className="mt-6 flex flex-col gap-4">
                   <img
                     className="max-h-72 min-h-64 object-contain"
-                    src={`https://github.com/Evolution-X/www_gitres/blob/main/devices/images/${codename}.png?raw=true`}
+                    src={`https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/devices/images/${codename}.webp`}
                     alt="Device"
                   />
                   <div className="flex flex-wrap justify-center gap-4 sm:flex-row md:flex-col lg:justify-normal lg:pl-2">

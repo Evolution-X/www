@@ -8,7 +8,7 @@ const variants = {
   visible: { opacity: 1, y: 0, transition: { delay: 0.2 } },
 }
 
-const getImageUrl = (image) => `https://raw.githubusercontent.com/Evolution-X/www_gitres/main/merch/items/${image}.png?raw=true`;
+const getImageUrl = (image) => `https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/merch/items/${image}.webp`;
 
 const Merch = () => {
   const [merchData, setMerchData] = useState(null)
