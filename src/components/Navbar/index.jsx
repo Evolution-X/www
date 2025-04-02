@@ -43,42 +43,42 @@ export default function Navbar() {
       >
         <img
           src={menuClose}
-          alt="menu"
-          className="absolute right-10 top-10 block size-8 md:hidden"
+          alt="Close menu"
+          className="absolute right-10 top-10 block size-8 md:hidden cursor-pointer"
           onClick={closeMenu}
         />
+
+        {[
+          { path: "/", label: "Home" },
+          { path: "/team", label: "Team" },
+          { path: "/downloads", label: "Download" },
+          { path: "/blog", label: "Blog" },
+          { path: "/merch", label: "Merch" },
+        ].map(({ path, label }) => (
+          <li key={path}>
+            <NavLink
+              to={path}
+              onClick={closeMenu}
+              className={({ isActive }) =>
+                `relative transition-colors duration-300 ${
+                  isActive
+                    ? "text-[#0060ff] font-bold after:absolute after:left-0 after:bottom-[-2px] after:w-full after:h-[2px] after:bg-[#0060ff]"
+                    : "text-[#A9A9A9]"
+                } hover:text-[#0060ff]`
+              }
+            >
+              {label}
+            </NavLink>
+          </li>
+        ))}
+
         <li>
-          <NavLink to={"/"} onClick={closeMenu}>
-            Home
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to={"/team"} onClick={closeMenu}>
-            team
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to={"downloads"} onClick={closeMenu}>
-            Download
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to={"/blog"} onClick={closeMenu}>
-            blog
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to={"/merch"} onClick={closeMenu}>
-            merch
-          </NavLink>
-        </li>
-        <li>   
           <Link
             to={"https://crowdin.com/project/evolution_x"}
             target="_blank"
             className="inline-flex items-center gap-2"
           >
-            translations <ArrowOutwardIcon width={20} height={20} />
+            Translations <ArrowOutwardIcon width={20} height={20} />
           </Link>
         </li>
         <li>
@@ -87,7 +87,7 @@ export default function Navbar() {
             target="_blank"
             className="inline-flex items-center gap-2"
           >
-            wiki <ArrowOutwardIcon width={20} height={20} />
+            Wiki <ArrowOutwardIcon width={20} height={20} />
           </Link>
         </li>
       </ul>
