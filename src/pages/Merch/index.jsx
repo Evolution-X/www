@@ -83,11 +83,8 @@ const Merch = () => {
         className="mx-auto grid gap-16 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
       >
         {merchData.map((item, index) => (
-          <a
+          <div
             key={index}
-            href={item.link}
-            target="_blank"
-            rel="noopener noreferrer"
             className="relative flex h-80 w-64 flex-col justify-end rounded-3xl text-left duration-300 
                        shadow-[0px_0px_38.5px_14px_#0060ff20] hover:scale-105 hover:shadow-[0px_0px_38.5px_14px_#0060ff50]"
           >
@@ -102,13 +99,15 @@ const Merch = () => {
               <div className="mt-2">
                 <a
                   href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-block px-6 py-2 bg-[#0060ff] text-white rounded-full hover:bg-[#004bb5] transition-all duration-300"
                 >
                   Buy Now
                 </a>
               </div>
             </div>
-          </a>
+          </div>
         ))}
       </motion.div>
     </motion.div>
