@@ -10,10 +10,14 @@ export default function Navbar() {
 
   const openMenu = () => {
     navRef.current.style.top = "0px"
+    document.body.style.overflow = "hidden"
+    document.body.style.height = "100%"
   }
 
   const closeMenu = () => {
     navRef.current.style.top = "-2500px"
+    document.body.style.overflow = ""
+    document.body.style.height = ""
   }
 
   return (
