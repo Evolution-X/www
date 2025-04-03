@@ -282,7 +282,7 @@ const Downloads = () => {
                         )}
                         <div className="flex flex-col gap-6 px-7">
                           <div>
-                            <p className="lg:text-md flex items-end justify-between text-sm text-[#999999]">
+                            <p className="lg:text-md flex items-end justify-between text-sm evoxhighlight">
                               Device{" "}
                               <span className="ml-8 inline-flex h-5 items-center justify-center rounded-3xl bg-[#232323] p-4">
                                 <span className="bg-gradient-to-r from-[#0060ff] via-[#9b4dca] to-[#ff007f] bg-clip-text text-transparent lg:text-lg">
@@ -295,7 +295,7 @@ const Downloads = () => {
                             </p>
                           </div>
                           <div className="inline-flex flex-col items-start justify-start">
-                            <p className="lg:text-md text-sm text-[#999999]">
+                            <p className="lg:text-md text-sm evoxhighlight">
                               Maintainer
                             </p>
                             <p className="font-[Prod-Medium] text-lg text-white lg:text-2xl">

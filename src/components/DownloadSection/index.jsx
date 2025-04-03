@@ -192,27 +192,27 @@ const DownloadSection = () => {
                   />
                   <div className="flex flex-wrap justify-center gap-4 sm:flex-row md:flex-col lg:justify-normal lg:pl-2">
                     <span>
-                      <p className="text-lg text-[#999999]">Device</p>
+                      <p className="text-lg evoxhighlight">Device</p>
                       <p className="w-auto text-2xl md:w-[15rem]">
                         {data.oem} {data.device}
                       </p>
                     </span>
                     <span>
-                      <p className="text-lg text-[#999999]">Codename</p>
+                      <p className="text-lg evoxhighlight">Codename</p>
                       <p className="text-2xl">{codename}</p>
                     </span>
                     <span>
-                      <p className="text-lg text-[#999999]">Version</p>
+                      <p className="text-lg evoxhighlight">Version</p>
                       <p className="text-2xl">{data.version}</p>
                     </span>
                   </div>
                 </div>
 
-                <div className="flex grow flex-col rounded-2xl bg-[#151414] px-6 py-7">
+                <div className="flex grow flex-col rounded-2xl bg-[#151414] px-6 py-7 middleshadow">
                   <div className="flex grow flex-col gap-4 lg:justify-between lg:gap-0">
                     <div className="flex flex-wrap gap-4 pl-2 lg:flex-row lg:gap-0">
                       <div className="grow">
-                        <div className="text-lg text-[#999999]">
+                        <div className="text-lg evoxhighlight">
                           Build Timestamp
                         </div>
                         <div className="text-2xl text-white">
@@ -222,13 +222,13 @@ const DownloadSection = () => {
                         </div>
                       </div>
                       <div className="grow">
-                        <div className="text-lg text-[#999999]">Build Type</div>
+                        <div className="text-lg evoxhighlight">Build Type</div>
                         <div className="text-2xl text-white">
                           {data.buildtype}
                         </div>
                       </div>
                       <div className="grow">
-                        <div className="text-lg text-[#999999]">Build Size</div>
+                        <div className="text-lg evoxhighlight">Build Size</div>
                         <div className="text-2xl text-white">
                           {(data.size / 1024 / 1024 / 1024).toFixed(2)} GB
                         </div>
