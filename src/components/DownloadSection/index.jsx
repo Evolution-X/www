@@ -133,9 +133,14 @@ const DownloadSection = () => {
                     included in this ROM before flashing it! YOU are choosing to
                     make these modifications, and if you point your finger at us
                     for messing up your device, we will{" "}
-                    <span className="evoxhighlight font-[Prod-bold]">
+                    <a
+                      href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="evoxhighlight font-[Prod-bold]"
+                    >
                       laugh
-                    </span>{" "}
+                    </a>{" "}
                     at you.
                   </p>
                 </div>
