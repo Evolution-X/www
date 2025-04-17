@@ -27,7 +27,7 @@ const Downloads = () => {
 
   const brands = Array.from(
     new Set(deviceList.map((device) => device.data?.oem))
-  )
+  ).sort((a, b) => a.localeCompare(b))
 
   // Fetch devices list
   const fetchDevices = async () => {
