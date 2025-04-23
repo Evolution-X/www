@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { EffectCoverflow, Autoplay, Pagination } from "swiper/modules"
+import { EffectCoverflow, Pagination } from "swiper/modules"
 import "swiper/css"
 import "swiper/css/effect-coverflow"
 import "swiper/css/pagination"
@@ -41,10 +41,8 @@ const ScreenshotCarousel = () => {
   }, [])
 
   useEffect(() => {
-    if (swiperRef.current && preloadedImages.length > 0) {
-      const swiperInstance = swiperRef.current.swiper
-
-      swiperInstance.slideTo(3)
+    if (swiperRef.current && preloadedImages.length > 2) {
+      swiperRef.current.swiper.slideTo(2)
     }
   }, [preloadedImages])
 
@@ -56,23 +54,23 @@ const ScreenshotCarousel = () => {
           effect="coverflow"
           grabCursor={true}
           centeredSlides={true}
-          slidesPerView={3}
+          slidesPerView={2}
           loop={true}
-          initialSlide={3}
+          spaceBetween={0}
+          slideToClickedSlide={true}
           coverflowEffect={{
             rotate: 0,
             stretch: 0,
-            depth: 200,
-            modifier: 1.5,
+            depth: 300,
+            modifier: 2,
             slideShadows: true,
           }}
-          autoplay={{ delay: 2500, disableOnInteraction: false }}
           pagination={{ clickable: true, el: ".custom-pagination" }}
-          modules={[EffectCoverflow, Autoplay, Pagination]}
-          className="w-full max-w-5xl"
+          modules={[EffectCoverflow, Pagination]}
+          className="w-full max-w-2xl"
         >
           {preloadedImages.map((url, index) => (
-            <SwiperSlide key={index} className="relative w-72 h-auto">
+            <SwiperSlide key={index} className="relative w-48 h-auto transition-transform">
               <div className="relative">
                 <img
                   src={url}
@@ -89,8 +87,23 @@ const ScreenshotCarousel = () => {
 
       <style>
         {`
+          .swiper-slide {
+            transform-origin: center center;
+            transition: transform 0.4s ease;
+          }
+
+          .swiper-slide:not(.swiper-slide-active) {
+            transform: scale(0.65);
+            z-index: 0;
+          }
+
+          .swiper-slide-active {
+            transform: scale(1);
+            z-index: 10;
+          }
+
           .swiper-slide:not(.swiper-slide-active) .swiper-slide-img {
-            border-radius: 12px;
+            filter: brightness(0.7) blur(0.5px);
           }
 
           .swiper-slide:not(.swiper-slide-active) .swiper-slide-overlay {
