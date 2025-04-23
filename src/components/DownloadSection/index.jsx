@@ -114,6 +114,28 @@ const DownloadSection = () => {
         <div className="mx-4 flex flex-col gap-6 sm:-mt-8 lg:-mb-20 lg:-mt-16">
           {data ? (
             <>
+              {data.currently_maintained === false && (
+                <motion.div
+                  variants={variants}
+                  initial="hidden"
+                  animate="visible"
+                  transition={{ delay: 0.6 }}
+                  viewport={{ once: true }}
+                  className="inline-flex flex-col gap-4 rounded-2xl border-4 border-dashed border-red-600 bg-red-200 px-8 py-6"
+                >
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="font-[Prod-bold] text-xl text-red-700">
+                        Warning: This version is no longer maintained for this device.
+                      </p>
+                      <p className="font-[Prod-light] text-lg text-red-800">
+                        It may not receive future updates or bug fixes. We recommend using a version that is currently maintained for continued support.
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
               <motion.div
                 variants={variants}
                 initial="hidden"
