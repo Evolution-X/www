@@ -14,11 +14,22 @@ const Downloads = () => {
   const [devices, setDevices] = useState({})
   const [deviceList, setDeviceList] = useState([])
   const [loading, setLoading] = useState(true)
+  const [currentlyMaintained, setCurrentlyMaintained] = useState(null)
   const [oem, setOem] = useState(null)
   const [searchQuery, setSearchQuery] = useState("")
   const [apple, setApple] = useState(false)
   const [latestVersionMapping, setLatestVersionMapping] = useState({})
   const [latestVersionSVG, setLatestVersionSVG] = useState(null)
+
+  // Toggle Currently Maintained filter
+  const toggleCurrentlyMaintained = (value) => {
+    setCurrentlyMaintained((prev) => (prev === value ? null : value))
+    setOem(null)
+  }
+
+  const filteredDeviceList = currentlyMaintained === null
+    ? deviceList
+    : deviceList.filter((device) => device.data?.currently_maintained === currentlyMaintained)
 
   // Toggle OEM filter
   const oemToggle = (deviceOem) => {
@@ -26,7 +37,7 @@ const Downloads = () => {
   }
 
   const brands = Array.from(
-    new Set(deviceList.map((device) => device.data?.oem))
+    new Set(filteredDeviceList.map((device) => device.data?.oem))
   ).sort((a, b) => a.localeCompare(b))
 
   // Fetch devices list
@@ -175,7 +186,7 @@ const Downloads = () => {
               <span className="evoxhighlight">Download</span>
               <img className="h-7 sm:h-10 lg:h-12" src={evolution} alt="" />
             </div>
-            <div className="space-y-4">
+            <div className="space-y-4 w-full max-w-[40rem] mx-auto">
               <input
                 type="text"
                 value={searchQuery}
@@ -191,6 +202,20 @@ const Downloads = () => {
                 className="flex w-full rounded-full border-2 border-current bg-slate-800 bg-gradient-to-r from-indigo-100 to-[#0060ff] px-10 py-4 text-black text-black/75 placeholder:text-black/75 focus:border-blue-600 focus:outline-none"
                 placeholder="Search"
               />
+              <div className="flex justify-center gap-3">
+                <button
+                  onClick={() => toggleCurrentlyMaintained(true)}
+                  className={`buttonSelect ${currentlyMaintained === true ? "bg-[#0060ff]" : ""}`}
+                >
+                  Active Devices
+                </button>
+                <button
+                  onClick={() => toggleCurrentlyMaintained(false)}
+                  className={`buttonSelect ${currentlyMaintained === false ? "bg-[#0060ff]" : ""}`}
+                >
+                  Inactive Devices
+                </button>
+              </div>
               <div className="inline-flex flex-wrap items-center justify-center gap-3">
                 {brands.map((brand, index) => (
                   <button
@@ -244,6 +269,10 @@ const Downloads = () => {
                     (device.data?.maintainer?.toLowerCase().includes(searchQuery.toLowerCase())) || // Match maintainer
                     (device.data?.github?.toLowerCase().includes(searchQuery.toLowerCase())) // Match GitHub
                 )
+                .filter((device) => {
+                  if (currentlyMaintained === null) return true
+                  return device.data?.currently_maintained === currentlyMaintained
+                })
                 .map((device, index) => {
                   // Check if device supports the latest version
                   const isSupported = supportsLatestVersion(devices[device.codename])
