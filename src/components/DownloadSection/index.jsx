@@ -114,28 +114,6 @@ const DownloadSection = () => {
         <div className="mx-4 flex flex-col gap-6 sm:-mt-8 lg:-mb-20 lg:-mt-16">
           {data ? (
             <>
-              {data.currently_maintained === false && (
-                <motion.div
-                  variants={variants}
-                  initial="hidden"
-                  animate="visible"
-                  transition={{ delay: 0.6 }}
-                  viewport={{ once: true }}
-                  className="inline-flex flex-col gap-4 rounded-2xl border-4 border-dashed border-red-600 bg-red-200 px-8 py-6"
-                >
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="font-[Prod-bold] text-xl text-red-700">
-                        Warning: This version is no longer maintained for this device.
-                      </p>
-                      <p className="font-[Prod-light] text-lg text-red-800">
-                        It may not receive future updates or bug fixes. We recommend using a version that is currently maintained for continued support.
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-
               <motion.div
                 variants={variants}
                 initial="hidden"
@@ -145,7 +123,7 @@ const DownloadSection = () => {
                 className="inline-flex flex-col rounded-2xl border-4 border-dashed border-[#ff5e00] px-8 py-6 lg:py-10"
               >
                 <div className="flex flex-col gap-2 lg:gap-4">
-                  <p className="font-[Prod-bold] text-2xl lg:text-3xl">
+                  <p className="font-[Prod-bold] text-2xl lg:text-3xl text-[#ff5e00]">
                     Before you download and install!
                   </p>
                   <p className="font-[Prod-light] text-lg lg:text-2xl">
@@ -352,6 +330,28 @@ const DownloadSection = () => {
                   </div>
                 </div>
               </motion.div>
+
+              {data.currently_maintained === false && (
+                <motion.div
+                  variants={variants}
+                  initial="hidden"
+                  animate="visible"
+                  transition={{ delay: 0.6 }}
+                  viewport={{ once: true }}
+                  className="inline-flex flex-col rounded-2xl border-4 border-dashed border-red-600 px-8 py-6 lg:py-10"
+                >
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="font-[Prod-bold] text-2xl lg:text-3xl text-red-700">
+                        This version is no longer maintained!
+                      </p>
+                      <p className="font-[Prod-light] text-lg lg:text-2xl">
+                        You may not receive future updates or bug fixes while on this version of the ROM. We recommend using a version that is currently <span className="evoxhighlight font-[Prod-bold]">maintained</span> for continued support.
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
             </>
           ) : (
             <div className="flex rounded-2xl bg-[#060505] p-6 ring ring-gray-400/5 ring-offset-2 ring-offset-gray-400/5 lg:gap-16 lg:p-11">
