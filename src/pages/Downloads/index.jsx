@@ -247,7 +247,7 @@ const Downloads = () => {
             animate="visible"
             transition={{ delay: 0.2 }}
             className="mx-4 grid gap-5 md:gap-10 min-[880px]:grid-cols-2 lg:gap-14 min-[1320px]:grid-cols-3"
-            key={`${oem}-${searchQuery}`}
+            key={`${currentlyMaintained}-${oem}-${searchQuery}`}
           >
             {deviceList &&
               !loading &&
