@@ -101,7 +101,7 @@ const HomePage = () => {
             className="MIDDLE z-40 inline-flex flex-col rounded-3xl px-8 pb-16 lg:px-16 lg:py-16"
           >
             <div className="inline-flex flex-col gap-9">
-              <div className="middleshadow flex flex-col gap-10 rounded-3xl bg-black px-10 py-10 sm:flex-row lg:min-h-[28rem] lg:flex-row lg:gap-20 lg:px-16 lg:py-16">
+              <div className="middleshadow flex flex-col gap-10 rounded-3xl bg-black px-10 py-10 sm:flex-row lg:min-h-[28rem] lg:flex-row lg:gap-20 lg:px-16 lg:py-16 border-2 border-[#0060ff]">
                 <div className="space-y-5 sm:w-3/4 lg:space-y-10">
                   <p className="font-[Prod-bold] text-3xl lg:text-5xl">
                     <span className="evoxhighlight">About</span> Evolution X
@@ -140,7 +140,7 @@ const HomePage = () => {
                 </div>
               </div>
               <div className="inline-flex flex-col gap-9 sm:flex-row md:gap-12 lg:flex-row">
-                <div className="middleshadow items-start justify-start rounded-3xl bg-black px-8 py-10 sm:w-1/2 lg:px-12 lg:py-14">
+                <div className="middleshadow items-start justify-start rounded-3xl bg-black px-8 py-10 sm:w-1/2 lg:px-12 lg:py-14 border-2 border-[#0060ff]">
                   <div className="flex flex-col items-start justify-start gap-5 lg:gap-10">
                     <div className="font-[Prod-bold] text-3xl capitalize lg:text-3xl">
                       Frequent updates & latest security patches
@@ -152,7 +152,7 @@ const HomePage = () => {
                     </div>
                   </div>
                 </div>
-                <div className="middleshadow items-start justify-start rounded-3xl bg-black px-8 py-10 sm:w-1/2 lg:px-12 lg:py-14">
+                <div className="middleshadow items-start justify-start rounded-3xl bg-black px-8 py-10 sm:w-1/2 lg:px-12 lg:py-14 border-2 border-[#0060ff]">
                   <div className="flex flex-col items-start justify-start gap-5 lg:gap-10">
                     <div className="font-[Prod-bold] text-3xl capitalize lg:text-3xl">
                       Pixel look & feel
