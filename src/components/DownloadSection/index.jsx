@@ -182,7 +182,7 @@ const DownloadSection = () => {
                 animate="visible"
                 transition={{ delay: 0.4 }}
                 viewport={{ once: true }}
-                className="flex flex-col gap-10 rounded-2xl bg-[#060505] p-6 ring ring-[#0060ff] ring-offset-2 ring-offset-[#0060ff] md:flex-row lg:gap-16 lg:p-11"
+                className="flex flex-col gap-10 rounded-2xl bg-[#060505] p-6 md:flex-row lg:gap-16 lg:p-11 border-2 border-[#0060ff]"
               >
                 <div className="mt-6 flex flex-col gap-4">
                   <img
@@ -208,7 +208,7 @@ const DownloadSection = () => {
                   </div>
                 </div>
 
-                <div className="flex grow flex-col rounded-2xl bg-[#151414] px-6 py-7 middleshadow">
+                <div className="flex grow flex-col rounded-2xl bg-[#151414] px-6 py-7 border-2 border-[#0060ff] middleshadow">
                   <div className="flex grow flex-col gap-4 lg:justify-between lg:gap-0">
                     <div className="flex flex-wrap gap-4 pl-2 lg:flex-row lg:gap-0">
                       <div className="grow">
@@ -234,7 +234,7 @@ const DownloadSection = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="inline-flex flex-col items-center justify-between gap-4 rounded-2xl bg-[#212121] px-8 py-5 lg:flex-row">
+                    <div className="inline-flex flex-col items-center justify-between gap-4 rounded-2xl bg-[#212121] px-8 py-5 lg:flex-row border-2 border-[#0060ff]">
                       <div className="flex items-center justify-center gap-4 lg:gap-9">
                         <div className="flex size-20 shrink-0 items-center justify-center lg:size-40">
                           <img

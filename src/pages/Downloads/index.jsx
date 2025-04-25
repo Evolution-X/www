@@ -284,7 +284,7 @@ const Downloads = () => {
                       whileInView={{ opacity: 1, scale: 1 }}
                       key={index}
                     >
-                      <div className="relative flex min-h-full w-[23rem] flex-col justify-between rounded-2xl border border-[#0060ff] bg-black pb-7 duration-100 ease-in shadow-[0px_0px_38.5px_14px_#0060ff20] hover:scale-105 hover:shadow-[0px_0px_38.5px_14px_#0060ff50]">
+                      <div className="relative flex min-h-full w-[23rem] flex-col justify-between rounded-2xl border-2 border-[#0060ff] bg-black pb-7 duration-100 ease-in shadow-[0px_0px_38.5px_14px_#0060ff20] hover:scale-105 hover:shadow-[0px_0px_38.5px_14px_#0060ff50]">
                         <img
                           className="mx-auto my-4 flex size-56 object-contain"
                           src={`https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/devices/images/${device.codename}.webp`}
