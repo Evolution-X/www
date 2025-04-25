@@ -74,7 +74,7 @@ const HomePage = () => {
                 <motion.div
                   whileTap={{ scale: 0.95 }}
                   initial={{ scale: 1 }}
-                  className="homebutton min-w-[11rem] rounded-full bg-[#0060ff] border-none px-7 py-3 text-white hover:bg-[#004bb5]"
+                  className="homebutton"
                 >
                   <div className="">Download ROM</div>
                 </motion.div>
@@ -83,7 +83,7 @@ const HomePage = () => {
                 <motion.div
                   whileTap={{ scale: 0.95 }}
                   initial={{ scale: 1 }}
-                  className="homebutton min-w-[11rem] rounded-full bg-[#0060ff] border-none px-7 py-3 text-white hover:bg-[#004bb5]"
+                  className="homebutton"
                 >
                   <div className="inline-flex items-center gap-2">
                     Learn More <ArrowOutwardIcon />
