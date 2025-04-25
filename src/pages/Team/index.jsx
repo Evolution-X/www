@@ -178,8 +178,8 @@ function Card({ list, shadowOn, isMaintainer = false }) {
           >
             <div
               className={`flex h-full flex-col justify-between rounded-3xl ${shadowOn
-                ? "shadow-[0px_0px_38.5px_14px_#0060ff25] hover:shadow-[0px_0px_38.5px_14px_#0060ff50]"
-                : "shadow-[0px_0px_38.5px_14px_#0060ff20] hover:shadow-[0px_0px_38.5px_14px_#0060ff50]"
+                ? "shadow-[0px_0px_38.5px_14px_#0060ff25] hover:shadow-[0px_0px_38.5px_14px_#0060ff50] hover:scale-105"
+                : "shadow-[0px_0px_38.5px_14px_#0060ff20] hover:shadow-[0px_0px_38.5px_14px_#0060ff50] hover:scale-105"
               }`}
             >
               <img
