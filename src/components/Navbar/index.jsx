@@ -50,10 +50,11 @@ export default function Navbar() {
 
         {[
           { path: "/", label: "Home" },
-          { path: "/team", label: "Team" },
           { path: "/downloads", label: "Download" },
+          { path: "/team", label: "Team" },
           { path: "/blog", label: "Blog" },
           { path: "/merch", label: "Merch" },
+          { path: "/stats", label: "Stats" },
         ].map(({ path, label }) => (
           <li key={path}>
             <NavLink

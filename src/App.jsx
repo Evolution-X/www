@@ -6,6 +6,7 @@ import Footer from "./components/Footer"
 import Downloads from "./pages/Downloads"
 import Blog from "./pages/Blog"
 import Merch from "./pages/Merch"
+import Stats from "./pages/Stats"
 import NotFound from "./pages/NotFound"
 import BlogSection from "./components/BlogSection"
 import DownloadSection from "./components/DownloadSection"
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:blogId" element={<BlogSection />} />
                 <Route path="/merch" element={<Merch />} />
+                <Route path="/stats" element={<Stats />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
