@@ -96,7 +96,7 @@ export default function Blog() {
             <span className="evoxhighlight">Blog</span>
           </div>
 
-          <div className="flex w-full flex-col gap-10 rounded-3xl bg-black px-2 py-8 lg:px-14 lg:pb-16">
+          <div className="flex w-full flex-col gap-10 rounded-3xl bg-black px-2 py-8 lg:px-14 lg:pb-16 border-2 border-[#0060ff]">
             <div className="inline-flex h-9 items-center font-[Prod-bold]">
               <hr className="w-9 rotate-90 border-2 border-[#0060ff]" />
               <p className="text-2xl">
@@ -107,7 +107,7 @@ export default function Blog() {
             <div className="posts mx-3 grid gap-6 sm:grid-cols-2 lg:gap-16 xl:mx-16">
               {blogsList.map((blog, index) => (
                 <Link to={`/blog/${blog.blogId}`} key={index}>
-                  <div className="relative flex h-[240px] flex-col rounded-3xl ring ring-slate-500/10 duration-100 ease-linear hover:scale-105">
+                  <div className="relative flex h-[240px] flex-col rounded-3xl duration-100 ease-linear hover:scale-105 middleshadow hover:shadow-[0px_0px_38.5px_14px_#0060ff50]">
                     <img
                       src={getBackgroundUrl(blog?.background)}
                       alt="Post Background"
