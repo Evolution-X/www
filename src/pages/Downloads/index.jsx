@@ -335,7 +335,8 @@ const Downloads = () => {
                             to={`/downloads/${device.codename}`}
                             className="inline-flex h-16 items-center justify-center rounded-full bg-[#0060ff] text-xl text-white hover:bg-[#004bb5] transition-all duration-300"
                           >
-                            Get Evolution X
+                            <span className="mr-1">Get</span>
+                            <img src={evolution} alt="Evolution X" className="h-4 w-auto" />
                           </Link>
                         </div>
                       </div>
