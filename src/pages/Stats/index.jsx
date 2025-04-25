@@ -2,6 +2,7 @@ import { motion } from "framer-motion"
 import React, { useEffect, useState } from "react"
 import evoloading from "../../assets/evoloading.gif"
 import evolution from "../../assets/evolution.svg"
+import { toWords } from 'number-to-words'
 
 const variants = {
   hidden: { opacity: 0, y: 75, transition: { delay: 0.2 } },
@@ -92,9 +93,11 @@ const Stats = () => {
               times!
             </p>
             <p className="text-lg mt-2">
-              <span className="text-3xl font-bold evoxhighlight">
-                {statsData.summaries?.downloads?.today.toLocaleString()}
-              </span>
+              That's{" "}
+              <span className="text-lg mt-2 evoxhighlight">
+                {toWords(statsData.total)}
+              </span>{" "}
+              times!
             </p>
           </motion.div>
           <div className="flex justify-between space-x-4">
