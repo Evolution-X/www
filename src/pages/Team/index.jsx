@@ -107,32 +107,6 @@ const Team = () => {
           </div>
         </div>
       </motion.div>
-
-      {/* About Evolution X */}
-      <motion.div
-        variants={variants}
-        initial="hidden"
-        animate="visible"
-        className="z-10 mx-10 flex flex-col items-center justify-center gap-10 sm:mx-24 xl:flex-row"
-      >
-        <div className="space-y-10 md:text-center xl:text-left">
-          <div className="text-nowrap !bg-clip-text text-4xl text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [background:linear-gradient(92deg,_#0060ff,_#004bb5)] lg:text-5xl">
-            About Evolution X
-          </div>
-          <div className="text-xl lg:text-2xl">
-            Evolution X is a custom Android ROM project that mimics the user
-            experience of Google Pixel devices while enhancing it with extensive
-            customization options. Launched in March 2019 by a team of three
-            developers, led by Jose Antonio Huab "Joey", Evolution X has since
-            evolved into one of the most sought-after custom ROMs.
-          </div>
-        </div>
-        <img
-          className="mx-10 h-56 rounded-[2.5rem] object-cover lg:h-72"
-          alt="Evolution X Banner"
-          src="https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/team/banner.webp"
-        />
-      </motion.div>
     </motion.div>
   )
 }
