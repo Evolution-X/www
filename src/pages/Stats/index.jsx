@@ -17,7 +17,7 @@ const Stats = () => {
   useEffect(() => {
     const fetchStats = async () => {
       const endDate = new Date().toISOString().split("T")[0]
-      const url = `https://sourceforge.net/projects/evolution-x/files/stats/json?start_date=2019-03-19&end_date=${endDate}`
+      const url = `https://sourceforge.net/projects/evolution-x/files/stats/json?start_date=2019-03-19&end_date=${endDate}&period=daily`
 
       try {
         const response = await fetch(url)
@@ -37,17 +37,19 @@ const Stats = () => {
     fetchStats()
   }, [])
 
-  const formatDate = (dateString) => {
+  const formatDate = (dateString, withTime = false) => {
     const date = new Date(dateString)
     const options = {
       weekday: "long",
       year: "numeric",
       month: "long",
       day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      second: "numeric",
-      hour12: true,
+      ...(withTime && {
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      }),
     }
     return date.toLocaleString("en-US", options)
   }
@@ -64,6 +66,15 @@ const Stats = () => {
     )
   }
 
+  const getMostDownloadsDay = () => {
+    if (!statsData?.downloads?.length) return null
+    return statsData.downloads.reduce((maxDay, currentDay) =>
+      currentDay[1] > maxDay[1] ? currentDay : maxDay
+    )
+  }
+
+  const mostDownloadsDay = getMostDownloadsDay()
+
   return (
     <motion.div
       variants={variants}
@@ -75,7 +86,6 @@ const Stats = () => {
         <img className="h-7 sm:h-10 lg:h-12" src={evolution} alt="Logo" />
         <span className="evoxhighlight">Stats</span>
       </div>
-
       {!loading && !error && statsData && (
         <div className="text-white text-center space-y-12">
           <motion.div
@@ -100,6 +110,69 @@ const Stats = () => {
               times!
             </p>
           </motion.div>
+          {mostDownloadsDay && (
+            <motion.div
+              variants={variants}
+              initial="hidden"
+              animate="visible"
+              className="middleshadow bg-black p-6 rounded-xl flex-1 border-2 border-[#0060ff]"
+            >
+              <p className="text-2xl font-semibold evoxhighlight">Most Downloads in a Day</p>
+              <p className="text-lg mt-2">
+                On{" "}
+                <span className="evoxhighlight">
+                  {formatDate(mostDownloadsDay[0], false)}
+                </span>
+                , we hit{" "}
+                <span className="text-3xl font-bold evoxhighlight">
+                  {mostDownloadsDay[1].toLocaleString()}
+                </span>{" "}
+                downloads!
+              </p>
+            </motion.div>
+          )}
+          {statsData.summaries?.geo?.top && (
+            <motion.div
+              variants={variants}
+              initial="hidden"
+              animate="visible"
+              className="middleshadow bg-black p-6 rounded-xl flex-1 border-2 border-[#0060ff]"
+            >
+              <p className="text-2xl font-semibold evoxhighlight">Top Country</p>
+              <p className="text-lg mt-2">
+                The country with the most downloads is{" "}
+                <span className="evoxhighlight">
+                  {statsData.summaries.geo.top}
+                </span>
+                , accounting for{" "}
+                <span className="text-3xl font-bold evoxhighlight">
+                  {statsData.summaries.geo.percent}%
+                </span>{" "}
+                of total downloads!
+              </p>
+            </motion.div>
+          )}
+          {statsData.summaries?.os?.top && (
+            <motion.div
+              variants={variants}
+              initial="hidden"
+              animate="visible"
+              className="middleshadow bg-black p-6 rounded-xl flex-1 border-2 border-[#0060ff]"
+            >
+              <p className="text-2xl font-semibold evoxhighlight">Top Operating System</p>
+              <p className="text-lg mt-2">
+                The most used operating system for downloads is{" "}
+                <span className="evoxhighlight">
+                  {statsData.summaries.os.top}
+                </span>
+                , accounting for{" "}
+                <span className="text-3xl font-bold evoxhighlight">
+                  {statsData.summaries.os.percent}%
+                </span>{" "}
+                of total downloads!
+              </p>
+            </motion.div>
+          )}
           <div className="flex justify-between space-x-4">
             <motion.div
               variants={variants}
@@ -177,21 +250,21 @@ const Stats = () => {
                 <span className="font-semibold evoxhighlight">Stats Updated:</span>
                 <br />
                 <span>
-                  {formatDate(statsData.stats_updated)}
+                  {formatDate(statsData.stats_updated, true)}
                 </span>
               </p>
               <p className="text-lg">
                 <span className="font-semibold evoxhighlight">Start Date:</span>
                 <br />
                 <span>
-                  {formatDate(statsData.start_date)}
+                  {formatDate(statsData.start_date, true)}
                 </span>
               </p>
               <p className="text-lg">
                 <span className="font-semibold evoxhighlight">End Date:</span>
                 <br />
                 <span>
-                  {formatDate(statsData.end_date)}
+                  {formatDate(statsData.end_date, true)}
                 </span>
               </p>
             </div>
