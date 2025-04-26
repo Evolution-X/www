@@ -183,12 +183,16 @@ const Stats = () => {
               <p className="text-2xl font-semibold evoxhighlight">Countries</p>
               <div className="mt-4 max-h-40 overflow-y-scroll">
                 <ul className="space-y-2">
-                  {statsData.countries?.map(([country, count], index) => (
-                    <li key={index} className="text-lg">
-                      <span className="font-semibold">{country}</span>:{" "}
-                      {count.toLocaleString()}
-                    </li>
-                  ))}
+                  {statsData.countries
+                    ?.sort(([a], [b]) =>
+                      a.localeCompare(b, undefined, { sensitivity: "base" })
+                    )
+                    .map(([country, count], index) => (
+                      <li key={index} className="text-lg">
+                        <span className="font-semibold">{country}</span>:{" "}
+                        {count.toLocaleString()}
+                      </li>
+                    ))}
                 </ul>
               </div>
             </motion.div>
@@ -201,12 +205,16 @@ const Stats = () => {
               <p className="text-2xl font-semibold evoxhighlight">Operating Systems</p>
               <div className="mt-4 max-h-40 overflow-y-scroll">
                 <ul className="space-y-2">
-                  {statsData.oses?.map(([os, count], index) => (
-                    <li key={index} className="text-lg">
-                      <span className="font-semibold">{os}</span>:{" "}
-                      {count.toLocaleString()}
-                    </li>
-                  ))}
+                  {statsData.oses
+                    ?.sort(([a], [b]) =>
+                      a.localeCompare(b, undefined, { sensitivity: "base" })
+                    )
+                    .map(([os, count], index) => (
+                      <li key={index} className="text-lg">
+                        <span className="font-semibold">{os}</span>:{" "}
+                        {count.toLocaleString()}
+                      </li>
+                    ))}
                 </ul>
               </div>
             </motion.div>
@@ -220,21 +228,27 @@ const Stats = () => {
             <p className="text-2xl font-semibold evoxhighlight">Operating Systems by Country</p>
             <div className="mt-4 max-h-40 overflow-y-scroll">
               <ul className="space-y-2">
-                {Object.entries(statsData.oses_by_country)?.map(
-                  ([country, oses], index) => (
+                {Object.entries(statsData.oses_by_country)
+                  .sort(([a], [b]) =>
+                    a.localeCompare(b, undefined, { sensitivity: "base" })
+                  )
+                  .map(([country, oses], index) => (
                     <li key={index} className="text-lg">
                       <span className="font-semibold evoxhighlight">{country}</span>:{" "}
                       <ul className="ml-4">
-                        {Object.entries(oses).map(([os, count], idx) => (
-                          <li key={idx} className="text-lg">
-                            <span className="font-semibold">{os}</span>:{" "}
-                            {count.toLocaleString()}
-                          </li>
-                        ))}
+                        {Object.entries(oses)
+                          .sort(([a], [b]) =>
+                            a.localeCompare(b, undefined, { sensitivity: "base" })
+                          )
+                          .map(([os, count], idx) => (
+                            <li key={idx} className="text-lg">
+                              <span className="font-semibold">{os}</span>:{" "}
+                              {count.toLocaleString()}
+                            </li>
+                          ))}
                       </ul>
                     </li>
-                  )
-                )}
+                  ))}
               </ul>
             </div>
           </motion.div>
