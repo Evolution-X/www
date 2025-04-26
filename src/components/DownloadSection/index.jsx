@@ -17,6 +17,7 @@ const DownloadSection = () => {
   const { codename } = useParams()
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState(null)
+  const [downloads, setDownloads] = useState(null)
   const [showInstructions, setShowInstructions] = useState(false)
   const [showChangelogs, setShowChangelogs] = useState(false)
   const [androidVersions, setAndroidVersions] = useState({})
@@ -94,12 +95,34 @@ const DownloadSection = () => {
       const device = await fetchDeviceData()
       setData(device)
       setLoading(false)
+
+      if (device) {
+        const endDate = new Date().toISOString().split("T")[0]
+
+        const androidVersion = Object.entries(androidVersions)
+          .find(([version, branches]) => branches.includes(currentBranch))
+          ?. [0]
+
+        const sfandroidVersion = androidVersion?.replace("-", "_")
+        const statsUrl = `https://sourceforge.net/projects/evolution-x/files/${codename}/${sfandroidVersion}/${device.filename}/stats/json?start_date=2019-03-19&end_date=${endDate}&period=monthly`
+
+        try {
+          const statsResponse = await fetch(statsUrl)
+          if (statsResponse.ok) {
+            const statsData = await statsResponse.json()
+            const totalDownloads = statsData?.summaries?.time?.downloads || 0
+            setDownloads(totalDownloads)
+          }
+        } catch (error) {
+          console.error("Error fetching download stats:", error)
+        }
+      }
     }
 
     if (currentBranch) {
       fetchData()
     }
-  }, [currentBranch])
+  }, [currentBranch, codename])
 
   return (
     <>
@@ -213,24 +236,28 @@ const DownloadSection = () => {
                     <div className="flex flex-wrap gap-4 pl-2 lg:flex-row lg:gap-0">
                       <div className="grow">
                         <div className="text-lg evoxhighlight">
-                          Build Timestamp
+                          Date
                         </div>
                         <div className="text-2xl text-white">
-                          {new Date(data.timestamp * 1000)
-                            .toString()
-                            .slice(0, 24)}
+                          {new Date(data.timestamp * 1000).toDateString()}
                         </div>
                       </div>
                       <div className="grow">
-                        <div className="text-lg evoxhighlight">Build Type</div>
+                        <div className="text-lg evoxhighlight">Type</div>
                         <div className="text-2xl text-white">
                           {data.buildtype}
                         </div>
                       </div>
                       <div className="grow">
-                        <div className="text-lg evoxhighlight">Build Size</div>
+                        <div className="text-lg evoxhighlight">Size</div>
                         <div className="text-2xl text-white">
                           {(data.size / 1024 / 1024 / 1024).toFixed(2)} GB
+                        </div>
+                      </div>
+                      <div className="grow">
+                        <div className="text-lg evoxhighlight">Download Count</div>
+                        <div className="text-2xl text-white">
+                          {downloads !== null ? downloads : "N/A"}
                         </div>
                       </div>
                     </div>
