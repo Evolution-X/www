@@ -92,22 +92,13 @@ const Stats = () => {
     )
   }
 
-  const getMostDownloadsDay = () => {
-    if (!dailyStatsData?.downloads?.length) return null
-    return dailyStatsData.downloads.reduce((maxDay, currentDay) =>
-      currentDay[1] > maxDay[1] ? currentDay : maxDay
-    )
+  const getMostDownloads = (downloads) => {
+    if (!downloads?.length) return null
+    return downloads.reduce((max, current) => current[1] > max[1] ? current : max)
   }
 
-  const getTopDownloadsMonth = () => {
-    if (!monthlyStatsData?.downloads?.length) return null
-    return monthlyStatsData.downloads.reduce((maxMonth, currentMonth) =>
-      currentMonth[1] > maxMonth[1] ? currentMonth : maxMonth
-    )
-  }
-
-  const mostDownloadsDay = getMostDownloadsDay()
-  const mostDownloadsMonth = getTopDownloadsMonth()
+  const mostDownloadsDay = getMostDownloads(dailyStatsData?.downloads)
+  const mostDownloadsMonth = getMostDownloads(monthlyStatsData?.downloads)
 
   return (
     <motion.div
