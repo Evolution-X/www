@@ -10,40 +10,66 @@ const variants = {
 }
 
 const Stats = () => {
-  const [statsData, setStatsData] = useState(null)
+  const [dailyStatsData, setDailyStatsData] = useState(null)
+  const [monthlyStatsData, setMonthlyStatsData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    const fetchStats = async () => {
+    const fetchDailyStats = async () => {
       const endDate = new Date().toISOString().split("T")[0]
       const url = `https://sourceforge.net/projects/evolution-x/files/stats/json?start_date=2019-03-19&end_date=${endDate}&period=daily`
 
       try {
         const response = await fetch(url)
         if (!response.ok) {
-          throw new Error("Failed to fetch stats")
+          throw new Error("Failed to fetch daily stats")
         }
         const data = await response.json()
-        setStatsData(data)
+        setDailyStatsData(data)
       } catch (err) {
-        console.error("Stats fetch error:", err)
+        console.error("Daily stats fetch error:", err)
         setError(err.message)
+      }
+    }
+
+    const fetchMonthlyStats = async () => {
+      const endDate = new Date().toISOString().split("T")[0]
+      const url = `https://sourceforge.net/projects/evolution-x/files/stats/json?start_date=2019-03-19&end_date=${endDate}&period=monthly`
+
+      try {
+        const response = await fetch(url)
+        if (!response.ok) {
+          throw new Error("Failed to fetch monthly stats")
+        }
+        const data = await response.json()
+        setMonthlyStatsData(data)
+      } catch (err) {
+        console.error("Monthly stats fetch error:", err)
+        setError(err.message)
+      }
+    }
+
+    const fetchData = async () => {
+      setLoading(true)
+      try {
+        await Promise.all([fetchDailyStats(), fetchMonthlyStats()])
+      } catch (err) {
+        console.error("Error in fetching data:", err)
       } finally {
         setLoading(false)
       }
     }
 
-    fetchStats()
+    fetchData()
   }, [])
 
-  const formatDate = (dateString, withTime = false) => {
+  const formatDate = (dateString, withTime = false, showDay = true) => {
     const date = new Date(dateString)
     const options = {
-      weekday: "long",
       year: "numeric",
       month: "long",
-      day: "numeric",
+      ...(showDay && { day: "numeric", weekday: "long" }),
       ...(withTime && {
         hour: "numeric",
         minute: "numeric",
@@ -67,13 +93,21 @@ const Stats = () => {
   }
 
   const getMostDownloadsDay = () => {
-    if (!statsData?.downloads?.length) return null
-    return statsData.downloads.reduce((maxDay, currentDay) =>
+    if (!dailyStatsData?.downloads?.length) return null
+    return dailyStatsData.downloads.reduce((maxDay, currentDay) =>
       currentDay[1] > maxDay[1] ? currentDay : maxDay
     )
   }
 
+  const getTopDownloadsMonth = () => {
+    if (!monthlyStatsData?.downloads?.length) return null
+    return monthlyStatsData.downloads.reduce((maxMonth, currentMonth) =>
+      currentMonth[1] > maxMonth[1] ? currentMonth : maxMonth
+    )
+  }
+
   const mostDownloadsDay = getMostDownloadsDay()
+  const mostDownloadsMonth = getTopDownloadsMonth()
 
   return (
     <motion.div
@@ -86,7 +120,7 @@ const Stats = () => {
         <img className="h-7 sm:h-10 lg:h-12" src={evolution} alt="Logo" />
         <span className="evoxhighlight">Stats</span>
       </div>
-      {!loading && !error && statsData && (
+      {!loading && !error && dailyStatsData && (
         <div className="text-white text-center space-y-12">
           <motion.div
             variants={variants}
@@ -98,14 +132,14 @@ const Stats = () => {
             <p className="text-lg mt-2">
               In total, Evolution X has been downloaded{" "}
               <span className="text-3xl font-bold evoxhighlight">
-                {statsData.total.toLocaleString()}
+                {dailyStatsData.total.toLocaleString()}
               </span>{" "}
               times!
             </p>
             <p className="text-lg mt-2">
               That's{" "}
               <span className="text-lg mt-2 evoxhighlight">
-                {toWords(statsData.total)}
+                {toWords(dailyStatsData.total)}
               </span>{" "}
               times!
             </p>
@@ -131,7 +165,27 @@ const Stats = () => {
               </p>
             </motion.div>
           )}
-          {statsData.summaries?.geo?.top && (
+          {mostDownloadsMonth && (
+            <motion.div
+              variants={variants}
+              initial="hidden"
+              animate="visible"
+              className="middleshadow bg-black p-6 rounded-xl flex-1 border-2 border-[#0060ff]"
+            >
+              <p className="text-2xl font-semibold evoxhighlight">Most Downloads in a Month</p>
+              <p className="text-lg mt-2">
+                In {" "}
+                <span className="evoxhighlight">
+                  {formatDate(mostDownloadsMonth[0], false, false)}
+                </span>, we had {" "}
+                <span className="text-3xl font-bold evoxhighlight">
+                  {mostDownloadsMonth[1].toLocaleString()}
+                </span>{" "}
+                downloads!
+              </p>
+            </motion.div>
+          )}
+          {dailyStatsData.summaries?.geo?.top && (
             <motion.div
               variants={variants}
               initial="hidden"
@@ -142,17 +196,17 @@ const Stats = () => {
               <p className="text-lg mt-2">
                 The country with the most downloads is{" "}
                 <span className="evoxhighlight">
-                  {statsData.summaries.geo.top}
+                  {dailyStatsData.summaries.geo.top}
                 </span>
                 , accounting for{" "}
                 <span className="text-3xl font-bold evoxhighlight">
-                  {statsData.summaries.geo.percent}%
+                  {dailyStatsData.summaries.geo.percent}%
                 </span>{" "}
                 of total downloads!
               </p>
             </motion.div>
           )}
-          {statsData.summaries?.os?.top && (
+          {dailyStatsData.summaries?.os?.top && (
             <motion.div
               variants={variants}
               initial="hidden"
@@ -163,17 +217,17 @@ const Stats = () => {
               <p className="text-lg mt-2">
                 The most used operating system for downloads is{" "}
                 <span className="evoxhighlight">
-                  {statsData.summaries.os.top}
+                  {dailyStatsData.summaries.os.top}
                 </span>
                 , accounting for{" "}
                 <span className="text-3xl font-bold evoxhighlight">
-                  {statsData.summaries.os.percent}%
+                  {dailyStatsData.summaries.os.percent}%
                 </span>{" "}
                 of total downloads!
               </p>
             </motion.div>
           )}
-          {statsData.downloads?.length > 0 && (
+          {dailyStatsData.downloads?.length > 0 && (
             <motion.div
               variants={variants}
               initial="hidden"
@@ -183,12 +237,36 @@ const Stats = () => {
               <p className="text-2xl font-semibold evoxhighlight">Downloads per Day</p>
               <div className="mt-4 max-h-40 overflow-y-scroll">
                 <ul className="space-y-2">
-                  {[...statsData.downloads]
+                  {[...dailyStatsData.downloads]
                     .sort((a, b) => new Date(b[0]) - new Date(a[0]))
                     .map(([date, count], index) => (
                       <li key={index}>
                         <div className="flex flex-col items-center">
                           <span className="font-semibold evoxhighlight">{formatDate(date)}:</span>
+                          <span className="text-lg mt-1">{count.toLocaleString()}</span>
+                        </div>
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            </motion.div>
+          )}
+          {monthlyStatsData?.downloads?.length > 0 && (
+            <motion.div
+              variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
+              initial="hidden"
+              animate="visible"
+              className="middleshadow bg-black p-6 rounded-xl border-2 border-[#0060ff] mt-8"
+            >
+              <p className="text-2xl font-semibold evoxhighlight">Downloads per Month</p>
+              <div className="mt-4 max-h-40 overflow-y-scroll">
+                <ul className="space-y-2">
+                  {[...monthlyStatsData.downloads]
+                    .sort((a, b) => new Date(b[0]) - new Date(a[0]))
+                    .map(([date, count], index) => (
+                      <li key={index}>
+                        <div className="flex flex-col items-center">
+                          <span className="font-semibold evoxhighlight">{formatDate(date, false, false)}:</span>
                           <span className="text-lg mt-1">{count.toLocaleString()}</span>
                         </div>
                       </li>
@@ -207,7 +285,7 @@ const Stats = () => {
               <p className="text-2xl font-semibold evoxhighlight">Countries</p>
               <div className="mt-4 max-h-40 overflow-y-scroll">
                 <ul className="space-y-2">
-                  {statsData.countries
+                  {dailyStatsData.countries
                     ?.sort(([a], [b]) =>
                       a.localeCompare(b, undefined, { sensitivity: "base" })
                     )
@@ -229,7 +307,7 @@ const Stats = () => {
               <p className="text-2xl font-semibold evoxhighlight">Operating Systems</p>
               <div className="mt-4 max-h-40 overflow-y-scroll">
                 <ul className="space-y-2">
-                  {statsData.oses
+                  {dailyStatsData.oses
                     ?.sort(([a], [b]) =>
                       a.localeCompare(b, undefined, { sensitivity: "base" })
                     )
@@ -252,7 +330,7 @@ const Stats = () => {
             <p className="text-2xl font-semibold evoxhighlight">Operating Systems by Country</p>
             <div className="mt-4 max-h-40 overflow-y-scroll">
               <ul className="space-y-2">
-                {Object.entries(statsData.oses_by_country)
+                {Object.entries(dailyStatsData.oses_by_country)
                   .sort(([a], [b]) =>
                     a.localeCompare(b, undefined, { sensitivity: "base" })
                   )
@@ -288,21 +366,21 @@ const Stats = () => {
                 <span className="font-semibold evoxhighlight">Stats Updated:</span>
                 <br />
                 <span>
-                  {formatDate(statsData.stats_updated, true)}
+                  {formatDate(dailyStatsData.stats_updated, true)}
                 </span>
               </p>
               <p className="text-lg">
                 <span className="font-semibold evoxhighlight">Start Date:</span>
                 <br />
                 <span>
-                  {formatDate(statsData.start_date, true)}
+                  {formatDate(dailyStatsData.start_date, true)}
                 </span>
               </p>
               <p className="text-lg">
                 <span className="font-semibold evoxhighlight">End Date:</span>
                 <br />
                 <span>
-                  {formatDate(statsData.end_date, true)}
+                  {formatDate(dailyStatsData.end_date, true)}
                 </span>
               </p>
             </div>
