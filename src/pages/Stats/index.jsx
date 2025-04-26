@@ -173,6 +173,30 @@ const Stats = () => {
               </p>
             </motion.div>
           )}
+          {statsData.downloads?.length > 0 && (
+            <motion.div
+              variants={variants}
+              initial="hidden"
+              animate="visible"
+              className="middleshadow bg-black p-6 rounded-xl border-2 border-[#0060ff]"
+            >
+              <p className="text-2xl font-semibold evoxhighlight">Downloads per Day</p>
+              <div className="mt-4 max-h-40 overflow-y-scroll">
+                <ul className="space-y-2">
+                  {[...statsData.downloads]
+                    .sort((a, b) => new Date(b[0]) - new Date(a[0]))
+                    .map(([date, count], index) => (
+                      <li key={index}>
+                        <div className="flex flex-col items-center">
+                          <span className="font-semibold evoxhighlight">{formatDate(date)}:</span>
+                          <span className="text-lg mt-1">{count.toLocaleString()}</span>
+                        </div>
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            </motion.div>
+          )}
           <div className="flex justify-between space-x-4">
             <motion.div
               variants={variants}
@@ -234,7 +258,7 @@ const Stats = () => {
                   )
                   .map(([country, oses], index) => (
                     <li key={index} className="text-lg">
-                      <span className="font-semibold evoxhighlight">{country}</span>:{" "}
+                      <span className="font-semibold evoxhighlight">{country}:</span>{" "}
                       <ul className="ml-4">
                         {Object.entries(oses)
                           .sort(([a], [b]) =>
