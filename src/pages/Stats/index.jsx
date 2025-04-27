@@ -11,6 +11,7 @@ const variants = {
 
 const Stats = () => {
   const [dailyStatsData, setDailyStatsData] = useState(null)
+  const [weeklyStatsData, setWeeklyStatsData] = useState(null)
   const [monthlyStatsData, setMonthlyStatsData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -29,6 +30,23 @@ const Stats = () => {
         setDailyStatsData(data)
       } catch (err) {
         console.error("Daily stats fetch error:", err)
+        setError(err.message)
+      }
+    }
+
+    const fetchWeeklyStats = async () => {
+      const endDate = new Date().toISOString().split("T")[0]
+      const url = `https://sourceforge.net/projects/evolution-x/files/stats/json?start_date=2019-03-19&end_date=${endDate}&period=weekly`
+
+      try {
+        const response = await fetch(url)
+        if (!response.ok) {
+          throw new Error("Failed to fetch weekly stats")
+        }
+        const data = await response.json()
+        setWeeklyStatsData(data)
+      } catch (err) {
+        console.error("Weekly stats fetch error:", err)
         setError(err.message)
       }
     }
@@ -53,7 +71,7 @@ const Stats = () => {
     const fetchData = async () => {
       setLoading(true)
       try {
-        await Promise.all([fetchDailyStats(), fetchMonthlyStats()])
+        await Promise.all([fetchDailyStats(), fetchWeeklyStats(), fetchMonthlyStats()])
       } catch (err) {
         console.error("Error in fetching data:", err)
       } finally {
@@ -98,6 +116,7 @@ const Stats = () => {
   }
 
   const mostDownloadsDay = getMostDownloads(dailyStatsData?.downloads)
+  const mostDownloadsWeek = getMostDownloads(weeklyStatsData?.downloads)
   const mostDownloadsMonth = getMostDownloads(monthlyStatsData?.downloads)
 
   return (
@@ -153,6 +172,27 @@ const Stats = () => {
                   {mostDownloadsDay[1].toLocaleString()}
                 </span>{" "}
                 downloads!
+              </p>
+            </motion.div>
+          )}
+          {mostDownloadsWeek && (
+            <motion.div
+              variants={variants}
+              initial="hidden"
+              animate="visible"
+              className="middleshadow bg-black p-6 rounded-xl flex-1 border-2 border-[#0060ff]"
+            >
+              <p className="text-2xl font-semibold evoxhighlight">Most Downloads in a Week</p>
+              <p className="text-lg mt-2">
+                Starting on{" "}
+                <span className="evoxhighlight">
+                  {formatDate(mostDownloadsWeek[0], false)}
+                </span>
+                , we saw{" "}
+                <span className="text-3xl font-bold evoxhighlight">
+                  {mostDownloadsWeek[1].toLocaleString()}
+                </span>{" "}
+                downloads over 7 days!
               </p>
             </motion.div>
           )}
@@ -234,6 +274,30 @@ const Stats = () => {
                       <li key={index}>
                         <div className="flex flex-col items-center">
                           <span className="font-semibold evoxhighlight">{formatDate(date)}:</span>
+                          <span className="text-lg mt-1">{count.toLocaleString()}</span>
+                        </div>
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            </motion.div>
+          )}
+          {weeklyStatsData?.downloads?.length > 0 && (
+            <motion.div
+              variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
+              initial="hidden"
+              animate="visible"
+              className="middleshadow bg-black p-6 rounded-xl border-2 border-[#0060ff] mt-8"
+            >
+              <p className="text-2xl font-semibold evoxhighlight">Downloads per Week</p>
+              <div className="mt-4 max-h-40 overflow-y-scroll">
+                <ul className="space-y-2">
+                  {[...weeklyStatsData.downloads]
+                    .sort((a, b) => new Date(b[0]) - new Date(a[0]))
+                    .map(([date, count], index) => (
+                      <li key={index}>
+                        <div className="flex flex-col items-center">
+                          <span className="font-semibold evoxhighlight">{formatDate(date, false, true)}:</span>
                           <span className="text-lg mt-1">{count.toLocaleString()}</span>
                         </div>
                       </li>
