@@ -263,22 +263,21 @@ const Stats = () => {
                   {[...weeklyStatsData.downloads]
                     .sort((a, b) => new Date(a[0]) - new Date(b[0]))
                     .slice(0, -1)
-                    .reduce((acc, [date, count], index, array) => {
-                      if (index > 0) {
-                        const prevDate = array[index - 1][0];
-                        const formattedStart = formatDate(prevDate, false, true);
-                        const formattedEnd = formatDate(date, false, true);
-                        acc.push(
-                          <li key={index} className="text-lg">
-                            <div className="flex justify-between items-center">
-                              <span className="font-semibold evoxhighlight">{`${formattedStart} - ${formattedEnd}`}:</span>
-                              <span className="ml-4">{count.toLocaleString()}</span>
-                            </div>
-                          </li>
-                        );
-                      }
-                      return acc;
-                    }, [])
+                    .map(([startDate, count], index) => {
+                      const start = new Date(startDate);
+                      const end = new Date(start);
+                      end.setDate(start.getDate() + 6);
+                      const formattedStart = formatDate(start.toISOString(), false, true);
+                      const formattedEnd = formatDate(end.toISOString(), false, true);
+                      return (
+                        <li key={index} className="text-lg">
+                          <div className="flex justify-between items-center">
+                            <span className="font-semibold evoxhighlight">{`${formattedStart} - ${formattedEnd}`}:</span>
+                            <span className="ml-4">{count.toLocaleString()}</span>
+                          </div>
+                        </li>
+                      );
+                    })
                     .reverse()}
                 </ul>
               </div>
