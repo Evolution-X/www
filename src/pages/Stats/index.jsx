@@ -239,10 +239,10 @@ const Stats = () => {
                   {[...dailyStatsData.downloads]
                     .sort((a, b) => new Date(b[0]) - new Date(a[0]))
                     .map(([date, count], index) => (
-                      <li key={index}>
-                        <div className="flex flex-col items-center">
+                      <li key={index} className="text-lg">
+                        <div className="flex justify-between items-center">
                           <span className="font-semibold evoxhighlight">{formatDate(date)}:</span>
-                          <span className="text-lg mt-1">{count.toLocaleString()}</span>
+                          <span className="ml-4">{count.toLocaleString()}</span>
                         </div>
                       </li>
                     ))}
@@ -261,15 +261,25 @@ const Stats = () => {
               <div className="mt-4 max-h-40 overflow-y-scroll">
                 <ul className="space-y-2">
                   {[...weeklyStatsData.downloads]
-                    .sort((a, b) => new Date(b[0]) - new Date(a[0]))
-                    .map(([date, count], index) => (
-                      <li key={index}>
-                        <div className="flex flex-col items-center">
-                          <span className="font-semibold evoxhighlight">{formatDate(date, false, true)}:</span>
-                          <span className="text-lg mt-1">{count.toLocaleString()}</span>
-                        </div>
-                      </li>
-                    ))}
+                    .sort((a, b) => new Date(a[0]) - new Date(b[0]))
+                    .slice(0, -1)
+                    .reduce((acc, [date, count], index, array) => {
+                      if (index > 0) {
+                        const prevDate = array[index - 1][0];
+                        const formattedStart = formatDate(prevDate, false, true);
+                        const formattedEnd = formatDate(date, false, true);
+                        acc.push(
+                          <li key={index} className="text-lg">
+                            <div className="flex justify-between items-center">
+                              <span className="font-semibold evoxhighlight">{`${formattedStart} - ${formattedEnd}`}:</span>
+                              <span className="ml-4">{count.toLocaleString()}</span>
+                            </div>
+                          </li>
+                        );
+                      }
+                      return acc;
+                    }, [])
+                    .reverse()}
                 </ul>
               </div>
             </motion.div>
@@ -287,10 +297,10 @@ const Stats = () => {
                   {[...monthlyStatsData.downloads]
                     .sort((a, b) => new Date(b[0]) - new Date(a[0]))
                     .map(([date, count], index) => (
-                      <li key={index}>
-                        <div className="flex flex-col items-center">
+                      <li key={index} className="text-lg">
+                        <div className="flex justify-between items-center">
                           <span className="font-semibold evoxhighlight">{formatDate(date, false, false)}:</span>
-                          <span className="text-lg mt-1">{count.toLocaleString()}</span>
+                          <span className="ml-4">{count.toLocaleString()}</span>
                         </div>
                       </li>
                     ))}
@@ -298,7 +308,7 @@ const Stats = () => {
               </div>
             </motion.div>
           )}
-          <div className="flex justify-between space-x-4">
+          {dailyStatsData?.countries?.length > 0 && (
             <motion.div
               variants={variants}
               initial="hidden"
@@ -308,19 +318,17 @@ const Stats = () => {
               <p className="text-2xl font-semibold evoxhighlight">Countries</p>
               <div className="mt-4 max-h-40 overflow-y-scroll">
                 <ul className="space-y-2">
-                  {dailyStatsData.countries
-                    ?.sort(([a], [b]) =>
-                      a.localeCompare(b, undefined, { sensitivity: "base" })
-                    )
-                    .map(([country, count], index) => (
-                      <li key={index} className="text-lg">
-                        <span className="font-semibold">{country}</span>:{" "}
-                        {count.toLocaleString()}
-                      </li>
-                    ))}
+                  {dailyStatsData.countries.map(([country, downloads], index) => (
+                    <li key={index} className="flex justify-between">
+                      <span className="text-lg font-semibold evoxhighlight">{country}:</span>
+                      <span className="text-lg mt-1">{downloads.toLocaleString()}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </motion.div>
+          )}
+          {dailyStatsData?.oses?.length > 0 && (
             <motion.div
               variants={variants}
               initial="hidden"
@@ -330,20 +338,16 @@ const Stats = () => {
               <p className="text-2xl font-semibold evoxhighlight">Operating Systems</p>
               <div className="mt-4 max-h-40 overflow-y-scroll">
                 <ul className="space-y-2">
-                  {dailyStatsData.oses
-                    ?.sort(([a], [b]) =>
-                      a.localeCompare(b, undefined, { sensitivity: "base" })
-                    )
-                    .map(([os, count], index) => (
-                      <li key={index} className="text-lg">
-                        <span className="font-semibold">{os}</span>:{" "}
-                        {count.toLocaleString()}
-                      </li>
-                    ))}
+                  {dailyStatsData.oses.map(([os, downloads], index) => (
+                    <li key={index} className="flex justify-between">
+                      <span className="text-lg font-semibold evoxhighlight">{os}:</span>
+                      <span className="text-lg mt-1">{downloads.toLocaleString()}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </motion.div>
-          </div>
+          )}
           <motion.div
             variants={variants}
             initial="hidden"
@@ -359,19 +363,21 @@ const Stats = () => {
                   )
                   .map(([country, oses], index) => (
                     <li key={index} className="text-lg">
-                      <span className="font-semibold evoxhighlight">{country}:</span>{" "}
-                      <ul className="ml-4">
+                      <div className="flex justify-center">
+                        <span className="font-semibold evoxhighlight">{country}</span>
+                      </div>
+                      <div className="space-y-2 mt-2">
                         {Object.entries(oses)
                           .sort(([a], [b]) =>
                             a.localeCompare(b, undefined, { sensitivity: "base" })
                           )
                           .map(([os, count], idx) => (
-                            <li key={idx} className="text-lg">
-                              <span className="font-semibold">{os}</span>:{" "}
-                              {count.toLocaleString()}
-                            </li>
+                            <div key={idx} className="flex justify-between items-center">
+                              <span className="font-semibold text-left w-1/2 evoxhighlight">{os}:</span>
+                              <span className="ml-4 w-1/2 text-right">{count.toLocaleString()}</span>
+                            </div>
                           ))}
-                      </ul>
+                      </div>
                     </li>
                   ))}
               </ul>
@@ -386,25 +392,22 @@ const Stats = () => {
             <p className="text-2xl font-semibold evoxhighlight">Stats Information</p>
             <div className="mt-4 space-y-2">
               <p className="text-lg">
-                <span className="font-semibold evoxhighlight">Stats Updated:</span>
-                <br />
-                <span>
-                  {formatDate(dailyStatsData.stats_updated, true)}
-                </span>
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold evoxhighlight">Updated:</span>
+                  <span className="ml-4">{formatDate(dailyStatsData.stats_updated, true)}</span>
+                </div>
               </p>
               <p className="text-lg">
-                <span className="font-semibold evoxhighlight">Start Date:</span>
-                <br />
-                <span>
-                  {formatDate(dailyStatsData.start_date, true)}
-                </span>
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold evoxhighlight">Start:</span>
+                  <span className="ml-4">{formatDate(dailyStatsData.start_date, true)}</span>
+                </div>
               </p>
               <p className="text-lg">
-                <span className="font-semibold evoxhighlight">End Date:</span>
-                <br />
-                <span>
-                  {formatDate(dailyStatsData.end_date, true)}
-                </span>
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold evoxhighlight">End:</span>
+                  <span className="ml-4">{formatDate(dailyStatsData.end_date, true)}</span>
+                </div>
               </p>
             </div>
           </motion.div>
