@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom"
 import evoloading from "../../assets/evoloading.gif"
 import donateicon from "../../assets/donateicon.svg"
 import xdaicon from "../../assets/xdaicon.svg"
+import closeIcon from "../../assets/menuClose.svg"
 import Changelogs from "../Changelogs"
 import FlashingInstructions from "../FlashingInstructions"
 import { motion } from "framer-motion"
@@ -303,12 +304,19 @@ const DownloadSection = () => {
                             Flashing Instructions
                           </button>
                           {showInstructions && (
-                            <div className="fixed inset-0 z-50 flex flex-col py-[6rem] backdrop-blur-sm md:py-[6rem] lg:py-[6rem] xl:px-[4rem] 2xl:px-[15rem]">
+                            <div
+                              onClick={(e) => {
+                                if (e.target === e.currentTarget) {
+                                  setShowInstructions(false);
+                                }
+                              }}
+                              className="fixed inset-0 z-50 flex flex-col py-[6rem] backdrop-blur-sm md:py-[6rem] lg:py-[6rem] xl:px-[4rem] 2xl:px-[15rem]"
+                            >
                               <span
                                 onClick={() => setShowInstructions(false)}
-                                className="absolute right-6 top-6 z-50 cursor-pointer"
+                                className="absolute p-2 bg-[#0060ff] rounded-full border-4 border-[#0060ff] right-6 top-6 z-50 cursor-pointer"
                               >
-                                ❌
+                                <img src={closeIcon} alt="close" />
                               </span>
                               <div className="relative mx-[2rem] grow overflow-y-scroll rounded-3xl bg-stone-800 px-10 outline-dashed outline-2 outline-[#0060ff] lg:pt-[1rem]">
                                 <FlashingInstructions
@@ -327,12 +335,19 @@ const DownloadSection = () => {
                             Changelog
                           </button>
                           {showChangelogs && (
-                            <div className="fixed inset-0 z-50 flex flex-col py-[6rem] backdrop-blur-sm md:py-[6rem] lg:py-[6rem] xl:px-[4rem] 2xl:px-[15rem]">
+                            <div
+                              onClick={(e) => {
+                                if (e.target === e.currentTarget) {
+                                  setShowChangelogs(false);
+                                }
+                              }}
+                              className="fixed inset-0 z-50 flex flex-col py-[6rem] backdrop-blur-sm md:py-[6rem] lg:py-[6rem] xl:px-[4rem] 2xl:px-[15rem]"
+                            >
                               <span
                                 onClick={() => setShowChangelogs(false)}
-                                className="absolute right-6 top-6 z-50 cursor-pointer"
+                                className="absolute p-2 bg-[#0060ff] rounded-full border-4 border-[#0060ff] right-6 top-6 z-50 cursor-pointer"
                               >
-                                ❌
+                                <img src={closeIcon} alt="close" />
                               </span>
                               <div className="relative mx-[2rem] grow overflow-y-scroll rounded-3xl bg-stone-800 px-10 outline-dashed outline-2 outline-[#0060ff] lg:pt-[1rem]">
                                 <Changelogs
