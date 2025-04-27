@@ -17,53 +17,17 @@ const Stats = () => {
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    const fetchDailyStats = async () => {
+    const fetchStats = async (period, setData) => {
       const endDate = new Date().toISOString().split("T")[0]
-      const url = `https://sourceforge.net/projects/evolution-x/files/stats/json?start_date=2019-03-19&end_date=${endDate}&period=daily`
+      const url = `https://sourceforge.net/projects/evolution-x/files/stats/json?start_date=2019-03-19&end_date=${endDate}&period=${period}`
 
       try {
         const response = await fetch(url)
-        if (!response.ok) {
-          throw new Error("Failed to fetch daily stats")
-        }
+        if (!response.ok) throw new Error(`Failed to fetch ${period} stats`)
         const data = await response.json()
-        setDailyStatsData(data)
+        setData(data)
       } catch (err) {
-        console.error("Daily stats fetch error:", err)
-        setError(err.message)
-      }
-    }
-
-    const fetchWeeklyStats = async () => {
-      const endDate = new Date().toISOString().split("T")[0]
-      const url = `https://sourceforge.net/projects/evolution-x/files/stats/json?start_date=2019-03-19&end_date=${endDate}&period=weekly`
-
-      try {
-        const response = await fetch(url)
-        if (!response.ok) {
-          throw new Error("Failed to fetch weekly stats")
-        }
-        const data = await response.json()
-        setWeeklyStatsData(data)
-      } catch (err) {
-        console.error("Weekly stats fetch error:", err)
-        setError(err.message)
-      }
-    }
-
-    const fetchMonthlyStats = async () => {
-      const endDate = new Date().toISOString().split("T")[0]
-      const url = `https://sourceforge.net/projects/evolution-x/files/stats/json?start_date=2019-03-19&end_date=${endDate}&period=monthly`
-
-      try {
-        const response = await fetch(url)
-        if (!response.ok) {
-          throw new Error("Failed to fetch monthly stats")
-        }
-        const data = await response.json()
-        setMonthlyStatsData(data)
-      } catch (err) {
-        console.error("Monthly stats fetch error:", err)
+        console.error(`${period} stats fetch error:`, err)
         setError(err.message)
       }
     }
@@ -71,7 +35,11 @@ const Stats = () => {
     const fetchData = async () => {
       setLoading(true)
       try {
-        await Promise.all([fetchDailyStats(), fetchWeeklyStats(), fetchMonthlyStats()])
+        await Promise.all([
+          fetchStats('daily', setDailyStatsData),
+          fetchStats('weekly', setWeeklyStatsData),
+          fetchStats('monthly', setMonthlyStatsData),
+        ])
       } catch (err) {
         console.error("Error in fetching data:", err)
       } finally {
