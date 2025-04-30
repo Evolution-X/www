@@ -8,63 +8,50 @@ const variants = {
   visible: { opacity: 1, y: 0, transition: { delay: 0.2 } },
 }
 
-const getImageUrl = (image) => `https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/merch/items/${image}.webp`;
-
 const Merch = () => {
   const [merchData, setMerchData] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  const fetchFile = async (url) => {
+    try {
+      const response = await fetch(url)
+      if (!response.ok) throw new Error(`Failed to fetch ${url}`)
+      return await response.json()
+    } catch (err) {
+      console.error(`Fetch error for ${url}:`, err)
+      setError(err.message)
+    }
+  }
 
   useEffect(() => {
-    const fetchMerchData = async () => {
+    const fetchMerch = async () => {
+      setLoading(true)
       try {
-        const response = await fetch(
-          "https://raw.githubusercontent.com/Evolution-X/www_gitres/main/merch/merch.json"
-        )
-        if (!response.ok) {
-          throw new Error('Failed to fetch merch data')
+        const merchIndexUrl = "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/merch/merch.json"
+        const merchItems = await fetchFile(merchIndexUrl)
+
+        if (merchItems) {
+          setMerchData(merchItems)
         }
-        const data = await response.json()
-        setMerchData(data)
-      } catch (error) {
-        console.error("Error fetching merch data:", error)
+      } catch (err) {
+        console.error("Error loading merch:", err)
+        setError(err.message)
+      } finally {
+        setLoading(false)
       }
     }
 
-    fetchMerchData()
+    fetchMerch()
   }, [])
 
-  const checkAllImagesLoaded = (merchData) => {
-    const imagePromises = merchData.map((item) => {
-      return new Promise((resolve, reject) => {
-        const image = new Image()
-        image.src = getImageUrl(item.image)
-        image.onload = resolve
-        image.onerror = () => reject(new Error(`Failed to load image for item ${item.name}`))
-      })
-    })
-    
-    return Promise.all(imagePromises)
-  }
-
-  useEffect(() => {
-    const loadImages = async () => {
-      if (merchData) {
-        try {
-          await checkAllImagesLoaded(merchData)
-          setLoading(false)
-        } catch (error) {
-          console.error("Error loading images:", error)
-        }
-      }
-    }
-    loadImages()
-  }, [merchData])
-
-  if (loading) {
-    return <img className="mx-auto" src={evoloading} alt="Loading..." />
-  }
-
-  return (
+  return loading ? (
+    <img className="mx-auto" src={evoloading} alt="Loading..." />
+  ) : error ? (
+    <div className="flex justify-center items-center min-h-screen">
+      <p className="text-red-500">{error}</p>
+    </div>
+  ) : (
     <motion.div
       variants={variants}
       initial="hidden"
@@ -91,7 +78,7 @@ const Merch = () => {
             <img
               className="absolute h-80 w-64 rounded-3xl object-cover transform transition-all duration-500 ease-in-out hover:scale-110"
               alt={item.name}
-              src={getImageUrl(item.image)}
+              src={`https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/merch/items/${item.image}.webp`}
             />
             <div className="z-20 rounded-b-3xl bg-black/50 px-4 py-4 transition-all duration-300 hover:bg-black/70">
               <p className="font-[Prod-bold] text-xl text-white">{item.name}</p>

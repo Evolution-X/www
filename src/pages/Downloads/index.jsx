@@ -7,171 +7,140 @@ import { motion } from "framer-motion"
 
 const variants = {
   hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0 },
+  visible: { opacity: 1, y: 0 }
 }
 
 const Downloads = () => {
-  const [devices, setDevices] = useState({})
+  const [devices, setDevices] = useState([])
   const [deviceList, setDeviceList] = useState([])
   const [loading, setLoading] = useState(true)
-  const [currentlyMaintained, setCurrentlyMaintained] = useState(null)
-  const [oem, setOem] = useState(null)
-  const [searchQuery, setSearchQuery] = useState("")
-  const [apple, setApple] = useState(false)
-  const [latestVersionMapping, setLatestVersionMapping] = useState({})
+  const [latestSupportMap, setLatestSupportMap] = useState({})
   const [latestVersionSVG, setLatestVersionSVG] = useState(null)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [oem, setOem] = useState(null)
+  const [currentlyMaintained, setCurrentlyMaintained] = useState(null)
+  const [apple, setApple] = useState(false)
 
-  // Toggle Currently Maintained filter
   const toggleCurrentlyMaintained = (value) => {
     setCurrentlyMaintained((prev) => (prev === value ? null : value))
     setOem(null)
   }
 
-  const filteredDeviceList = currentlyMaintained === null
-    ? deviceList
-    : deviceList.filter((device) => device.data?.currently_maintained === currentlyMaintained)
-
-  // Toggle OEM filter
   const oemToggle = (deviceOem) => {
-    setOem((prevOem) => (prevOem === deviceOem ? null : deviceOem))
+    setOem((prev) => (prev === deviceOem ? null : deviceOem))
   }
+
+  const filteredDeviceList =
+    currentlyMaintained === null
+      ? deviceList
+      : deviceList.filter(
+          (d) => d.data?.currently_maintained === currentlyMaintained
+        )
 
   const brands = Array.from(
-    new Set(filteredDeviceList.map((device) => device.data?.oem))
+    new Set(filteredDeviceList.map((d) => d.data?.oem))
   ).sort((a, b) => a.localeCompare(b))
 
-  // Fetch devices list
-  const fetchDevices = async () => {
-    const url =
-      "https://raw.githubusercontent.com/Evolution-X/www_gitres/main/devices/devices.json"
+  const fetchJson = async (url) => {
     try {
-      const response = await fetch(url)
-      const devicesData = await response.json()
-      return devicesData
-    } catch (error) {
-      console.error("Error fetching devices:", error)
-      return {}
+      const res = await fetch(url)
+      return await res.json()
+    } catch (err) {
+      console.error(`Error fetching from ${url}:`, err)
+      return null
     }
   }
 
-  // Fetch device data
-  const fetchDeviceData = async (devices) => {
-    try {
-      const data = await Promise.all(
-        Object.entries(devices).map(async ([device, branches]) => {
-          // Filter out vanilla branches
-          const filteredBranches = branches.filter(
-            (branch) => !branch.includes("-vanilla")
-          )
+  const fetchDevices = () =>
+    fetchJson(
+      "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/devices/devices.json"
+    ) || []
 
-          const deviceDataList = await Promise.all(
-            filteredBranches.map(async (branch) => {
-              const deviceUrl = `https://raw.githubusercontent.com/Evolution-X/OTA/${branch}/builds/${device}.json`
-              try {
-                const response = await fetch(deviceUrl)
-                const deviceData = await response.json()
-                return { codename: device, branch, data: deviceData.response[0] }
-              } catch (error) {
-                console.error(
-                  `Error fetching data for device ${device} on branch ${branch}:`,
-                  error
-                )
-                return { codename: device, branch, data: null }
-              }
-            })
-          )
-
-          return deviceDataList.filter((item) => item.data)
-        })
-      )
-      return data.flat()
-    } catch (error) {
-      console.error("Error fetching device data:", error)
-      return []
-    }
-  }
-
-  // Fetch latest version mapping
-  const fetchLatestVersion = async () => {
-    const url =
-      "https://raw.githubusercontent.com/Evolution-X/www_gitres/main/version/latestversion.json"
-    try {
-      const response = await fetch(url)
-      const versionData = await response.json()
-      setLatestVersionMapping(versionData)
-    } catch (error) {
-      console.error("Error fetching latest version mapping:", error)
-    }
-  }
-
-  // Check if a device supports the latest version
-  const supportsLatestVersion = (branches) => {
-    const latestVersions = Object.values(latestVersionMapping).flat()
-    return branches.some((branch) =>
-      latestVersions.some((version) => branch.includes(version))
-    )
-  }
-
-  // Fetch latest version SVG
   const fetchLatestVersionSVG = async () => {
-    const latestVersionUrl =
-      "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/version/latestversion.svg"
     try {
-      const response = await fetch(latestVersionUrl)
-      const latestVersionData = await response.text()
-      setLatestVersionSVG(latestVersionData)
-    } catch (error) {
-      console.error("Error fetching latest version SVG:", error)
+      const res = await fetch(
+        "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/version/latestversion.svg"
+      )
+      const svg = await res.text()
+      setLatestVersionSVG(svg)
+    } catch (err) {
+      console.error("Error fetching latest version SVG:", err)
     }
   }
 
-  // Load devices list on component mount
+  const supportsLatestVersion = async (branches) => {
+    const data = await fetchJson(
+      "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/version/versions.json"
+    )
+    const latest = data?.[0]?.branches?.[0]
+    return latest ? branches.includes(latest) : false
+  }
+
+  const fetchDeviceData = async (deviceObjs) => {
+    const allDeviceData = await Promise.all(
+      deviceObjs.map(async ({ device, branches }) => {
+        const filtered = branches.filter((b) => !b.includes("-vanilla"))
+
+        const branchData = await Promise.all(
+          filtered.map(async (branch) => {
+            const url = `https://raw.githubusercontent.com/Evolution-X/OTA/refs/heads/${branch}/builds/${device}.json`
+            const data = await fetchJson(url)
+            return data?.response?.[0]
+              ? { codename: device, branch, data: data.response[0] }
+              : null
+          })
+        )
+
+        return branchData.filter(Boolean)
+      })
+    )
+
+    return allDeviceData.flat()
+  }
+
   useEffect(() => {
-    const loadDevices = async () => {
+    const init = async () => {
       const devicesData = await fetchDevices()
       setDevices(devicesData)
-      fetchLatestVersion()
       fetchLatestVersionSVG()
     }
-    loadDevices()
+
+    init()
   }, [])
 
   useEffect(() => {
-    const loadDeviceData = async () => {
-      if (Object.keys(devices).length > 0 && Object.keys(latestVersionMapping).length > 0) {
-        const data = await fetchDeviceData(devices)
-        const combinedList = data
-          .filter((item) => item.data) // Ensure only items with 'data' are processed
-          .reduce((acc, curr) => {
-            const existingItemIndex = acc.findIndex(
-              (x) => x.codename === curr.codename
-            )
+    const load = async () => {
+      if (!devices.length) return
 
-            if (existingItemIndex !== -1) {
-              // If codename exists, compare timestamps
-              if (curr.data.timestamp > acc[existingItemIndex].data.timestamp) {
-                acc[existingItemIndex] = curr // Replace with the one having greater timestamp
-              }
-            } else {
-              acc.push(curr) // Add new unique item
-            }
+      const data = await fetchDeviceData(devices)
+      const latestPerDevice = data
+        .reduce((acc, curr) => {
+          const i = acc.findIndex((x) => x.codename === curr.codename)
+          if (i !== -1) {
+            if (curr.data.timestamp > acc[i].data.timestamp) acc[i] = curr
+          } else {
+            acc.push(curr)
+          }
+          return acc
+        }, [])
+        .sort((a, b) => b.data.timestamp - a.data.timestamp)
 
-            return acc
-          }, [])
-          .sort((a, b) => b.data.timestamp - a.data.timestamp)
-
-        setDeviceList(combinedList)
-        setLoading(false)
+      const supportMap = {}
+      for (const { device, branches } of devices) {
+        supportMap[device] = await supportsLatestVersion(branches)
       }
+
+      setLatestSupportMap(supportMap)
+      setDeviceList(latestPerDevice)
+      setLoading(false)
     }
-    loadDeviceData()
-  }, [devices, latestVersionMapping])
+
+    load()
+  }, [devices])
 
   return (
     <>
-      {loading && (
-        <img className="mx-auto" src={evoloading} alt="Loading..." />
-      )}
+      {loading && <img className="mx-auto" src={evoloading} alt="Loading..." />}
 
       {!loading && (
         <div className="flex flex-col items-center justify-center gap-20 xl:gap-24">
@@ -257,25 +226,30 @@ const Downloads = () => {
                   (device) =>
                     device.data?.device
                       .toLowerCase()
-                      .includes(searchQuery.toLowerCase()) || // Match device name
+                      .includes(searchQuery.toLowerCase()) ||
                     device.codename
                       .toLowerCase()
-                      .includes(searchQuery.toLowerCase()) || // Match codename
+                      .includes(searchQuery.toLowerCase()) ||
                     (
                       device.data?.oem.toLowerCase() +
                       " " +
                       device.data?.device.toLowerCase()
-                    ).includes(searchQuery.toLowerCase()) || // Match OEM and device name
-                    (device.data?.maintainer?.toLowerCase().includes(searchQuery.toLowerCase())) || // Match maintainer
-                    (device.data?.github?.toLowerCase().includes(searchQuery.toLowerCase())) // Match GitHub
+                    ).includes(searchQuery.toLowerCase()) ||
+                    device.data?.maintainer
+                      ?.toLowerCase()
+                      .includes(searchQuery.toLowerCase()) ||
+                    device.data?.github
+                      ?.toLowerCase()
+                      .includes(searchQuery.toLowerCase())
                 )
                 .filter((device) => {
                   if (currentlyMaintained === null) return true
-                  return device.data?.currently_maintained === currentlyMaintained
+                  return (
+                    device.data?.currently_maintained === currentlyMaintained
+                  )
                 })
                 .map((device, index) => {
-                  // Check if device supports the latest version
-                  const isSupported = supportsLatestVersion(devices[device.codename])
+                  const isLatestSupported = latestSupportMap[device.codename]
 
                   return (
                     <motion.div
@@ -290,7 +264,7 @@ const Downloads = () => {
                           src={`https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/devices/images/${device.codename}.webp`}
                           alt=""
                         />
-                        {isSupported && latestVersionSVG && (
+                        {isLatestSupported && latestVersionSVG && (
                           <motion.div
                             initial={{ scale: 0.8, rotate: -5 }}
                             animate={{ scale: 0.9, rotate: 5 }}
@@ -300,11 +274,11 @@ const Downloads = () => {
                               duration: 0.7,
                               type: "spring",
                               damping: 5,
-                              stiffness: 30,
+                              stiffness: 30
                             }}
                             viewport={{ once: true }}
                             dangerouslySetInnerHTML={{
-                              __html: latestVersionSVG,
+                              __html: latestVersionSVG
                             }}
                             className="absolute right-[-20px] top-[-30px] size-20 sm:right-[-30px]"
                           />
@@ -336,7 +310,11 @@ const Downloads = () => {
                             className="inline-flex h-16 items-center justify-center rounded-full bg-[#0060ff] text-xl text-white hover:bg-[#004bb5] transition-all duration-300"
                           >
                             <span className="mr-1">Get</span>
-                            <img src={evolution} alt="Evolution X" className="h-4 w-auto" />
+                            <img
+                              src={evolution}
+                              alt="Evolution X"
+                              className="h-4 w-auto"
+                            />
                           </Link>
                         </div>
                       </div>

@@ -11,7 +11,7 @@ import { ArrowOutwardIcon } from "../ui/icons.tsx"
 
 const variants = {
   hidden: { opacity: 0, y: 75 },
-  visible: { opacity: 1, y: 0 },
+  visible: { opacity: 1, y: 0 }
 }
 
 const DownloadSection = () => {
@@ -21,7 +21,7 @@ const DownloadSection = () => {
   const [downloads, setDownloads] = useState(null)
   const [showInstructions, setShowInstructions] = useState(false)
   const [showChangelogs, setShowChangelogs] = useState(false)
-  const [androidVersions, setAndroidVersions] = useState({})
+  const [androidVersions, setAndroidVersions] = useState([])
   const [supportedBranches, setSupportedBranches] = useState([])
   const [currentBranch, setCurrentBranch] = useState("")
 
@@ -34,28 +34,31 @@ const DownloadSection = () => {
         setLoading(true)
 
         const versionsResponse = await fetch(
-          "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/version/versions.json",
+          "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/version/versions.json"
         )
         const versionsData = await versionsResponse.json()
         setAndroidVersions(versionsData)
 
         const devicesResponse = await fetch(
-          "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/devices/devices.json",
+          "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/devices/devices.json"
         )
         const devicesData = await devicesResponse.json()
 
-        const branches = devicesData[codename] || []
+        const deviceEntry = devicesData.find(
+          (device) => device.device === codename
+        )
+        const branches = deviceEntry ? deviceEntry.branches : []
         setSupportedBranches(branches)
 
         if (branches.length > 0) {
-          const highestVersionBranch = Object.entries(versionsData)
+          const highestVersionBranch = versionsData
             .sort(
-              ([versionA], [versionB]) =>
-                parseInt(versionB.split("-")[0], 10) -
-                parseInt(versionA.split("-")[0], 10),
+              (a, b) =>
+                parseInt(b.version.split("-")[0], 10) -
+                parseInt(a.version.split("-")[0], 10)
             )
-            .flatMap(([version, branchesForVersion]) =>
-              branchesForVersion.filter((branch) => branches.includes(branch)),
+            .flatMap((versionObj) =>
+              versionObj.branches.filter((branch) => branches.includes(branch))
             )[0]
 
           if (highestVersionBranch) {
@@ -73,57 +76,50 @@ const DownloadSection = () => {
     fetchVersionsAndDevices()
   }, [codename])
 
-  const fetchDeviceData = async () => {
-    if (!currentBranch) return null
-
-    try {
-      const url = `https://raw.githubusercontent.com/Evolution-X/OTA/${currentBranch}/builds/${codename}.json`
-      const response = await fetch(url)
-      if (response.ok) {
-        const fetchedDeviceData = await response.json()
-        return fetchedDeviceData.response[0]
-      }
-    } catch (error) {
-      console.error("Error fetching device data:", error)
-    }
-
-    return null
-  }
-
   useEffect(() => {
     const fetchData = async () => {
+      if (!currentBranch || !codename || androidVersions.length === 0) return
+
       setLoading(true)
-      const device = await fetchDeviceData()
-      setData(device)
-      setLoading(false)
+      setData(null)
+      setDownloads(null)
 
-      if (device) {
+      try {
+        const url = `https://raw.githubusercontent.com/Evolution-X/OTA/refs/heads/${currentBranch}/builds/${codename}.json`
+
+        const response = await fetch(url)
+        if (!response.ok) throw new Error("Device data fetch failed")
+        const json = await response.json()
+        const deviceData = json.response[0]
+        setData(deviceData)
+
         const endDate = new Date().toISOString().split("T")[0]
+        const versionMatch = androidVersions.find((v) =>
+          v.branches.includes(currentBranch)
+        )
+        const androidVersion = versionMatch?.version
 
-        const androidVersion = Object.entries(androidVersions)
-          .find(([version, branches]) => branches.includes(currentBranch))
-          ?. [0]
+        if (deviceData.filename) {
+          const versionPath = deviceData.filename.includes("Vanilla")
+            ? `${androidVersion}_vanilla`
+            : androidVersion
+          const statsUrl = `https://sourceforge.net/projects/evolution-x/files/${codename}/${versionPath}/${deviceData.filename}/stats/json?start_date=2019-03-19&end_date=2025-04-30&period=monthly`
 
-        const sfandroidVersion = androidVersion?.replace("-", "_")
-        const statsUrl = `https://sourceforge.net/projects/evolution-x/files/${codename}/${sfandroidVersion}/${device.filename}/stats/json?start_date=2019-03-19&end_date=${endDate}&period=monthly`
-
-        try {
           const statsResponse = await fetch(statsUrl)
           if (statsResponse.ok) {
             const statsData = await statsResponse.json()
-            const totalDownloads = statsData?.summaries?.time?.downloads || 0
-            setDownloads(totalDownloads)
+            setDownloads(statsData?.summaries?.time?.downloads || 0)
           }
-        } catch (error) {
-          console.error("Error fetching download stats:", error)
         }
+      } catch (err) {
+        console.error("Error fetching device data or stats:", err)
       }
+
+      setLoading(false)
     }
 
-    if (currentBranch) {
-      fetchData()
-    }
-  }, [currentBranch, codename])
+    fetchData()
+  }, [currentBranch, codename, androidVersions])
 
   return (
     <>
@@ -169,7 +165,6 @@ const DownloadSection = () => {
                   </p>
                 </div>
               </motion.div>
-
               <motion.div
                 variants={variants}
                 initial="hidden"
@@ -178,28 +173,31 @@ const DownloadSection = () => {
                 viewport={{ once: true }}
                 className="inline-flex flex-wrap items-center justify-start gap-3"
               >
-                {Object.entries(androidVersions)
-                  .sort(([versionA], [versionB]) => {
-                    const numA = parseInt(versionA.split("-")[0], 10)
-                    const numB = parseInt(versionB.split("-")[0], 10)
+                {androidVersions
+                  .sort((versionA, versionB) => {
+                    const numA = parseInt(versionA.version.split("-")[0], 10)
+                    const numB = parseInt(versionB.version.split("-")[0], 10)
                     return numA - numB
                   })
-                  .map(([version, branches]) =>
-                    branches.map(
-                      (branch) =>
+                  .map((versionObj) =>
+                    versionObj.branches.map((branch) => {
+                      const isVanilla = branch.includes("vanilla")
+                      const versionLabel = `${versionObj.version} ${isVanilla ? "VANILLA" : ""}`
+
+                      return (
                         supportedBranches.includes(branch) && (
                           <button
                             key={branch}
                             className={`buttonSelect ${currentBranch === branch ? "bg-[#0060ff]" : ""}`}
                             onClick={() => setCurrentBranch(branch)}
                           >
-                            {version}
+                            {versionLabel}
                           </button>
-                        ),
-                    ),
+                        )
+                      )
+                    })
                   )}
               </motion.div>
-
               <motion.div
                 variants={variants}
                 initial="hidden"
@@ -231,14 +229,11 @@ const DownloadSection = () => {
                     </span>
                   </div>
                 </div>
-
                 <div className="flex grow flex-col rounded-2xl bg-[#151414] px-6 py-7 border-2 border-[#0060ff] middleshadow">
                   <div className="flex grow flex-col gap-4 lg:justify-between lg:gap-0">
                     <div className="flex flex-wrap gap-4 pl-2 lg:flex-row lg:gap-0">
                       <div className="grow">
-                        <div className="text-lg evoxhighlight">
-                          Date
-                        </div>
+                        <div className="text-lg evoxhighlight">Date</div>
                         <div className="text-2xl text-white">
                           {new Date(data.timestamp * 1000).toDateString()}
                         </div>
@@ -256,7 +251,9 @@ const DownloadSection = () => {
                         </div>
                       </div>
                       <div className="grow">
-                        <div className="text-lg evoxhighlight">Download Count</div>
+                        <div className="text-lg evoxhighlight">
+                          Download Count
+                        </div>
                         <div className="text-2xl text-white">
                           {downloads !== null ? downloads : "N/A"}
                         </div>
@@ -307,7 +304,7 @@ const DownloadSection = () => {
                             <div
                               onClick={(e) => {
                                 if (e.target === e.currentTarget) {
-                                  setShowInstructions(false);
+                                  setShowInstructions(false)
                                 }
                               }}
                               className="fixed inset-0 z-50 flex flex-col py-[6rem] backdrop-blur-sm md:py-[6rem] lg:py-[6rem] xl:px-[4rem] 2xl:px-[15rem]"
@@ -338,7 +335,7 @@ const DownloadSection = () => {
                             <div
                               onClick={(e) => {
                                 if (e.target === e.currentTarget) {
-                                  setShowChangelogs(false);
+                                  setShowChangelogs(false)
                                 }
                               }}
                               className="fixed inset-0 z-50 flex flex-col py-[6rem] backdrop-blur-sm md:py-[6rem] lg:py-[6rem] xl:px-[4rem] 2xl:px-[15rem]"
@@ -372,7 +369,6 @@ const DownloadSection = () => {
                   </div>
                 </div>
               </motion.div>
-
               {data.currently_maintained === false && (
                 <motion.div
                   variants={variants}
@@ -388,7 +384,13 @@ const DownloadSection = () => {
                         This version is no longer maintained!
                       </p>
                       <p className="font-[Prod-light] text-lg lg:text-2xl">
-                        You may not receive future updates or bug fixes while on this version of the ROM. We recommend using a version that is currently <span className="evoxhighlight font-[Prod-bold]">maintained</span> for continued support.
+                        You may not receive future updates or bug fixes while on
+                        this version of the ROM. We recommend using a version
+                        that is currently{" "}
+                        <span className="evoxhighlight font-[Prod-bold]">
+                          maintained
+                        </span>{" "}
+                        for continued support.
                       </p>
                     </div>
                   </div>

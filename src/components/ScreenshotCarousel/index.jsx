@@ -19,7 +19,7 @@ const ScreenshotCarousel = () => {
 
         const imageUrls = data.map(
           (screenshot) =>
-            `https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/screenshots/${screenshot}.webp`
+            `https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/screenshots/images/${screenshot}.webp`
         )
 
         const imagePromises = imageUrls.map((url) => {

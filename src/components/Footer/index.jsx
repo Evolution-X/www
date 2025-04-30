@@ -54,6 +54,10 @@ function index() {
           <a href={"https://t.me/Stock_Sucks"} target="_blank" rel="noreferrer">
             <span className="font-[Prod-bold] text-sm underline">Kshitij</span>
           </a>
+           <span> & </span>
+          <a href={"https://github.com/AnierinBliss"} target="_blank" rel="noreferrer">
+            <span className="font-[Prod-bold] text-sm underline">Anierin Bliss</span>
+          </a>
         </div>
         <div className="">
           Developed by{" "}
