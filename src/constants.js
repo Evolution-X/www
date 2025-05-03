@@ -1,0 +1,16 @@
+export const BASE = 'https://raw.githubusercontent.com/Evolution-X/'
+export const GITRES = `${BASE}www_gitres/refs/heads/main/`
+export const BLOGS = `${GITRES}blogs/blogs.json`
+export const BLOG_POSTS = `${GITRES}blogs/posts/`
+export const BLOG_POST_BACKGROUNDS = `${GITRES}blogs/images/`
+export const DEVICES = `${GITRES}devices/devices.json`
+export const DEVICES_IMAGE = `${GITRES}devices/images/`
+export const MERCH = `${GITRES}merch/merch.json`
+export const MERCH_IMAGES = `${GITRES}merch/images/`
+export const TEAM = `${GITRES}team/team.json`
+export const MAINTAINERS = `${GITRES}team/maintainers.json`
+export const SCREENSHOTS = `${GITRES}screenshots/screenshots.json`
+export const SCREENSHOTS_IMAGES = `${GITRES}screenshots/images/`
+export const VERSIONS = `${GITRES}version/versions.json`
+export const LATEST_VERSION = `${GITRES}version/latest_version.svg`
+export const OTA = `${BASE}OTA/`

@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'Prod-Normal';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src:
+      local('Product Sans Regular'),
+      url('ProductSans-Regular.woff') format('woff');
+  }
+
+  @font-face {
+    font-family: 'Prod-Italic';
+    font-style: Italic;
+    font-weight: 400;
+    font-display: swap;
+    src:
+      local('Product Sans Italic'),
+      url('ProductSans-Italic.woff') format('woff');
+  }
+
+  @font-face {
+    font-family: 'Prod-Thin';
+    font-style: Thin;
+    font-weight: 100;
+    font-display: swap;
+    src:
+      local('Product Sans Thin Regular'),
+      url('ProductSans-Thin.woff') format('woff');
+  }
+
+  @font-face {
+    font-family: 'Prod-Light';
+    font-style: Light;
+    font-weight: 300;
+    font-display: swap;
+    src:
+      local('Product Sans Light Regular'),
+      url('ProductSans-Light.woff') format('woff');
+  }
+
+  @font-face {
+    font-family: 'Prod-Medium';
+    font-style: Medium;
+    font-weight: 500;
+    font-display: swap;
+    src:
+      local('Product Sans Medium Regular'),
+      url('ProductSans-Medium.woff') format('woff');
+  }
+
+  @font-face {
+    font-family: 'Prod-Black-Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src:
+      local('Product Sans Black Regular'),
+      url('ProductSans-Black.woff') format('woff');
+  }
+
+  @font-face {
+    font-family: 'Prod-Thin-Italic';
+    font-style: ThinItalic;
+    font-weight: 100;
+    font-display: swap;
+    src:
+      local('Product Sans Thin Italic'),
+      url('ProductSans-ThinItalic.woff') format('woff');
+  }
+
+  @font-face {
+    font-family: 'Prod-Light-Italic';
+    font-style: LightItalic;
+    font-weight: 300;
+    font-display: swap;
+    src:
+      local('Product Sans Light Italic'),
+      url('ProductSans-LightItalic.woff') format('woff');
+  }
+
+  @font-face {
+    font-family: 'Product Sans Medium Italic';
+    font-style: MediumItalic;
+    font-weight: 500;
+    font-display: swap;
+    src:
+      local('Product Sans Medium Italic'),
+      url('ProductSans-MediumItalic.woff') format('woff');
+  }
+
+  @font-face {
+    font-family: 'Prod-bold';
+    font-style: Bold;
+    font-weight: 700;
+    font-display: swap;
+    src:
+      local('Product Sans Bold'),
+      url('ProductSans-Bold.woff') format('woff');
+  }
+
+  @font-face {
+    font-family: 'Product Sans Bold Italic';
+    font-style: BoldItalic;
+    font-weight: 700;
+    font-display: swap;
+    src:
+      local('Product Sans Bold Italic'),
+      url('ProductSans-BoldItalic.woff') format('woff');
+  }
+
+  @font-face {
+    font-family: 'Prod-black';
+    font-style: Black;
+    font-weight: 900;
+    font-display: swap;
+    src:
+      local('Product Sans Black Italic'),
+      url('ProductSans-BlackItalic.woff') format('woff');
+  }
+}

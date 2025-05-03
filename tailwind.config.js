@@ -58,10 +58,10 @@ module.exports = {
           },
         },
         meteor: {
-          "0%": { transform: "rotate(90deg) translateX(0)", opacity: "1" },
+          "0%": { transform: "rotate(90deg) translateX(-20px)", opacity: "1" },
           "70%": { opacity: "1" },
           "100%": {
-            transform: "rotate(90deg) translateX(-400px)",
+            transform: "rotate(90deg) translateX(-300px)",
             opacity: "0",
           },
         },
