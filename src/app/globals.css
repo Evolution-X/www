@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  @apply bg-[#040214];
+}
+
+.homebutton {
+  @apply min-w-[11rem] rounded-full border-2 border-[#0060ff] px-7 py-3 text-white shadow-[0px_0px_38.5px_14px_#0060ff25] hover:bg-[#004bb5] hover:shadow-[0px_0px_38.5px_14px_#0060ff50] lg:text-lg;
+}
+
+.evoxhighlight {
+  @apply text-[#0060ff];
+}
+
+.middleshadow {
+  box-shadow: 0px 4px 20px 20px rgb(0 96 255 / 0.05);
+}
+
+.buttonSelect {
+  @apply w-fit rounded-full border-2 border-[#0060ff] px-6 py-3 text-center uppercase text-white duration-100 ease-linear hover:bg-[#004bb5] hover:bg-[#0060ff] hover:shadow-[0px_0px_38.5px_14px_#0060ff25];
+}

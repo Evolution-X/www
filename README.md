@@ -1,6 +1,6 @@
 # Evolution X Website
 
-![Evolution X](https://github.com/Evolution-X/manifest/raw/udc/Banner.png)
+![Evolution X](https://github.com/Evolution-X/www/raw/main/Banner.png)
 
 ## Install
 
@@ -11,10 +11,15 @@ npm install
 ## Test
 
 ```bash
-npm start
+npm run dev
 ```
 
-## Credits
+## Production
 
-- Designed by Kshitij
-- Developed by Zirgom Haidar, Pratham Kalra & Anierin Bliss
+```bash
+npm run build
+```
+
+```bash
+npm start
+```
