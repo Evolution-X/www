@@ -1,6 +1,4 @@
 import { ImageResponse } from 'next/og'
-import { readFile } from 'node:fs/promises'
-import { join } from 'node:path'
 import { SITE } from '../constants'
 import { permanentRedirect } from 'next/navigation'
 
@@ -12,8 +10,12 @@ export default async function Image() {
   }
 
   const [prodBoldFontData, prodLightFontData] = await Promise.all([
-    readFile(join(process.cwd(), 'src/assets/fonts/ProductSans-Bold.woff')),
-    readFile(join(process.cwd(), 'src/assets/fonts/ProductSans-Light.woff'))
+    fetch(new URL('/fonts/ProductSans-Bold.woff', SITE)).then((res) =>
+      res.arrayBuffer()
+    ),
+    fetch(new URL('/fonts/ProductSans-Light.woff', SITE)).then((res) =>
+      res.arrayBuffer()
+    )
   ])
 
   return new ImageResponse(

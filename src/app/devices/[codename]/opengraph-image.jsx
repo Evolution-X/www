@@ -1,6 +1,4 @@
 import { ImageResponse } from 'next/og'
-import { readFile } from 'node:fs/promises'
-import { join } from 'node:path'
 import { SITE, DEVICES_OG_IMAGE } from '../../../constants'
 import { getDeviceData } from '../../../lib/dataService'
 
@@ -12,8 +10,12 @@ export default async function Image({ params }) {
   const deviceData = await getDeviceData(codename)
 
   const [prodBoldFontData, prodNormalFontData] = await Promise.all([
-    readFile(join(process.cwd(), 'src/assets/fonts/ProductSans-Bold.woff')),
-    readFile(join(process.cwd(), 'src/assets/fonts/ProductSans-Regular.woff'))
+    fetch(new URL('/fonts/ProductSans-Bold.woff', SITE)).then((res) =>
+      res.arrayBuffer()
+    ),
+    fetch(new URL('/fonts/ProductSans-Regular.woff', SITE)).then((res) =>
+      res.arrayBuffer()
+    )
   ])
 
   let displayTitle = 'Device Not Found'
